@@ -1,0 +1,29 @@
+.nav{
+    a{
+        color: black;
+        position: relative;
+    }
+    a::after{
+        content: '';
+        display: block;
+        height: 2px;
+        position: absolute;
+        bottom: 0;
+        transition: 0.3s;
+        background-color: black;
+        width: 0px;
+        left: 0;
+    }
+    a:hover{
+        text-shadow: 0 0 1px rgb(40, 65, 209);
+    }
+    a:hover::after{
+        width: 100%;
+    }
+    .nav-item{
+        padding: 8px;
+    }
+    .nav-link{
+        padding: 0 5px 0 5px;
+    }
+}
