@@ -1,9 +1,16 @@
-.container{
+
+.table{
+    display: grid;
+    grid-template-rows: 25vh 25vh 25vh 25vh 25vh 25vh; 
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-auto-columns: 25vh;
+    grid-auto-rows: 33.3%;
+    grid-gap: 10px;
+    
+}
+.item{
+    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: rgb(116, 147, 250);
-    margin: 20px auto;
-    border: 3px dashed black;
 }
