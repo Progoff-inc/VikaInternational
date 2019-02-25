@@ -1,0 +1,10 @@
+<div class="container d-flex justify-content-center flex-wrap my-3" style="min-height:90vh">
+  <div class="card rounded-0" style="width: 18rem;" *ngFor="let g of goods">
+    <img src="{{g.Image}}" class="card-img-top" >
+    <div class="card-body">
+      <h5 class="card-title">{{g.Name}}</h5>
+      <p class="card-text">{{g.Description}}</p>
+      <a href="#" class="btn btn-primary">Купить</a>
+    </div>
+  </div>
+</div>
