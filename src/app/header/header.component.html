@@ -1,13 +1,21 @@
 <div class="container-fluid">
     <div class="row head">
       <div class="col-sm-4">
-        <h1 >Vika International</h1>
+        <a [routerLink]='["/"]' style="text-decoration: unset; color: unset"><h1 >Vika International</h1></a>
       </div>
       <div class="col-sm-4 d-flex justify-content-center align-items-center">
         <img src="../../assets/images/logo.png" alt="">
       </div>
-      <div class="col-sm-4 d-inline-flex justify-content-end align-items-center">
-        <i class="fas fa-search"></i>
+      <div class="col-sm-4 d-inline-flex justify-content-end align-items-center search">
+          <form class="form-inline">
+            
+            <div class="form-group mx-sm-3 mb-2">
+              <input type="text" class="form-control" style="border-bottom-right-radius: 0; border-top-right-radius: 0 " id="inputPassword2" placeholder="Найти">
+              <i class="fas fa-search rounded"></i>
+            </div>
+            
+          </form>
+        
       </div>
       
     </div>
