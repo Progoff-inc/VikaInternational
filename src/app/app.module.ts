@@ -10,6 +10,8 @@ import { SalesCarouselComponent } from './sales-carousel/sales-carousel.componen
 import { FooterComponent } from './footer/footer.component';
 import { GoodsComponent } from './goods/goods.component';
 import { ContactsComponent } from './contacts/contacts.component';
+import { ProductComponent } from './product/product.component';
+import { GoodsService } from './products.service';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,14 @@ import { ContactsComponent } from './contacts/contacts.component';
     SalesCarouselComponent,
     FooterComponent,
     GoodsComponent,
-    ContactsComponent
+    ContactsComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [GoodsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
