@@ -21,6 +21,7 @@ export interface Good{
   Name:string;
   Description:string;
   Price:number;
+  Color:string;
   Image:string;
   Photoes?:string[];
 }

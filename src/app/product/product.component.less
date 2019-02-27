@@ -3,12 +3,13 @@ img.main{
 }
 img.photo{
     height: 200px;
-    margin: 10px;
+    margin: 10px 10px 10px 0;
 
 }
 .photoes{
     display: flex;
     padding: 10px;
+    padding-left: 0;;
     overflow-x: scroll;
     margin-bottom: 20px;
     &::-webkit-scrollbar {
@@ -25,13 +26,23 @@ img.photo{
     
     /* Handle */
     &::-webkit-scrollbar-thumb {
-        background: rgb(207, 216, 255); 
+        background:linear-gradient(to right, #eaeffe, #1841b9);
         
         border-radius: 4px;
     }
     
     /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {
-        background: #b6c3ff; 
+        background:linear-gradient(to right, #b8caff, #03299c);
     }
+}
+
+@media(min-width:768px){
+    .photoes{
+        &::-webkit-scrollbar {
+            height: 5px;
+            width: 5px;
+        }
+    }
+    
 }

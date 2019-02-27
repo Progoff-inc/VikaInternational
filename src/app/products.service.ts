@@ -12,9 +12,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         },
         {
@@ -22,9 +23,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         },
         {
@@ -32,9 +34,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         },
         {
@@ -42,9 +45,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         },
         {
@@ -52,9 +56,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         },
         {
@@ -62,9 +67,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         },
         {
@@ -72,9 +78,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         },
         {
@@ -82,9 +89,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         },
         {
@@ -92,9 +100,10 @@ export class GoodsService{
           Name:"Имя", 
           Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
           Price:0.00,
-          Image: ph,
+          Color:"Синий (Blue)",
+          Image: ph1,
           Photoes: [
-            ph, ph1, ph2, ph3, ph4 
+             ph1, ph2, ph3, ph4 
           ]
         }
   
