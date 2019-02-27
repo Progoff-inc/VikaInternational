@@ -11,4 +11,27 @@ img.photo{
     padding: 10px;
     overflow-x: scroll;
     margin-bottom: 20px;
+    &::-webkit-scrollbar {
+        height: 0px;
+        width: 0px;
+    }
+    
+    /* Track */
+    &::-webkit-scrollbar-track {
+        box-shadow: none;; 
+        border-radius: 4px;
+        background-color: white;
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: rgb(207, 216, 255); 
+        
+        border-radius: 4px;
+    }
+    
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #b6c3ff; 
+    }
 }

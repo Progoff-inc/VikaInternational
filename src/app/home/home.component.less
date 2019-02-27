@@ -1,16 +1,40 @@
 
 .table{
-    display: grid;
-    grid-template-rows: 25vh 25vh 25vh 25vh 25vh 25vh; 
-    grid-template-columns: 33.3% 33.3% 33.3%;
-    grid-auto-columns: 25vh;
-    grid-auto-rows: 33.3%;
-    grid-gap: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     
 }
 .item{
     background-color: #fff;
+    margin: 5px;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    img{
+        width: 100%;
+    }
+    h3{
+        position: absolute;
+        z-index: 10;
+        color: white;
+        font-weight: 700;
+        text-align: center;
+        margin: 10px;
+    }
+    .blur{
+        position: absolute;
+        z-index: 5;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.281);
+    }
+
+    &:hover{
+        box-shadow: 0 0 3px black;
+    }
 }
