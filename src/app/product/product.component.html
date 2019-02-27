@@ -1,11 +1,14 @@
-<div class="container">
+<div class="container my-3">
   <div class="row">
     <div class="col-sm-6">
-      <img src="{{good.Image}}" class="rounded">
+      <img src="{{good.Image}}" class="rounded main">
     </div>
     <div class="col-sm-6">
       <div class="d-flex flex-column">
         <h3>{{good.Name}}</h3>
+        <div class="photoes" *ngIf="good.Photoes.length>0">
+          <img src="{{p}}" class="photo" *ngFor="let p of good.Photoes" (click)=choosePhoto(p)>
+        </div>
         <h4>Цена: {{good.Price}}</h4>
         <button class="btn btn-primary">Купить</button>
       </div>

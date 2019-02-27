@@ -16,5 +16,8 @@ export class ProductComponent implements OnInit {
     this.good = this.gs.getProduct(this.route.snapshot.paramMap.get("id"))
     console.log(this.good);
   }
+  choosePhoto(p){
+    this.good.Image = p;
+  }
 
 }
