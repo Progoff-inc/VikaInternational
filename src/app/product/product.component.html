@@ -10,7 +10,7 @@
           <img src="{{p}}" class="photo" *ngFor="let p of good.Photoes" (click)=choosePhoto(p)>
         </div>
         <h4>Цвет: {{good.Color}}</h4>
-        <h4>Цена: {{good.Price}}</h4>
+        <h4>Цена: {{good.Price}}<i style="font-size: 20px" class="fas fa-ruble-sign"></i></h4>
         <div>
           <a routerLink="/contacts" class="btn btn-primary my-2"  >Купить</a>
         </div>

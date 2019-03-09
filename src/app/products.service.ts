@@ -9,101 +9,101 @@ export class GoodsService{
     goods:Good[] = [
         {
           Id:1, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
-          Color:"Синий (Blue)",
-          Image: ph1,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:720,
+          Color:"Золото (Gold)",
+          Image: "../../assets/images/goods/21.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+             "../../assets/images/goods/21.jpg", "../../assets/images/goods/40.jpg", "../../assets/images/goods/23.jpg", "../../assets/images/goods/28.jpg" 
           ]
         },
         {
           Id:2, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:520,
           Color:"Синий (Blue)",
-          Image: ph1,
+          Image: "../../assets/images/goods/44.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+            "../../assets/images/goods/44.jpg", "../../assets/images/goods/51.jpg", "../../assets/images/goods/48.jpg", "../../assets/images/goods/54.jpg" 
           ]
         },
         {
           Id:3, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
-          Color:"Синий (Blue)",
-          Image: ph1,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:500,
+          Color:"Мульти (Multicolor)",
+          Image: "../../assets/images/goods/62.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+            "../../assets/images/goods/62.jpg", "../../assets/images/goods/73.jpg", "../../assets/images/goods/80.jpg", "../../assets/images/goods/66.jpg" 
           ]
         },
         {
           Id:4, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
-          Color:"Синий (Blue)",
-          Image: ph1,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:720,
+          Color:"Бронзовый (Bronze)",
+          Image: "../../assets/images/goods/84.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+            "../../assets/images/goods/84.jpg", "../../assets/images/goods/83.jpg", "../../assets/images/goods/88.jpg", "../../assets/images/goods/94.jpg" 
           ]
         },
         {
           Id:5, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
-          Color:"Синий (Blue)",
-          Image: ph1,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:440,
+          Color:"Черный (Black)",
+          Image: "../../assets/images/goods/98.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+            "../../assets/images/goods/98.jpg", "../../assets/images/goods/99.jpg"
           ]
         },
         {
           Id:6, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
-          Color:"Синий (Blue)",
-          Image: ph1,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:440,
+          Color:"Белый (White)",
+          Image: "../../assets/images/goods/100.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+            "../../assets/images/goods/100.jpg", "../../assets/images/goods/101.jpg", "../../assets/images/goods/106.jpg", "../../assets/images/goods/109.jpg" 
           ]
         },
         {
           Id:7, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
-          Color:"Синий (Blue)",
-          Image: ph1,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:440,
+          Color:"Серебро (Silver)",
+          Image: "../../assets/images/goods/103.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+            "../../assets/images/goods/103.jpg", "../../assets/images/goods/110.jpg"
           ]
         },
         {
           Id:8, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
-          Color:"Синий (Blue)",
-          Image: ph1,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:440,
+          Color:"Розовый (Pink)",
+          Image: "../../assets/images/goods/104.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+            "../../assets/images/goods/104.jpg", "../../assets/images/goods/105.jpg"
           ]
         },
         {
           Id:9, 
-          Name:"Имя", 
-          Description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni, nemo. Distinctio et necessitatibus labore voluptatibus ab, dolor aperiam sunt totam obcaecati magnam eligendi! Quisquam, ratione velit ab natus porro blanditiis.",
-          Price:0.00,
-          Color:"Синий (Blue)",
-          Image: ph1,
+          Name:"Пинцет для наращивания ресниц", 
+          Description:"",
+          Price:440,
+          Color:"Красный (Red)",
+          Image: "../../assets/images/goods/97.jpg",
           Photoes: [
-             ph1, ph2, ph3, ph4 
+            "../../assets/images/goods/97.jpg", "../../assets/images/goods/96.jpg"
           ]
         }
   
