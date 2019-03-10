@@ -12,6 +12,7 @@ import { GoodsComponent } from './goods/goods.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ProductComponent } from './product/product.component';
 import { GoodsService } from './products.service';
+import { CounterComponent } from './counter/counter.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { GoodsService } from './products.service';
     FooterComponent,
     GoodsComponent,
     ContactsComponent,
-    ProductComponent
+    ProductComponent,
+    CounterComponent
   ],
   imports: [
     BrowserModule,

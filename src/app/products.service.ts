@@ -6,6 +6,7 @@ const ph3 = "../../assets/images/goods/3.jpg";
 const ph4 = "../../assets/images/goods/4.jpg";
 
 export class GoodsService{
+    cart:CartItem[] = [];
     goods:Good[] = [
         {
           Id:1, 
@@ -113,4 +114,32 @@ export class GoodsService{
     getProduct(id){
         return this.goods.find(x => x.Id==id);
     }
+    addCartProduct(good:Good){
+      let i = this.cart.map(x => x.Good.Id).indexOf(good.Id);
+      if(i>-1){
+        this.cart[i].Count+=1
+      }
+      else{
+        this.cart.unshift({Good:good, Count:1});
+      }
+      
+    }
+    clearCart(){
+      if(confirm("Очистить корзину?")){
+        this.cart = [];
+      }
+      
+    }
+    getSum(){
+      let sum = 0;
+      this.cart.forEach(c => {
+        sum +=c.Count*c.Good.Price;
+      })
+      return sum;
+    }
+}
+
+export class CartItem{
+  Count:number;
+  Good:Good;
 }

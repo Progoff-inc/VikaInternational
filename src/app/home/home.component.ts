@@ -36,10 +36,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   }
-  getRow(i){
-    console.log((this.sections.length-this.sections.length%i)/i);
-    return Math.round((this.sections.length-this.sections.length%i)/i);
-  }
 }
 
 export interface Section{

@@ -7,6 +7,29 @@
         <img src="../../assets/images/logo.png" alt="">
       </div>
       <div class="col-md-4 d-inline-flex justify-content-center justify-content-md-end align-items-center search">
+          <i class="fas fa-user mx-2 text-light"></i>
+          <i class="fas fa-shopping-cart mx-2 text-light cart">
+            <span *ngIf="gs.cart.length>0">{{gs.cart.length>9?'9+':gs.cart.length}}</span>
+            <div *ngIf="gs.cart.length>0" class="cart-items">
+              <h3>Корзина</h3>
+              <div class="cart-item" *ngFor="let g of gs.cart">
+                <div>
+                  <p>{{g.Good.Name}}</p>
+                  <p>{{g.Good.Color}}</p>
+                </div>
+                <div style="text-align:right">
+                  <span >{{g.Good.Price * g.Count}}₽</span>
+                  <counter [Count]="g"></counter>
+                </div>
+                
+              </div>
+              <p class="mt-4" style="font-weight: 400; font-size:large">Сумма заказа: {{gs.getSum()}}₽</p>
+              <div class="d-flex mt-4" role="group">
+                <button type="button" class="btn btn-primary mr-2">Оформить заказ</button>
+                <button type="button" class="btn btn-link text-danger" (click)="gs.clearCart()">Очистить</button>
+              </div>
+            </div>
+          </i>
           <form class="form-inline">
             
             <div class="form-group mx-sm-3 mb-2 d-flex">
