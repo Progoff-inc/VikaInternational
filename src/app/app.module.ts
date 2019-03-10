@@ -13,6 +13,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { ProductComponent } from './product/product.component';
 import { GoodsService } from './products.service';
 import { CounterComponent } from './counter/counter.component';
+import { BookingComponent } from './booking/booking.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CounterComponent } from './counter/counter.component';
     GoodsComponent,
     ContactsComponent,
     ProductComponent,
-    CounterComponent
+    CounterComponent,
+    BookingComponent
   ],
   imports: [
     BrowserModule,

@@ -25,7 +25,7 @@
               </div>
               <p class="mt-4" style="font-weight: 400; font-size:large">Сумма заказа: {{gs.getSum()}}₽</p>
               <div class="d-flex mt-4" role="group">
-                <button type="button" class="btn btn-primary mr-2">Оформить заказ</button>
+                <button type="button" class="btn btn-primary mr-2" routerLink="/booking">Оформить заказ</button>
                 <button type="button" class="btn btn-link text-danger" (click)="gs.clearCart()">Очистить</button>
               </div>
             </div>
