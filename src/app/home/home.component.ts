@@ -13,43 +13,23 @@ export class HomeComponent implements OnInit {
     },
     {
       Name:"Раздел 2",
-      Image:"../../assets/images/goods/44.jpg"
+      Image:"../../assets/images/goods/176.jpg"
     },
     {
       Name:"Раздел 3",
-      Image:"../../assets/images/goods/44.jpg"
+      Image:"../../assets/images/goods/131.jpg"
     },
     {
       Name:"Раздел 4",
-      Image:"../../assets/images/goods/44.jpg"
+      Image:"../../assets/images/goods/124.jpg"
     },
     {
       Name:"Раздел 5",
-      Image:"../../assets/images/goods/44.jpg"
+      Image:"../../assets/images/goods/169.jpg"
     },
     {
       Name:"Раздел 6",
-      Image:"../../assets/images/goods/44.jpg"
-    },
-    {
-      Name:"Раздел 7",
-      Image:"../../assets/images/goods/44.jpg"
-    },
-    {
-      Name:"Раздел 8",
-      Image:"../../assets/images/goods/44.jpg"
-    },
-    {
-      Name:"Раздел 9",
-      Image:"../../assets/images/goods/44.jpg"
-    },
-    {
-      Name:"Раздел 10",
-      Image:"../../assets/images/goods/44.jpg"
-    },
-    {
-      Name:"Раздел 11",
-      Image:"../../assets/images/goods/44.jpg"
+      Image:"../../assets/images/goods/3.jpg"
     }
   ]
   constructor() { }
