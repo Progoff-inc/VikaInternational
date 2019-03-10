@@ -1,10 +1,9 @@
 .carousel-item{
     
-    div{
-        max-width: 600px;
-    }
+    height: 60vh;
+    padding: 10px;
     .sale-head{
-        font-size: 70px;
+        font-size: 50px;
         font-weight: 300;
         text-transform: uppercase;
         margin-bottom: 5px;
@@ -18,12 +17,66 @@
 .carousel{
     background:linear-gradient(to right, #eaeffe, #1841b9);
 }
+.carousel-next, .carousel-prev{
+    height: 100px;
+    width: 20px;
+    position: relative;
+    overflow: hidden;
+    &::before, &::after{
+        position: absolute;
+        top: 0;
+        content: '';
+        display: block;
+        height: 100%;
+        width: 1px;
+        
+    }
+}
+.carousel-next{
+    
+    &::before, &::after{
+        background-color: rgb(245, 245, 245);
+        right: 0;
+    }
+    &::before{
+        transform: rotate(-25deg);
+    }
+    &::after{
+        transform: rotate(25deg);
+    }
+
+}
+.carousel-prev{
+    
+    &::before, &::after{
+        background-color: rgb(61, 69, 190);
+        left: 0;
+    }
+    &::before{
+        transform: rotate(-25deg);
+    }
+    &::after{
+        transform: rotate(25deg);
+    }
+
+}
 
 @media(max-width:630px){
+    .carousel-next{
+    
+        &::before, &::after{
+            background-color: rgb(61, 69, 190);
+            right: 0;
+        }
+    
+    }
     .sale-head{
-        font-size: 15vw !important;
+        font-size: 10vw !important;
     }
     .sale-sm-head{
         font-size: 8vw;
+    }
+    .carousel-item{
+        height: unset
     }
 }
