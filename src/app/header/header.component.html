@@ -7,8 +7,8 @@
         <img src="../../assets/images/logo.png" alt="">
       </div>
       <div class="col-md-4 d-inline-flex justify-content-center justify-content-md-end align-items-center search">
-          <i class="fas fa-user mx-2 text-light"></i>
-          <i class="fas fa-shopping-cart mx-2 text-light cart">
+          <i class="fas fa-user mx-2 text-light" (click)="ms.open()"></i>
+          <a routerLink="/booking"><i class="fas fa-shopping-cart mx-2 text-light cart">
             <span *ngIf="gs.cart.length>0">{{gs.cart.length>9?'9+':gs.cart.length}}</span>
             <div *ngIf="gs.cart.length>0" class="cart-items">
               <h3>Корзина</h3>
@@ -29,7 +29,7 @@
                 <button type="button" class="btn btn-link text-danger" (click)="gs.clearCart()">Очистить</button>
               </div>
             </div>
-          </i>
+          </i></a>
           <form class="form-inline">
             
             <div class="form-group mx-sm-3 mb-2 d-flex">

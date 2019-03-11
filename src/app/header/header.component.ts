@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GoodsService } from '../products.service';
+import { GoodsService } from '../services/products.service';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,7 @@ import { GoodsService } from '../products.service';
 })
 export class HeaderComponent implements OnInit {
   showC=false;
-  constructor(public gs:GoodsService) { }
+  constructor(public gs:GoodsService, public ms:ModalService) { }
 
   ngOnInit() {
   }

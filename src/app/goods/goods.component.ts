@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GoodsService } from '../products.service';
+import { GoodsService } from '../services/products.service';
 
 @Component({
   selector: 'app-goods',
@@ -9,7 +9,7 @@ import { GoodsService } from '../products.service';
 export class GoodsComponent implements OnInit {
   
   
-  constructor(private gs:GoodsService) { }
+  constructor(public gs:GoodsService) { }
 
   ngOnInit() {
   }

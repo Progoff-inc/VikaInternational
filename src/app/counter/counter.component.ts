@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { GoodsService } from '../products.service';
+import { GoodsService } from '../services/products.service';
 
 @Component({
   selector: 'counter',

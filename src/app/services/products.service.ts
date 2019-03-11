@@ -1,4 +1,4 @@
-import { Good } from './goods/goods.component';
+import { Good } from '../goods/goods.component';
 const ph = "../../assets/images/sizors.png";
 const ph1 = "../../assets/images/goods/1.jpg";
 const ph2 = "../../assets/images/goods/2.jpg";
