@@ -1,15 +1,8 @@
-<div class="container py-2">
-  <form class="form">
-    <div class="row">
-      <div class="col-sm-12">
-        <h3 class="text-center">Форма оформления заказа</h3>
-      </div>
-      <div class="col-sm-4 offset-md-2">
-        11111111111111
-      </div>
-      <div class="col-sm-4 offset-md-2">
-        22222222222222
-      </div>
-    </div>
-  </form>
+<div class="container py-2" [ngSwitch]="curStep">
+  <h3 class="text-center">Форма оформления заказа</h3>
+  <booking-cart *ngSwitchCase="0" [parent]="vm"></booking-cart>
+  <booking-contact-info *ngSwitchCase="1" [parent]="vm"></booking-contact-info>
+  <booking-pay-delivery *ngSwitchCase="2" [parent]="vm"></booking-pay-delivery>
+  <booking-confirm *ngSwitchCase="3" [parent]="vm"></booking-confirm>
+  <booking-success *ngSwitchCase="4"></booking-success>
 </div>

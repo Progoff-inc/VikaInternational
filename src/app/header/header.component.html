@@ -9,10 +9,10 @@
       <div class="col-md-4 d-inline-flex justify-content-center justify-content-md-end align-items-center search">
           <i class="fas fa-user mx-2 text-light" (click)="ms.open()"></i>
           <a routerLink="/booking"><i class="fas fa-shopping-cart mx-2 text-light cart">
-            <span *ngIf="gs.cart.length>0">{{gs.cart.length>9?'9+':gs.cart.length}}</span>
-            <div *ngIf="gs.cart.length>0" class="cart-items">
+            <span *ngIf="gs.book.Cart.length>0">{{gs.book.Cart.length>9?'9+':gs.book.Cart.length}}</span>
+            <div *ngIf="gs.book.Cart.length>0" class="cart-items">
               <h3>Корзина</h3>
-              <div class="cart-item" *ngFor="let g of gs.cart">
+              <div class="cart-item" *ngFor="let g of gs.book.Cart">
                 <div>
                   <p>{{g.Good.Name}}</p>
                   <p>{{g.Good.Color}}</p>

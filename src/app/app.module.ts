@@ -22,6 +22,11 @@ import { CounterComponent } from './counter/counter.component';
 import { BookingComponent } from './booking/booking.component';
 import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './services/modal.service';
+import { BookingCartComponent } from './booking-cart/booking-cart.component';
+import { BookingPayDeliveryComponent } from './booking-pay-delivery/booking-pay-delivery.component';
+import { BookingConfirmComponent } from './booking-confirm/booking-confirm.component';
+import { BookingContactInfoComponent } from './booking-contact-info/booking-contact-info.component';
+import { BookingSuccessComponent } from './booking-success/booking-success.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,12 @@ import { ModalService } from './services/modal.service';
     ProductComponent,
     CounterComponent,
     BookingComponent,
-    ModalComponent
+    ModalComponent,
+    BookingCartComponent,
+    BookingPayDeliveryComponent,
+    BookingConfirmComponent,
+    BookingContactInfoComponent,
+    BookingSuccessComponent
   ],
   imports: [
     BrowserModule,

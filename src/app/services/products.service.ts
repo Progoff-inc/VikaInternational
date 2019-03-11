@@ -1,4 +1,5 @@
 import { Good } from '../goods/goods.component';
+import { Book } from '../booking/booking.component';
 const ph = "../../assets/images/sizors.png";
 const ph1 = "../../assets/images/goods/1.jpg";
 const ph2 = "../../assets/images/goods/2.jpg";
@@ -6,7 +7,7 @@ const ph3 = "../../assets/images/goods/3.jpg";
 const ph4 = "../../assets/images/goods/4.jpg";
 
 export class GoodsService{
-    cart:CartItem[] = [];
+    book:Book = new Book();
     goods:Good[] = [
         {
           Id:1, 
@@ -115,24 +116,24 @@ export class GoodsService{
         return this.goods.find(x => x.Id==id);
     }
     addCartProduct(good:Good){
-      let i = this.cart.map(x => x.Good.Id).indexOf(good.Id);
+      let i = this.book.Cart.map(x => x.Good.Id).indexOf(good.Id);
       if(i>-1){
-        this.cart[i].Count+=1
+        this.book.Cart[i].Count+=1
       }
       else{
-        this.cart.unshift({Good:good, Count:1});
+        this.book.Cart.unshift({Good:good, Count:1});
       }
       
     }
     clearCart(){
       if(confirm("Очистить корзину?")){
-        this.cart = [];
+        this.book.Cart = [];
       }
       
     }
     getSum(){
       let sum = 0;
-      this.cart.forEach(c => {
+      this.book.Cart.forEach(c => {
         sum +=c.Count*c.Good.Price;
       })
       return sum;
