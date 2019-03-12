@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
   showCart(){
-    if(this.gs.cart.length>0){
+    if(this.gs.book.Cart.length>0){
       
       this.showC = !this.showC
     }
