@@ -15,7 +15,7 @@ export class CounterComponent implements OnInit {
   plus(){
     
     this.g.Count+=1;
-    console.log(this.gs.cart[0].Count);
+    console.log(this.gs.book.Cart[0].Count);
   }
   minus(){
     this.g.Count-=1;

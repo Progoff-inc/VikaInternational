@@ -27,6 +27,7 @@ import { BookingPayDeliveryComponent } from './booking-pay-delivery/booking-pay-
 import { BookingConfirmComponent } from './booking-confirm/booking-confirm.component';
 import { BookingContactInfoComponent } from './booking-contact-info/booking-contact-info.component';
 import { BookingSuccessComponent } from './booking-success/booking-success.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { BookingSuccessComponent } from './booking-success/booking-success.compo
     BookingPayDeliveryComponent,
     BookingConfirmComponent,
     BookingContactInfoComponent,
-    BookingSuccessComponent
+    BookingSuccessComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,
