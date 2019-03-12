@@ -1,0 +1,27 @@
+<form [formGroup]="userForm">
+  <h3 class="text-center" style="font-weight:400">Регистрация</h3>
+  <div class="form-group">
+    <label for="na" [ngClass]="{'text-danger':(submitted && f.Name.errors)}">Ваше имя</label>
+    <input [ngClass]="{'border-danger':(submitted && f.Name.errors)}" formControlName="Name" class="form-control" id="na" placeholder="Ваше имя">
+    <small  class="form-text text-danger" *ngIf="submitted && f.Name.errors && f.Name.errors.required">Введите Ваше имя</small>
+  </div>
+  <div class="form-group">
+      <label for="exampleInputEmail1" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>
+      <input [ngClass]="{'border-danger':(submitted && f.Email.errors)}" formControlName="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ваш email">
+      <small  class="form-text text-danger" *ngIf="submitted && f.Email.errors && f.Email.errors.required">Введите email</small>
+      <small id="emailHelp1" class="form-text text-danger" *ngIf="submitted && f.Email.errors && f.Email.errors.email">Некорректный email</small>
+  </div>
+  <div class="form-group">
+      <label for="exampleInputPassword1" [ngClass]="{'text-danger':(submitted && f.Password && f.Password.errors)}">Пароль</label>
+      <input [ngClass]="{'border-danger':(submitted && f.Password.errors)}" formControlName="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль" #p>
+      <small  class="form-text text-danger" *ngIf="submitted && f.Password.errors && f.Password.errors.required">Введите пароль</small>
+  </div>
+  <div class="form-group">
+      <label for="exampleInputPassword" [ngClass]="{'text-danger':(submitted && (v.Password != v.PasswordConfirm || f.Password.errors))}">Подтвердите пароль</label>
+      <input [ngClass]="{'border-danger':(submitted && (v.Password != v.PasswordConfirm || f.Password.errors))}" type="password" formControlName="PasswordConfirm" class="form-control" id="exampleInputPassword" placeholder="Подтверждение пароля" #pc>
+      <small  class="form-text text-danger" *ngIf="submitted && f.Password.errors && f.Password.errors.required">Введите подтверждение пароля</small>
+      <small  class="form-text text-danger" *ngIf="submitted && v.Password != v.PasswordConfirm">Пороли не совпадают</small>
+    </div>
+  <button type="submit" class="btn btn-primary" (click)="Auth()">Зарегистрироваться</button>
+  <button type="submit" class="btn btn-link" (click)="enter()">Вход</button>
+</form>

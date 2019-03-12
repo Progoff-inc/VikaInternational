@@ -19,7 +19,6 @@ export class ModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.modal);
     this.ms.modal = this.modal;
     
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GoodsService } from '../services/products.service';
 import { ModalService } from '../services/modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ import { ModalService } from '../services/modal.service';
 })
 export class HeaderComponent implements OnInit {
   showC=false;
-  constructor(public gs:GoodsService, public ms:ModalService) { }
+  constructor(public gs:GoodsService, public ms:ModalService, private router:Router) { }
 
   ngOnInit() {
   }
@@ -24,6 +25,13 @@ export class HeaderComponent implements OnInit {
   }
   hideCart(){
     this.showC = false;
+  }
+  Profile(){
+    if(localStorage.getItem('user')){
+      this.router.navigate(['/user-profile']);
+    }else{
+      this.ms.open('enter');
+    }
   }
 
 }

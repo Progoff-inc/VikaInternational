@@ -28,6 +28,10 @@ import { BookingConfirmComponent } from './booking-confirm/booking-confirm.compo
 import { BookingContactInfoComponent } from './booking-contact-info/booking-contact-info.component';
 import { BookingSuccessComponent } from './booking-success/booking-success.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { AuthFormComponent } from './auth-form/auth-form.component';
+import { EnterFormComponent } from './enter-form/enter-form.component';
+import { UserService } from './services/user.service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +52,10 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
     BookingConfirmComponent,
     BookingContactInfoComponent,
     BookingSuccessComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    AuthFormComponent,
+    EnterFormComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +65,7 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [GoodsService, FormBuilder, HttpClient, ModalService, BsModalService],
+  providers: [GoodsService, UserService, FormBuilder, HttpClient, ModalService, BsModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
