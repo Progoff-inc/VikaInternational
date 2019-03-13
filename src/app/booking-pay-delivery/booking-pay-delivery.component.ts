@@ -9,9 +9,9 @@ import { GoodsService } from '../services/products.service';
 })
 export class BookingPayDeliveryComponent implements OnInit {
   @Input() parent;
+  deliv:boolean;
   constructor(public gs:GoodsService) { }
 
   ngOnInit() {
   }
-
 }
