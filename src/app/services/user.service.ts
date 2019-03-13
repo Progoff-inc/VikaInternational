@@ -1,10 +1,9 @@
 import { Good } from '../goods/goods.component';
-import { OnInit } from '@angular/core';
+// import { OnInit } from '@angular/core';
 
-export class UserService implements OnInit{
+export class UserService{
     public user:User;
-
-    ngOnInit(){
+    constructor(){
         if(localStorage.getItem('user')){
             this.user = JSON.parse(localStorage.getItem('user'));
         }

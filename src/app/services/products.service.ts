@@ -1,5 +1,6 @@
 import { Good } from '../goods/goods.component';
 import { Book } from '../booking/booking.component';
+// import { OnInit } from '@angular/core';
 const ph = "../../assets/images/sizors.png";
 const ph1 = "../../assets/images/goods/1.jpg";
 const ph2 = "../../assets/images/goods/2.jpg";
@@ -111,7 +112,11 @@ export class GoodsService{
   
         
       ];
-
+    constructor(){
+      if(sessionStorage.getItem('Cart')){
+        this.book.Cart = JSON.parse(sessionStorage.getItem('Cart'));
+      }
+    }
     getProduct(id){
         return this.goods.find(x => x.Id==id);
     }
@@ -119,9 +124,12 @@ export class GoodsService{
       let i = this.book.Cart.map(x => x.Good.Id).indexOf(good.Id);
       if(i>-1){
         this.book.Cart[i].Count+=1
+        sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
       }
       else{
         this.book.Cart.unshift({Good:good, Count:1});
+        sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
+        console.log(sessionStorage.getItem('Cart'));
       }
       
     }

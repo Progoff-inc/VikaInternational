@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../services/modal.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService, User } from '../services/user.service';
-import { userInfo } from 'os';
 
 @Component({
   selector: 'auth-form',
