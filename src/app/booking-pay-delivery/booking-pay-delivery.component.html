@@ -1,10 +1,10 @@
-<form>
+<form class="form my-3 mx-3 py-3 px-3">
   <p>Выбор способа доставки</p>
   <div class="form-check">
     <input [(ngModel)]="deliv" [ngModelOptions]="{standalone: true}" class="form-check-input" type="radio" name="Radios" id="Pickup" value="">
     <label class="form-check-label" for="Pickup">Самовывоз</label>
   </div>
-  <div class="form-check">
+  <div class="form-check mb-2">
     <input [(ngModel)]="deliv" [ngModelOptions]="{standalone: true}" class="form-check-input" type="radio" name="Radios" id="Delivering" value="delivery">
     <label class="form-check-label" for="Delivering">Доставка</label>
   </div>
@@ -28,11 +28,11 @@
   </div>
   <p>Выбор способа оплаты</p>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="Radios" id="Cash" value="cash">
+    <input class="form-check-input" type="radio" name="Radioc" id="Cash" value="cash">
     <label class="form-check-label" for="Cash">Наличные</label>
   </div>
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="Radios" id="Card" value="card">
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="radio" name="Radioc" id="Card" value="card">
     <label class="form-check-label" for="Card">Банковская карта</label>
   </div>
   <button type="submit" class="btn btn-primary" (click)="parent.nextStep()">Далее</button>
