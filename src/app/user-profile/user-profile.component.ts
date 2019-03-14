@@ -18,7 +18,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.us.user.Deals[0].Goods[0].Count)
 
   }
   showModal(){

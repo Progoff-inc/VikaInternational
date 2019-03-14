@@ -27,6 +27,15 @@ export class Book{
   User:BookingUser;
   DeliverType:DeliverTypes;
   PayType:PayTypes
+
+  plus(g){
+    let i = this.Cart.find(x => x.Good.Id==g.Good.Id);
+    i.Count++;
+  }
+  minus(g){
+    let i = this.Cart.find(x => x.Good.Id==g.Good.Id);
+    i.Count--;
+  }
 }
 
 export class BookingUser{

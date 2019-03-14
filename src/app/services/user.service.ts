@@ -1,6 +1,7 @@
 import { Good } from '../goods/goods.component';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { CartItem } from './products.service';
 // import { OnInit } from '@angular/core';
 
 @Injectable()
@@ -125,11 +126,5 @@ export class Deal{
     ShowGoods?:boolean; //не приходит с базы не надо нигде заполнять
     
     User:User;
-    Goods:DealGood[];
-}
-
-export class DealGood{
-    
-    Count:number;
-    Good:Good;
+    Goods:CartItem[];
 }

@@ -8,17 +8,11 @@ import { GoodsService } from '../services/products.service';
 })
 export class CounterComponent implements OnInit {
   @Input("Count") g:any;
+  @Input("Item") i:any;
   constructor(private gs:GoodsService) { }
 
   ngOnInit() {
   }
-  plus(){
-    
-    this.g.Count+=1;
-    console.log(this.gs.book.Cart[0].Count);
-  }
-  minus(){
-    this.g.Count-=1;
-  }
+  
 
 }

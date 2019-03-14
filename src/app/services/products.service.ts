@@ -145,9 +145,13 @@ export class GoodsService{
       })
       return sum;
     }
+    
 }
 
 export class CartItem{
   Count:number;
   Good:Good;
+
+  
+
 }

@@ -8,7 +8,7 @@
       </div>
       <div class="col-md-4 d-inline-flex justify-content-center justify-content-md-end align-items-center search">
           <i class="fas fa-user mx-2 text-light" (click)="Profile()" style="cursor:pointer"></i>
-          <a routerLink="/booking"><i class="fas fa-shopping-cart mx-2 text-light cart">
+          <span class="cart"><a routerLink="/booking"><i class="fas fa-shopping-cart mx-2 text-light"></i></a>
             <span *ngIf="gs.book.Cart.length>0">{{gs.book.Cart.length>9?'9+':gs.book.Cart.length}}</span>
             <div *ngIf="gs.book.Cart.length>0" class="cart-items">
               <h3>Корзина</h3>
@@ -19,7 +19,7 @@
                 </div>
                 <div style="text-align:right">
                   <span >{{g.Good.Price * g.Count}}₽</span>
-                  <counter [Count]="g"></counter>
+                  <counter [Count]="gs.book" [Item]="g"></counter>
                 </div>
               </div>
               <p class="mt-4" style="font-weight: 400; font-size:large">Сумма заказа: {{gs.getSum()}}₽</p>
@@ -28,7 +28,7 @@
                 <button type="button" class="btn btn-link text-danger" (click)="gs.clearCart()">Очистить</button>
               </div>
             </div>
-          </i></a>
+          </span>
           <form class="form-inline">
             
             <div class="form-group mx-sm-3 mb-2 d-flex">
