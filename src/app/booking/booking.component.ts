@@ -26,7 +26,6 @@ export class Book{
   Cart:CartItem[] = [];
   User:BookingUser;
   DeliverType:DeliverTypes;
-<<<<<<< HEAD
   PayType:PayTypes
 
   plus(g){
@@ -37,9 +36,6 @@ export class Book{
     let i = this.Cart.find(x => x.Good.Id==g.Good.Id);
     i.Count--;
   }
-=======
-  PayType:PayTypes;
->>>>>>> dac84ee5d41c544dedf29cde5012377edea751fe
 }
 
 export class BookingUser{
