@@ -110,7 +110,7 @@ export class UserService{
 
 export class User{
     Id:number;
-    Name?:string;
+    Name:string;
     Email:string;
     Password:string;
     Phone?:string;

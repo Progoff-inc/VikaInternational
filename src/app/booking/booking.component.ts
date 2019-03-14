@@ -26,7 +26,7 @@ export class Book{
   Cart:CartItem[] = [];
   User:BookingUser;
   DeliverType:DeliverTypes;
-  PayType:PayTypes
+  PayType:PayTypes;
 }
 
 export class BookingUser{
