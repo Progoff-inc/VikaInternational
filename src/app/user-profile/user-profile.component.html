@@ -1,3 +1,22 @@
-<p>
-  user-profile works!
-</p>
+<div *ngIf="us.user" class="container bg-light d-flex flex-column">
+  <h3>{{us.user.Name}}</h3>
+  <div class="main-info">
+    <h4>Контактная информация</h4>
+    <div class="d-flex">
+      <div class="form-group mr-0 mr-sm-5 flex-wrap">
+        <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>
+        <p id="em">{{us.user.Email}}</p>
+      </div>
+      <div class="form-group">
+        <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Телефон</label>
+        <p id="em">{{us.user.Phone?us.user.Phone:'Не указан'}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="deals">
+    <h4>Заказы</h4>
+    <div class="deal" *ngFor="let d of us.user.Deals">
+      Заказ №{{d.Id}}
+    </div>
+  </div>
+</div>
