@@ -15,13 +15,3 @@ export class GoodsComponent implements OnInit {
   }
 
 }
-
-export interface Good{
-  Id:number;
-  Name:string;
-  Description:string;
-  Price:number;
-  Color:string;
-  Image:string;
-  Photoes?:string[];
-}

@@ -33,7 +33,7 @@ export class AuthFormComponent implements OnInit {
       return;
     }
     let u = new User();
-    u.Id = 1;
+    u.UserId = 1;
     u.Email = this.userForm.value.Email;
     u.Name = this.userForm.value.Name;
     u.Password = this.userForm.value.Password;

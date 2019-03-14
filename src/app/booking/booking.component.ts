@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CartItem, GoodsService } from '../services/products.service';
+import { CartItem } from '../services/models';
+import { GoodsService } from '../services/products.service';
 
 @Component({
   selector: 'app-booking',
@@ -26,20 +27,19 @@ export class Book{
   Cart:CartItem[] = [];
   User:BookingUser;
   DeliverType:DeliverTypes;
-<<<<<<< HEAD
   PayType:PayTypes
 
   plus(g){
-    let i = this.Cart.find(x => x.Good.Id==g.Good.Id);
+    let i = this.Cart.find(x => x.Good.GoodId==g.Good.GoodId);
     i.Count++;
+    sessionStorage.setItem('Cart',JSON.stringify(this.Cart));
   }
   minus(g){
-    let i = this.Cart.find(x => x.Good.Id==g.Good.Id);
+    let i = this.Cart.find(x => x.Good.GoodId==g.Good.GoodId);
     i.Count--;
+    sessionStorage.setItem('Cart',JSON.stringify(this.Cart));
+    
   }
-=======
-  PayType:PayTypes;
->>>>>>> dac84ee5d41c544dedf29cde5012377edea751fe
 }
 
 export class BookingUser{

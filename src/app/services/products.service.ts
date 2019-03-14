@@ -1,4 +1,4 @@
-import { Good } from '../goods/goods.component';
+import { Good } from './models';
 import { Book } from '../booking/booking.component';
 // import { OnInit } from '@angular/core';
 const ph = "../../assets/images/sizors.png";
@@ -11,7 +11,7 @@ export class GoodsService{
     book:Book = new Book();
     goods:Good[] = [
         {
-          Id:1, 
+          GoodId:1, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:720,
@@ -22,7 +22,7 @@ export class GoodsService{
           ]
         },
         {
-          Id:2, 
+          GoodId:2, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:520,
@@ -33,7 +33,7 @@ export class GoodsService{
           ]
         },
         {
-          Id:3, 
+          GoodId:3, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:500,
@@ -44,7 +44,7 @@ export class GoodsService{
           ]
         },
         {
-          Id:4, 
+          GoodId:4, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:720,
@@ -55,7 +55,7 @@ export class GoodsService{
           ]
         },
         {
-          Id:5, 
+          GoodId:5, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:440,
@@ -66,7 +66,7 @@ export class GoodsService{
           ]
         },
         {
-          Id:6, 
+          GoodId:6, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:440,
@@ -77,7 +77,7 @@ export class GoodsService{
           ]
         },
         {
-          Id:7, 
+          GoodId:7, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:440,
@@ -88,7 +88,7 @@ export class GoodsService{
           ]
         },
         {
-          Id:8, 
+          GoodId:8, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:440,
@@ -99,7 +99,7 @@ export class GoodsService{
           ]
         },
         {
-          Id:9, 
+          GoodId:9, 
           Name:"Пинцет для наращивания ресниц", 
           Description:"",
           Price:440,
@@ -118,10 +118,10 @@ export class GoodsService{
       }
     }
     getProduct(id){
-        return this.goods.find(x => x.Id==id);
+        return this.goods.find(x => x.GoodId==id);
     }
     addCartProduct(good:Good){
-      let i = this.book.Cart.map(x => x.Good.Id).indexOf(good.Id);
+      let i = this.book.Cart.map(x => x.Good.GoodId).indexOf(good.GoodId);
       if(i>-1){
         this.book.Cart[i].Count+=1
         sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
@@ -135,6 +135,7 @@ export class GoodsService{
     clearCart(){
       if(confirm("Очистить корзину?")){
         this.book.Cart = [];
+        sessionStorage.removeItem('Cart');
       }
       
     }
@@ -148,10 +149,5 @@ export class GoodsService{
     
 }
 
-export class CartItem{
-  Count:number;
-  Good:Good;
 
-  
 
-}

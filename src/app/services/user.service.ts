@@ -1,7 +1,7 @@
-import { Good } from '../goods/goods.component';
+import { Good } from './models';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { CartItem } from './products.service';
+import { CartItem } from './models';
 // import { OnInit } from '@angular/core';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class UserService{
         this.user = user;
         this.user.Deals.push(
             {
-                Id:1,
+                DealId:1,
                 UserId:1,
                 CreateDate:new Date(),
                 User:null,
@@ -31,7 +31,7 @@ export class UserService{
                     {
                         Count:1,
                         Good:{
-                            Id:1, 
+                            GoodId:1, 
                             Name:"Пинцет для наращивания ресниц", 
                             Description:"",
                             Price:720,
@@ -46,7 +46,7 @@ export class UserService{
                     {
                         Count:1,
                         Good:{
-                            Id:2, 
+                            GoodId:2, 
                             Name:"Пинцет для наращивания ресниц", 
                             Description:"",
                             Price:520,
@@ -61,7 +61,7 @@ export class UserService{
                 ]
             },
             {
-                Id:2,
+                DealId:2,
                 UserId:1,
                 CreateDate:new Date(),
                 User:null,
@@ -69,7 +69,7 @@ export class UserService{
                     {
                         Count:1,
                         Good:{
-                            Id:1, 
+                            GoodId:1, 
                             Name:"Пинцет для наращивания ресниц", 
                             Description:"",
                             Price:720,
@@ -84,7 +84,7 @@ export class UserService{
                     {
                         Count:1,
                         Good:{
-                            Id:2, 
+                            GoodId:2, 
                             Name:"Пинцет для наращивания ресниц", 
                             Description:"",
                             Price:520,
@@ -110,7 +110,7 @@ export class UserService{
 }
 
 export class User{
-    Id:number;
+    UserId:number;
     Name:string;
     Email:string;
     Password:string;
@@ -120,7 +120,7 @@ export class User{
 }
 
 export class Deal{
-    Id:number;
+    DealId:number;
     UserId:number;
     CreateDate:Date;
     ShowGoods?:boolean; //не приходит с базы не надо нигде заполнять

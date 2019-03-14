@@ -29,8 +29,9 @@ CREATE TABLE IF NOT EXISTS users (
 	UserId int(20) PRIMARY KEY AUTO_INCREMENT,
     Name varchar(255),
     Email varchar(255) UNIQUE,
-    Phone varchar(255) UNIQUE,
+    Phone varchar(255),
     Password varchar(255),
+    IsAdmin bit DEFAULT 0,
     INDEX em_p_IX (Email, Password) 
 );
 
