@@ -1,39 +1,47 @@
-<form class="form my-3 mx-3 py-3 px-3">
+<form class="form my-3 mx-3 py-3 px-3" [formGroup]="PayDelForm">
   <p>Выбор способа доставки</p>
   <div class="form-check">
-    <input [(ngModel)]="deliv" [ngModelOptions]="{standalone: true}" class="form-check-input" type="radio" name="Radios" id="Pickup" value="">
+    <input formControlName="DeliverTypes" class="form-check-input" type="radio" name="DeliverTypes" id="Pickup" value="pickup">
     <label class="form-check-label" for="Pickup">Самовывоз</label>
   </div>
   <div class="form-check mb-2">
-    <input [(ngModel)]="deliv" [ngModelOptions]="{standalone: true}" class="form-check-input" type="radio" name="Radios" id="Delivering" value="delivery">
+    <input formControlName="DeliverTypes" class="form-check-input" type="radio" name="DeliverTypes" id="Delivering" value="delivery">
     <label class="form-check-label" for="Delivering">Доставка</label>
   </div>
-  <div *ngIf="deliv=='delivery'">
-    <div class="form-group">
-      <label for="InputCountry">Страна</label>
-      <input type="text" class="form-control" id="InputCountry" placeholder="Страна">
-    </div>
-    <div class="form-group">
-      <label for="InputCity">Город</label>
-      <input type="text" class="form-control" id="InputCity" placeholder="Город">
-    </div>
-    <div class="form-group">
-      <label for="InputAddress">Улица, дом, квартира</label>
-      <input type="text" class="form-control" id="InputAddress" placeholder="Адрес">
-    </div>
-    <div class="form-group">
-      <label for="InputPostIndex">Почтовый индекс</label>
-      <input type="number" class="form-control" id="InputPostIndex" placeholder="Почтовый индекс">
-    </div>
+  <div *ngIf="f.DeliverTypes.value=='delivery'">
+    <form [formGroup]="AddressForm">
+      <div class="form-group">
+        <label for="InputCountry" [ngClass]="{'text-danger':(submittedAddress && g.Country.errors)}">Страна</label>
+        <input type="text" [ngClass]="{'border-danger':(submittedAddress && g.Country.errors)}" formControlName="Country" class="form-control" id="InputCountry" placeholder="Страна">
+        <small class="form-text text-danger" *ngIf="submittedAddress && g.Country.errors && g.Country.errors.required">Введите название страны</small>
+      </div>
+      <div class="form-group">
+        <label for="InputCity" [ngClass]="{'text-danger':(submittedAddress && g.City.errors)}">Город</label>
+        <input type="text" [ngClass]="{'border-danger':(submittedAddress && g.City.errors)}" formControlName="City" class="form-control" id="InputCity" placeholder="Город">
+        <small class="form-text text-danger" *ngIf="submittedAddress && g.City.errors && g.City.errors.required">Введите название города</small>
+      </div>
+      <div class="form-group">
+        <label for="InputAddress" [ngClass]="{'text-danger':(submittedAddress && g.Address.errors)}">Улица, дом, квартира</label>
+        <input type="text" [ngClass]="{'border-danger':(submittedAddress && g.Address.errors)}" formControlName="Address" class="form-control" id="InputAddress" placeholder="Адрес">
+        <small class="form-text text-danger" *ngIf="submittedAddress && g.Address.errors && g.Address.errors.required">Введите адрес</small>
+      </div>
+      <div class="form-group">
+        <label for="InputPostIndex" [ngClass]="{'text-danger':(submittedAddress && g.PostIndex.errors)}">Почтовый индекс</label>
+        <input type="number" [ngClass]="{'border-danger':(submittedAddress && g.PostIndex.errors)}" formControlName="PostIndex" class="form-control" id="InputPostIndex" placeholder="Почтовый индекс">
+        <small class="form-text text-danger" *ngIf="submittedAddress && g.PostIndex.errors && g.PostIndex.errors.required">Введите почтовый индекс</small>
+      </div>
+    </form>
   </div>
+  <small class="form-text text-danger pb-2" *ngIf="submitted && f.DeliverTypes.errors && f.DeliverTypes.errors.required">Выберите способ доставки</small>
   <p>Выбор способа оплаты</p>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="Radioc" id="Cash" value="cash">
+    <input formControlName="PayTypes" class="form-check-input" type="radio" name="PayTypes" id="Cash" value="cash">
     <label class="form-check-label" for="Cash">Наличные</label>
   </div>
   <div class="form-check mb-3">
-    <input class="form-check-input" type="radio" name="Radioc" id="Card" value="card">
+    <input formControlName="PayTypes" class="form-check-input" type="radio" name="PayTypes" id="Card" value="card">
     <label class="form-check-label" for="Card">Банковская карта</label>
   </div>
-  <button type="submit" class="btn btn-primary" (click)="parent.nextStep()">Далее</button>
+  <small class="form-text text-danger pb-3" *ngIf="submitted && f.PayTypes.errors && f.PayTypes.errors.required">Выберите способ оплаты</small>
+  <button type="submit" class="btn btn-primary" (click)="nextPage()">Далее</button>
 </form>
