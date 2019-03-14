@@ -129,7 +129,6 @@ export class GoodsService{
       else{
         this.book.Cart.unshift({Good:good, Count:1});
         sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
-        console.log(sessionStorage.getItem('Cart'));
       }
       
     }

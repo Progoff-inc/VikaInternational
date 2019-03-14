@@ -1,3 +1,67 @@
-<p>
-  booking-confirm works!
-</p>
+<div class="cart-item" *ngFor="let g of gs.book.Cart">
+  <div class="justify-content-center">
+    <img class="img-s" src="{{g.Good.Image}}">
+  </div>
+  <div>
+    <p>{{g.Good.Name}}</p>
+  </div>
+  <div>
+    <p>{{g.Good.Color}}</p>
+  </div>
+  <div style="text-align:right">
+    <span >{{g.Good.Price * g.Count}}₽</span>
+    <p>Количество: {{g.Count}}</p>
+  </div>
+</div>
+<p class="mt-4" style="font-weight: 400; font-size:large">Сумма заказа: {{gs.getSum()}}₽</p>
+<form class="form my-3 py-3 px-3">
+  <div class="form-group">
+    <label for="InputName">Имя</label>
+    <input type="text" class="form-control" id="InputName" placeholder="Ваше имя">
+  </div>
+  <div class="form-group">
+    <label for="InputEmail">Email</label>
+    <input type="email" class="form-control" id="InputEmail" placeholder="Ваш Email">
+  </div>
+  <div class="form-group">
+    <label for="InputPhone">Телефон</label>
+    <input type="number" class="form-control" id="InputPhone" placeholder="Ваш телефон">
+  </div>
+  <p>Выбор способа доставки</p>
+  <div class="form-check">
+    <input [(ngModel)]="deliv" [ngModelOptions]="{standalone: true}" class="form-check-input" type="radio" name="Radios" id="Pickup" value="">
+    <label class="form-check-label" for="Pickup">Самовывоз</label>
+  </div>
+  <div class="form-check  mb-2">
+    <input [(ngModel)]="deliv" [ngModelOptions]="{standalone: true}" class="form-check-input" type="radio" name="Radios" id="Delivering" value="delivery">
+    <label class="form-check-label" for="Delivering">Доставка</label>
+  </div>
+  <div *ngIf="deliv=='delivery'">
+    <div class="form-group">
+      <label for="InputCountry">Страна</label>
+      <input type="text" class="form-control" id="InputCountry" placeholder="Страна">
+    </div>
+    <div class="form-group">
+      <label for="InputCity">Город</label>
+      <input type="text" class="form-control" id="InputCity" placeholder="Город">
+    </div>
+    <div class="form-group">
+      <label for="InputAddress">Улица, дом, квартира</label>
+      <input type="text" class="form-control" id="InputAddress" placeholder="Адрес">
+    </div>
+    <div class="form-group">
+      <label for="InputPostIndex">Почтовый индекс</label>
+      <input type="number" class="form-control" id="InputPostIndex" placeholder="Почтовый индекс">
+    </div>
+  </div>
+  <p>Выбор способа оплаты</p>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="Radioс" id="Cash" value="cash">
+    <label class="form-check-label" for="Cash">Наличные</label>
+  </div>
+  <div class="form-check  mb-2">
+    <input class="form-check-input" type="radio" name="Radioс" id="Card" value="card">
+    <label class="form-check-label" for="Card">Банковская карта</label>
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="parent.nextStep()">Далее</button>
+</form>
