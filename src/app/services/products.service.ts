@@ -138,9 +138,9 @@ export class GoodsService{
       }
       
     }
-    getSum(){
+    getSum(d = this.book.Cart){
       let sum = 0;
-      this.book.Cart.forEach(c => {
+      d.forEach(c => {
         sum +=c.Count*c.Good.Price;
       })
       return sum;

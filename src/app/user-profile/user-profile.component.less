@@ -1,15 +1,16 @@
 h4{
-    font-weight: 300;
+    font-weight: 350;
     font-size: 30px;
 }
+
 h3{
     font-weight: 400;
-    font-size: 35px;
+    font-size: 40px;
     margin: 10px 0;
 } 
-h4{
+h5{
     font-weight: 300;
-    font-size: 30px;
+    font-size: 25px;
 }
 label{
     font-weight: 300;
@@ -18,4 +19,41 @@ label{
 }
 p{
     font-size: 18px;
+}
+.deal{
+    &:not(:last-child){
+        border-bottom: 1px solid lightgrey;
+    }
+    margin-bottom: 20px;
+    margin-left: 10px;
+    padding-bottom: 10px;
+}
+.good{
+    margin-bottom: 10px;
+}
+.line {
+    margin-top: 10px;
+    font-size: 12pt;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    span {
+        background-color: #ffffff;
+        position: relative;
+        z-index: 1;
+        padding: 0px 8px;
+        cursor: pointer;
+        color: rgb(138, 138, 138);
+    }
+    &:after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 1px;
+        background-color: rgb(236, 236, 236);
+        position: absolute;
+        top: 50%;
+        margin-top: -1px;
+        z-index: 0;
+    }
 }

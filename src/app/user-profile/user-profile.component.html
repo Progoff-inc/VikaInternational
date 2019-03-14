@@ -1,11 +1,15 @@
-<div *ngIf="us.user" class="container bg-light d-flex flex-column">
-  <h3>{{us.user.Name}}</h3>
+<div *ngIf="us.user" class="container bg-light d-flex flex-column mt-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <h3>{{us.user.Name}}</h3>
+    <button class="btn btn-link text-danger" (click)="LogOut()">Выйти</button>
+  </div>
+  
   <div class="main-info">
     <h4>Контактная информация</h4>
     <div class="d-flex">
       <div class="form-group mr-0 mr-sm-5 flex-wrap">
         <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>
-        <p id="em">{{us.user.Email}}</p>
+        <p id="em">{{us.user.Email?us.user.Email:'Не указан'}}</p>
       </div>
       <div class="form-group">
         <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Телефон</label>
@@ -14,9 +18,26 @@
     </div>
   </div>
   <div class="deals">
-    <h4>Заказы</h4>
-    <div class="deal" *ngFor="let d of us.user.Deals">
-      Заказ №{{d.Id}}
+    <h4 class="mb-4">Заказы</h4>
+    <div class="deal" *ngFor="let d of us.user.Deals; ">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5>Заказ №{{d.Id}}</h5>
+        <span>{{d.CreateDate | date:'dd.MM.yyyy HH:mm:ss'}}</span>
+      </div>
+      <p  class="line" ><span (click)="showGoods(d)">Товары <i class="fa" [ngClass] = "{'fa-angle-down':!d.ShowGoods, ' fa-angle-up':d.ShowGoods}"></i></span></p>
+      <ol class="goods" *ngIf="d.ShowGoods">
+        <li class="good" *ngFor="let g of d.Goods">
+          <div class="d-flex flex-column mb-1">
+            <a routerLink="/product/{{g.Good.Id}}"><label>{{g.Good.Name}}</label></a>
+          </div>
+          <div class="d-flex flex-column">
+            <p class="my-1">Количество: {{g.Count}}</p>
+            <p class="my-1">Цена: {{g.Good.Price}}₽</p>
+          </div>
+          
+        </li>
+      </ol>
+      <h5>Сумма: {{gs.getSum(d.Goods)}}₽</h5>
     </div>
   </div>
 </div>
