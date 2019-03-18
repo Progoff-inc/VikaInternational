@@ -9,7 +9,7 @@ export class HomeComponent implements OnInit {
   sections:Section[] = [
     {
       Name:"Пинцеты для наращивания ресниц",
-      Image:"../../assets/images/goods/7.jpg"
+      Image:"../../assets/images/goods/10.jpg"
     },
     {
       Name:"Раздел 2",

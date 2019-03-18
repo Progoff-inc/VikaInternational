@@ -9,15 +9,14 @@
         <div class="photoes" *ngIf="good.Photoes.length>0">
           <img src="{{p}}" class="photo" *ngFor="let p of good.Photoes" (click)=choosePhoto(p)>
         </div>
+        <h6>Описание: {{good.Description}}</h6>
         <h4>Цвет: {{good.Color}}</h4>
         <h4>Цена: {{good.Price}}<i style="font-size: 20px" class="fas fa-ruble-sign"></i></h4>
         <div>
           <button  class="btn btn-primary mr-2" (click)="gs.addCartProduct(good)">Купить</button>
+          <a routerLink="/goods" class="btn btn-info">Назад</a>
         </div>
-        
       </div>
     </div>
-    
   </div>
-  <p>{{good.Description}}</p>
 </div>
