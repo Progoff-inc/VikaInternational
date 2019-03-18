@@ -15,7 +15,6 @@ export class UserProfileComponent implements OnInit {
       if(!this.us.user){
         this.showModal();
       }
-      console.log(this.us.user);
   }
 
   ngOnInit() {
