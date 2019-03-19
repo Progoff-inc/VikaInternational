@@ -32,6 +32,7 @@ import { AuthFormComponent } from './auth-form/auth-form.component';
 import { EnterFormComponent } from './enter-form/enter-form.component';
 import { UserService } from './services/user.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ChangeInfoComponent } from './change-info/change-info.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ProgressBarComponent,
     AuthFormComponent,
     EnterFormComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ChangeInfoComponent
   ],
   imports: [
     BrowserModule,

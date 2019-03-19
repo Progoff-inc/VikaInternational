@@ -30,6 +30,13 @@ export class UserProfileComponent implements OnInit {
   showGoods(d){
     d.ShowGoods = !d.ShowGoods; 
   }
-  
+  changeInfo(){
+    let change = {
+      UserId:this.us.user.UserId,
+      Email:this.us.user.Email,
+      Phone:this.us.user.Phone
+    }
+    this.ms.open("change", change);
+  }
 
 }

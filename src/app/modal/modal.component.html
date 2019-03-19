@@ -3,6 +3,7 @@
   <div class="p-3">
     <auth-form *ngIf="ms.type=='auth'"></auth-form>
     <enter-form *ngIf="ms.type=='enter'"></enter-form>
+    <change-info *ngIf="ms.type=='change'" [change]="ms.inpt"></change-info>
   </div>
   
   

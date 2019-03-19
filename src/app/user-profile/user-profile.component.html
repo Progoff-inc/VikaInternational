@@ -5,7 +5,8 @@
   </div>
   
   <div class="main-info">
-    <h4>Контактная информация</h4>
+    <h4>Контактная информация<i class="fas fa-pencil-alt" (click)="changeInfo()"></i></h4>
+    
     <div class="d-flex">
       <div class="form-group mr-0 mr-sm-5 flex-wrap">
         <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>

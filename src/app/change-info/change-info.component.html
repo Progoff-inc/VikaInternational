@@ -1,0 +1,15 @@
+<form [formGroup]="userForm">
+  <h3 class="text-center" style="font-weight:400">Изменение</h3>
+  <div class="form-group">
+    <label for="na" >Телефон</label>
+    <input formControlName="Phone" class="form-control" id="na" placeholder="Ваш телефон">
+  </div>
+  <div class="form-group">
+      <label for="exampleInputEmail1" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>
+      <input [ngClass]="{'border-danger':(submitted && f.Email.errors)}" formControlName="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ваш email">
+      <small id="emailHelp1" class="form-text text-danger" *ngIf="submitted && f.Email.errors && f.Email.errors.email">Некорректный email</small>
+  </div>
+  
+  <button type="submit" class="btn btn-primary" (click)="save()">Сохранить</button>
+</form>
+
