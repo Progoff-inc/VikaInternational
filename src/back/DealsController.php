@@ -16,43 +16,30 @@ if(isset($_GET['Key']))
         case 'get-section-goods':
             echo json_encode($ctxt->getSectionGoods($_GET['Id']));
             break;
-        case 'get-reports':
-            echo json_encode($ctxt->getReports());
-            break;
-        case 'get-report-cars':
-            echo json_encode($ctxt->getReportCar(-1));
-            break;
-        case 'get-user':
-            $q = $db->query("SELECT * FROM users where Id=8");
-            $res = [];
-            $s = $q->fetch();
-            $user = new User($s['Id'], $s['Photo'], $s['Name'], $s['Email'],
-            $s['Phone'], $s['Lang'], $s['CreateDate'], $s['ModifiedDate'], $s['IsAdmin'], [], []);
-            
-            echo json_encode($user);
-            break;
-        case 'get-car':
-            echo json_encode($ctxt->getCar($_GET['Id'],true));
-            break;
-        case 'add-car':
+       
+        case 'add-deal':
             $b = json_decode(file_get_contents('php://input'), true);  
-            echo json_encode($ctxt->addCar($b));
+            echo json_encode($ctxt->addDeal($b));
             break;
-        case 'add-price':
+        case 'add-deal-goods':
             $b = json_decode(file_get_contents('php://input'), true);  
-            echo json_encode($ctxt->addPrices($_GET['Id'],$b));
+            echo json_encode($ctxt->addDealGoods($b));
             break;
-        case 'add-booking':
+        case 'add-section':
             $b = json_decode(file_get_contents('php://input'), true); 
-            echo json_encode($ctxt->addBooking($b));
+            echo json_encode($ctxt->addSection($b));
             break;
-        case 'update-car':
+        case 'add-section-goods':
             $b = json_decode(file_get_contents('php://input'), true); 
-            echo json_encode($ctxt->updateCar($b, $_GET['Id']));
+            echo json_encode($ctxt->addSectionGoods($b));
             break;
-        case 'update-prices':
+        case 'update-section':
             $b = json_decode(file_get_contents('php://input'), true); 
-            echo json_encode($ctxt->updatePrices($b, $_GET['Id']));
+            echo json_encode($ctxt->updateSection($b, $_GET['Id']));
+            break;
+        case 'update-good':
+            $b = json_decode(file_get_contents('php://input'), true); 
+            echo json_encode($ctxt->updateGood($b, $_GET['Id']));
             break;
         default:
             echo "Введенный ключ несуществует";

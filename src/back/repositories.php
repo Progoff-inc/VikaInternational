@@ -39,7 +39,7 @@ class DataBase {
         
     }
     
-    //####################Cars Controller#########################
+    //####################Deals Controller#########################
     public function getSections() {
         $sth = $this->db->query("SELECT * FROM sections");
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Section');
@@ -52,6 +52,15 @@ class DataBase {
         
         return $this->db->lastInsertId();
     }
+    public function addDealGoods($goods){
+        for ($i = 0; $i <= count($goods); $i++) {
+            $res = $this->genInsertQuery($goods[$i],"dealsgoods");
+            $s = $this->db->prepare($res[0]);
+            $s->execute($res[1]);
+        }
+        return $this->db->lastInsertId();
+    }
+
     
     public function getSectionGoods($id) {
         $s = $this->db->prepare("SELECT * FROM goods WHERE SectionId=?");
@@ -107,10 +116,17 @@ class DataBase {
     }
 
     public function setAdmin($id, $isa){
-        $s = $this->db->prepare("UPDATE users SET IsAdmin=? WHERE Id=?");
+        $s = $this->db->prepare("UPDATE users SET IsAdmin=? WHERE UserId=?");
         $s->execute(array($isa === 'true',$id));
         return array($isa, $id);
     }
+
+    public function updateUserInfo($id, $phone, $email){
+        $s = $this->db->prepare("UPDATE users SET Phone=?, Email=? WHERE UserId=?");
+        $s->execute(array($phone, $email, $id));
+        return $id;
+    }
+
     public function getUserById($id){
         $s = $this->db->prepare("SELECT * FROM users WHERE UserId=?");
         $s->execute(array($id));
@@ -121,21 +137,8 @@ class DataBase {
         return $u;
     }
     
-    public function getUserBooks($id) {
-        $s = $this->db->prepare("SELECT * FROM books WHERE UserId=?");
-        $s->execute(array($id));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Book');
-        $books =[];
-        while($b = $s->fetch()){
-            $b->Car = $this->getReportCar($b->CarId);
-            $b->User = $this->getReportUser($b->UserId);
-            $books[] = $b;
-        }
-        return $books;
-    }
-    
     public function addUser($u){
-
+        $u['Password']= md5(md5($u['Password']));
         $a = $this->genInsertQuery($u);
         $s = $this->db->prepare($a[0]);
         $s->execute($a[1]);
@@ -147,67 +150,37 @@ class DataBase {
     
     //####################User Controller###########################
     
-    //####################Messager Controller###########################
-    
-    public function createTopic($uid){
-        $s = $this->db->query("SELECT Id FROM users WHERE IsAdmin=true");
-        $rid = $s->fetch()[0];
-        $s = $this->db->prepare("INSERT INTO topics (UserId, UserReciverId, ModifyDate) VALUES (?,?,now())");
-        $s->execute(array($uid, $rid));
+    //####################Admin Controller##########################
+
+    public function addSection($section){
+        $res = $this->genInsertQuery($section,"sections");
+        $s = $this->db->prepare($res[0]);
+        $s->execute($res[1]);
         
-        return $this->getUserTopics($rid);
+        return $this->db->lastInsertId();
     }
-    public function saveMessage($uid, $tid, $t){
-        $s = $this->db->prepare("INSERT INTO messages (UserId, TopicId, Text, CreateDate) Values (?,?,?,now())");
-        $s->execute(array($uid, $tid, $t));
-        
-        return $this->getMessageById($this->db->lastInsertId());
-    } 
-    
-    public function getMessageById($id) {
-        $s = $this->db->prepare("SELECT Id, TopicId, UserId, Text, CreateDate FROM messages WHERE Id=?");
-        $s->execute(array($id));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Message');
-        $u=$s->fetch();
-        return $u;
-    }
-    
-    public function getUserTopics($id) {
-        $s = $this->db->prepare("SELECT * FROM topics WHERE UserId=? OR UserReciverId=?");
-        $s->execute(array($id, $id));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Topic');
-        $topics = [];
-        while($r = $s->fetch()){
-            $r->User = $this->getReportUser($r->UserId);
-            $r->UserReciver = $this->getReportUser($r->UserReciverId);
-            $r->Messages = $this->getMessages($r->Id);
-            $topics[] = $r;
+    public function addSectionGoods($goods){
+        for ($i = 0; $i <= count($goods); $i++) {
+            $res = $this->genInsertQuery($goods[$i],"goods");
+            $s = $this->db->prepare($res[0]);
+            $s->execute($res[1]);
         }
-        return $topics;
+        return $this->db->lastInsertId();
     }
-    
-    public function getMessages($tid){
-        $s = $this->db->prepare("SELECT * FROM messages WHERE TopicId=?");
-        $s->execute(array($tid));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Message');
-        return $s->fetchAll();
+
+    public function updateSection($section, $id){
+        $a = $this->genUpdateQuery($section['Keys'], $section['Values'], "sections", $id);
+        $s = $this->db->prepare($a[0]);
+        $s->execute($a[1]);
+        return $a;
     }
-    
-    public function addComment($uid, $fid, $t){
-        $s = $this->db->prepare("INSERT INTO comments (UserId, FeedBackId, Text, CreateDate) VALUES (?,?,?,now())");
-        $s->execute(array($uid, $fid, $t));
-        return $this->getCommentById($this->db->lastInsertId());
+    public function updateGood($good, $id){
+        $a = $this->genUpdateQuery($good['Keys'], $good['Values'], "goods", $id);
+        $s = $this->db->prepare($a[0]);
+        $s->execute($a[1]);
+        return $a;
     }
-    
-    public function getCommentById($id){
-        $s = $this->db->prepare("SELECT Id, FeedBackId, UserId, Text, CreateDate FROM comments WHERE Id=?");
-        $s->execute(array($id));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Comment');
-        $u=$s->fetch();
-        $u->User = $this->getUserById($u->UserId);
-        $u->Likes = $this->getLikes($u->Id,2);
-        return $u;
-    }
-    //####################Messager Controller###########################
+
+    //####################Admin Controller##########################
 }
 ?>

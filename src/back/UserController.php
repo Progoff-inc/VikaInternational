@@ -10,13 +10,6 @@ if(isset($_GET['Key']))
 {
     
     switch ($_GET['Key']) {
-        case 'get-sections':
-            echo json_encode($ctxt->getSections());
-            break;
-        case 'get-ip':
-            $ip =  $_SERVER['REMOTE_ADDR'];
-            echo json_encode($ip);
-            break;
         case 'get-user-by-id':
             echo json_encode($ctxt->getUserById($_GET['Id']));
             break;
