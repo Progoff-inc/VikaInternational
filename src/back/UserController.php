@@ -26,6 +26,10 @@ if(isset($_GET['Key']))
             $b = json_decode(file_get_contents('php://input'), true);
             echo json_encode($ctxt->setAdmin($_GET['Id'], $_GET['IsAdmin']));
             break;
+        case 'update-user-info':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->setAdmin($b['UserId'], $b['Phone'], $b['Email']));
+            break;
         default:
             echo "Введенный ключ несуществует";
         
