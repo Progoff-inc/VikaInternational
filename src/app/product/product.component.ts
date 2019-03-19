@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private gs:GoodsService, private route:ActivatedRoute) { }
+  constructor(public gs:GoodsService, private route:ActivatedRoute) { }
   good:Good;
   ngOnInit() {
     this.good = this.gs.getProduct(this.route.snapshot.paramMap.get("id"))
