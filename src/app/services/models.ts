@@ -1,5 +1,6 @@
 export interface Good{
     GoodId:number;
+    SectionId:number;
     Name:string;
     Description:string;
     Price:number;
@@ -35,4 +36,10 @@ export class Deal{
     
     User:User;
     Goods:CartItem[];
+}
+
+export interface Section{
+  SectionId:string;
+  Name:string;
+  Image:string;
 }

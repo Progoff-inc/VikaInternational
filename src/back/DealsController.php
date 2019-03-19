@@ -13,13 +13,8 @@ if(isset($_GET['Key']))
         case 'get-sections':
             echo json_encode($ctxt->getSections());
             break;
-        
-        case 'get-ip':
-            $ip =  $_SERVER['REMOTE_ADDR'];
-            echo json_encode($ip);
-            break;
-        case 'get-same-cars':
-            echo json_encode($ctxt->getSameCars($_GET['Id']));
+        case 'get-section-goods':
+            echo json_encode($ctxt->getSectionGoods($_GET['Id']));
             break;
         case 'get-reports':
             echo json_encode($ctxt->getReports());

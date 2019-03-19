@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS goods (
     Description text NULL,
     Image varchar(255) NOT NULL,
     Color varchar(200) NULL,
-    Count int(20) NOT NULL,
     
     CONSTRAINT ds_fk FOREIGN KEY(SectionId) REFERENCES sections(SectionId)
 );
