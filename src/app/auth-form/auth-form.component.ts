@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../services/modal.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService, User } from '../services/user.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'auth-form',
@@ -11,15 +11,20 @@ import { UserService, User } from '../services/user.service';
 export class AuthFormComponent implements OnInit {
   userForm:FormGroup;
   submitted = false;
+  showError = false;
   constructor(public ms:ModalService, private fb: FormBuilder, private us:UserService) { }
 
   ngOnInit() {
     this.userForm = this.fb.group({
       Name: ['', Validators.required],
       Email: ['', [Validators.required, Validators.email]],
+      Phone:[''],
       Password: ['', Validators.required],
       PasswordConfirm: ['', Validators.required]
     });
+    this.userForm.valueChanges.subscribe(()=>{
+      this.showError = false;
+    })
   }
   enter(){
     this.ms.type='enter';
@@ -32,14 +37,25 @@ export class AuthFormComponent implements OnInit {
     if(this.userForm.value.Password != this.userForm.value.PasswordConfirm){
       return;
     }
-    let u = new User();
-    u.UserId = 1;
-    u.Email = this.userForm.value.Email;
-    u.Name = this.userForm.value.Name;
-    u.Password = this.userForm.value.Password;
-    u.Deals = [];
-    this.us.regUser(u);
-    this.ms.close();
+    let u = {
+      Email:this.userForm.value.Email,
+      Name:this.userForm.value.Name,
+      Password:this.userForm.value.Password,
+      Phone:this.userForm.value.Phone
+    }
+    
+    this.us.regUser(u).subscribe(user => {
+      if(user){
+        sessionStorage.setItem('user',JSON.stringify(user));
+          this.us.user = user;
+          this.ms.close();
+      }
+      else{
+          this.showError = true;
+      }
+      
+    });
+    
   }
 
   get f() { return this.userForm.controls; };

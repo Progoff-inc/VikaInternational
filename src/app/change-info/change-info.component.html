@@ -9,7 +9,9 @@
       <input [ngClass]="{'border-danger':(submitted && f.Email.errors)}" formControlName="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ваш email">
       <small id="emailHelp1" class="form-text text-danger" *ngIf="submitted && f.Email.errors && f.Email.errors.email">Некорректный email</small>
   </div>
-  
+  <div class="alert alert-danger" *ngIf="showError" role="alert">
+    Пользователь с таким Email уже зарегистрирован
+  </div>
   <button type="submit" class="btn btn-primary" (click)="save()">Сохранить</button>
 </form>
 

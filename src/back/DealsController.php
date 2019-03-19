@@ -16,6 +16,12 @@ if(isset($_GET['Key']))
         case 'get-section-goods':
             echo json_encode($ctxt->getSectionGoods($_GET['Id']));
             break;
+        case 'get-good':
+            echo json_encode($ctxt->getGood($_GET['Id']));
+            break;
+        case 'get-section':
+            echo json_encode($ctxt->getSection($_GET['Id']));
+            break;
        
         case 'add-deal':
             $b = json_decode(file_get_contents('php://input'), true);  

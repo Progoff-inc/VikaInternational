@@ -9,7 +9,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'goods', component: GoodsComponent},
+  { path: 'goods/:id', component: GoodsComponent},
   { path: 'contacts', component: ContactsComponent},
   { path: 'product/:id', component: ProductComponent },
   { path: 'booking', component: BookingComponent },

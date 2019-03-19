@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Section } from '../services/models';
+import { GoodsService } from '../services/products.service';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,12 @@ import { Section } from '../services/models';
 export class HomeComponent implements OnInit {
   sections:Section[]
   
-  constructor() { }
+  constructor( private gs:GoodsService) { }
 
   ngOnInit() {
+    this.gs.getSections().subscribe(data => {
+      this.sections = data;
+    })
   }
 }
 

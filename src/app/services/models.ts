@@ -6,7 +6,6 @@ export interface Good{
     Price:number;
     Color:string;
     Image:string;
-    Photoes?:string[];
   }
 
   export class CartItem{
@@ -39,7 +38,22 @@ export class Deal{
 }
 
 export interface Section{
-  SectionId:string;
+  SectionId:number;
   Name:string;
   Image:string;
+
+  Goods:Good[];
+}
+
+export interface NewUser{
+  Name:string;
+  Password:string;
+  Email:string;
+  Phone?:string;
+}
+
+export interface UserInfo{
+  UserId:number;
+  Phone:string;
+  Email:string;
 }

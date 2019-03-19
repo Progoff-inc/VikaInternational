@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="deals">
-    <h4 class="mb-4">Заказы</h4>
+    <h4 class="mb-4">{{us.user.Deals.length>0?'Заказы':'Заказы отсутствуют'}}</h4>
     <div class="deal" *ngFor="let d of us.user.Deals; ">
       <div class="d-flex justify-content-between align-items-center">
         <h5>Заказ №{{d.DealId}}</h5>

@@ -1,7 +1,7 @@
 <sales-carousel></sales-carousel>
 <div class="container my-3 px-0">
   <div class="table " >
-    <div routerLink="/goods" 
+    <div routerLink="/goods/{{s.SectionId}}" 
       class="item" 
       *ngFor="let s of sections; let i = index;">
         <img src="{{s.Image}}">

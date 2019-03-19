@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, Deal } from '../services/user.service';
+import { UserService } from '../services/user.service';
 import { ModalService } from '../services/modal.service';
 import { Router } from '@angular/router';
 import { GoodsService } from '../services/products.service';
@@ -12,7 +12,7 @@ import { GoodsService } from '../services/products.service';
 export class UserProfileComponent implements OnInit {
 
   constructor(public us:UserService, private ms:ModalService, private gs:GoodsService) {
-      if(!this.us.user){
+      if(!localStorage.getItem('user') && !sessionStorage.getItem('user')){
         this.showModal();
       }
   }

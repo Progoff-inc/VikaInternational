@@ -43,5 +43,7 @@ class Section{
     public $SectionId;
     public $Name;
     public $Description;
+
+    public $Goods;
 }
 ?>

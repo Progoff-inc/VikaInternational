@@ -12,6 +12,10 @@
       <small id="emailHelp1" class="form-text text-danger" *ngIf="submitted && f.Email.errors && f.Email.errors.email">Некорректный email</small>
   </div>
   <div class="form-group">
+    <label for="exampleInputEmail13" [ngClass]="{'text-danger':(submitted && f.Phone.errors)}">Phone</label>
+    <input [ngClass]="{'border-danger':(submitted && f.Phone.errors)}" formControlName="Phone" class="form-control" id="exampleInputEmail13"  placeholder="Ваш телефон">
+  </div>
+  <div class="form-group">
       <label for="exampleInputPassword1" [ngClass]="{'text-danger':(submitted && f.Password && f.Password.errors)}">Пароль</label>
       <input [ngClass]="{'border-danger':(submitted && f.Password.errors)}" formControlName="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль" #p>
       <small  class="form-text text-danger" *ngIf="submitted && f.Password.errors && f.Password.errors.required">Введите пароль</small>
@@ -21,6 +25,9 @@
       <input [ngClass]="{'border-danger':(submitted && (v.Password != v.PasswordConfirm || f.Password.errors))}" type="password" formControlName="PasswordConfirm" class="form-control" id="exampleInputPassword" placeholder="Подтверждение пароля" #pc>
       <small  class="form-text text-danger" *ngIf="submitted && f.Password.errors && f.Password.errors.required">Введите подтверждение пароля</small>
       <small  class="form-text text-danger" *ngIf="submitted && v.Password != v.PasswordConfirm">Пороли не совпадают</small>
+    </div>
+    <div class="alert alert-danger" *ngIf="showError" role="alert">
+      Пользователь с таким email уже существует
     </div>
   <button type="submit" class="btn btn-primary" (click)="Auth()">Зарегистрироваться</button>
   <button type="submit" class="btn btn-link" (click)="enter()">Вход</button>

@@ -60,7 +60,14 @@ class DataBase {
         }
         return $this->db->lastInsertId();
     }
-
+    public function getSection($id){
+        $s = $this->db->prepare("SELECT * FROM users WHERE SectionId=?");
+        $s->execute(array($id));
+        $s->setFetchMode(PDO::FETCH_CLASS, 'Section');
+        $u=$s->fetch();
+        $u->Deals = $this->getSectionGoods($u->SectionId);
+        return $u;
+    } 
     
     public function getSectionGoods($id) {
         $s = $this->db->prepare("SELECT * FROM goods WHERE SectionId=?");
@@ -99,8 +106,10 @@ class DataBase {
         $s->execute(array($e, md5(md5($p))));
         $s->setFetchMode(PDO::FETCH_CLASS, 'User');
         $u=$s->fetch();
-        $u->Password = null;
-        $u->Deals = $this->getUserDeals($u->UserId);
+        if($u){
+            $u->Password = null;
+            $u->Deals = $this->getUserDeals($u->UserId);
+        }
         return $u;
     } 
     public function getUserDeals($id) {
@@ -138,12 +147,24 @@ class DataBase {
     }
     
     public function addUser($u){
-        $u['Password']= md5(md5($u['Password']));
-        $a = $this->genInsertQuery($u);
-        $s = $this->db->prepare($a[0]);
-        $s->execute($a[1]);
+        if($this->checkUser($u['Email'])){
+            $u['Password']= md5(md5($u['Password']));
+            $a = $this->genInsertQuery($u);
+            $s = $this->db->prepare($a[0]);
+            $s->execute($a[1]);
+            
+            return $this->getUserById($this->db->lastInsertId());
+        }
+        else{
+            return false;
+        }
         
-        return $this->db->lastInsertId();
+    }
+
+    private function checkUser($e){
+        $s = $this->db->prepare("SELECT * FROM users WHERE Email=?");
+        $s->execute(array($e));
+        return count($s->fetchAll())==0;
     }
     
     

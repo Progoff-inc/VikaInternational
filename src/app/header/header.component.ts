@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     this.showC = false;
   }
   Profile(){
-    if(localStorage.getItem('user')){
+    if(localStorage.getItem('user') || sessionStorage.getItem('user')){
       this.router.navigate(['/user-profile']);
     }else{
       this.ms.open('enter');

@@ -13,8 +13,9 @@ export class ProductComponent implements OnInit {
   constructor(public gs:GoodsService, private route:ActivatedRoute) { }
   good:Good;
   ngOnInit() {
-    this.good = this.gs.getProduct(this.route.snapshot.paramMap.get("id"))
-    console.log(this.good);
+    this.gs.getProduct(this.route.snapshot.paramMap.get("id")).subscribe(data => {
+      this.good = data;
+    })
   }
   choosePhoto(p){
     this.good.Image = p;

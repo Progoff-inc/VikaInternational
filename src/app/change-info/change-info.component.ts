@@ -12,6 +12,7 @@ export class ChangeInfoComponent implements OnInit {
   @Input() change:any;
   submitted = false;
   userForm:FormGroup;
+  showError = false;
   constructor(private fb:FormBuilder, private ms:ModalService, private us:UserService) { 
     
   }
@@ -21,6 +22,9 @@ export class ChangeInfoComponent implements OnInit {
       Email: [this.change.Email?this.change.Email:'', [Validators.email]],
       Phone: [this.change.Phone?this.change.Phone:'']
     });
+    this.userForm.valueChanges.subscribe(()=>{
+      this.showError = false;
+    })
   }
 
   /**
@@ -32,9 +36,24 @@ export class ChangeInfoComponent implements OnInit {
       return;
     }
     console.log(this.userForm.value);
-    this.us.user.Email = this.userForm.value.Email;
-    this.us.user.Phone = this.userForm.value.Phone;
-    this.ms.close();
+    let userInfo = {UserId:this.us.user.UserId, Email:this.userForm.value.Email, Phone:this.userForm.value.Phone};
+    this.us.updateUserInfo(userInfo).subscribe((data)=>{
+      if(data){
+        this.us.user.Phone= userInfo.Phone;
+        this.us.user.Email = userInfo.Email;
+        
+      }
+      else{
+        if(this.us.user.Email != userInfo.Email){
+          this.showError = true;
+        }
+        else{
+          this.ms.close();
+        }
+        
+      }
+      
+    });
   }
 
   /**
