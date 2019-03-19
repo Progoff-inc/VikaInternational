@@ -2,7 +2,7 @@
   <div class="card rounded-0 p-2" style="width: 18rem; margin: 5px;" *ngFor="let g of gs.goods">
       <a routerLink="/product/{{g.Id}}"><img src="{{g.Image}}" class="card-img-top" ></a>
     <div class="card-body">
-      <h5 class="card-title mb-0">{{g.Color}}</h5>
+      <h5 class="card-title mb-0">#{{g.GoodId}} {{g.Name}}</h5>
       <!-- <p class="card-text">{{g.Description}}</p> -->
       <small style="font-size: 15px" class="d-block mb-3">Цена: {{g.Price}}₽</small>
       <button  class="btn btn-primary mr-2" (click)="gs.addCartProduct(g)">Купить</button>
