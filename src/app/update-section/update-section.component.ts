@@ -12,6 +12,7 @@ export class UpdateSectionComponent implements OnInit {
   goods = [];
   sectionsCopy:Section[];
   submits:boolean[] = [];
+  sGoods:boolean[] = [];
   constructor(private gs:GoodsService) { }
 
   ngOnInit() {
@@ -19,12 +20,16 @@ export class UpdateSectionComponent implements OnInit {
       this.sections = data;
       data.forEach(x => {
         this.submits.push(false);
+        this.sGoods.push(false);
         this.goods.push([]);
       })
       this.sectionsCopy = JSON.parse(JSON.stringify(data));
     })
   }
+  showGoods(i){
 
+    this.sGoods[i]=!this.sGoods[i];
+  }
   checkChanges(s:Section){
     let s1 = this.sectionsCopy.find(se => se.SectionId==s.SectionId);
     return !this.deepEqual(s,s1);
@@ -40,18 +45,29 @@ export class UpdateSectionComponent implements OnInit {
     this.gs.updateSection({Name:s.Name, Image:s.Image}, s.SectionId).subscribe((d)=>{
       console.log(d);
       this.gs.updateSectionGoods(s.Goods).subscribe(()=> {
-        this.gs.addGoods(this.goods[i]).subscribe(data=> {
-          console.log(data);
-          this.goods[i] = [];
-          this.submits[i] = false;
-          var ss = this.sectionsCopy.find(se => se.SectionId==s.SectionId);
-          ss.Name = s.Name;
-          ss.Image = s.Image;
-          data.forEach(e => {
-            ss.Goods.push(e);
-            s.Goods.push(e);
+        if(this.goods[i].length>0){
+          this.gs.addGoods(this.goods[i]).subscribe(data=> {
+            console.log(data);
+            this.goods[i] = [];
+            this.submits[i] = false;
+            var ss = this.sectionsCopy.find(se => se.SectionId==s.SectionId);
+            ss.Name = s.Name;
+            ss.Image = s.Image;
+            data.forEach(e => {
+              ss.Goods.push(e);
+              s.Goods.push(e);
+            });
           });
-        })
+          
+        }
+        else{
+          this.submits[i] = false;
+            var ss = this.sectionsCopy.find(se => se.SectionId==s.SectionId);
+            ss.Name = s.Name;
+            ss.Image = s.Image;
+            ss.Goods = JSON.parse(JSON.stringify(s.Goods));
+        }
+        
       })
       
     });

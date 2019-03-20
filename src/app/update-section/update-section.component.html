@@ -11,7 +11,8 @@
       <input [(ngModel)]="s.Image" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Image==''}" class="form-control" id="exampleInputEmail13"  placeholder="Ссылка на зображение раздела">
       <small  class="form-text text-danger" *ngIf="s.Image==''">Изображение не может отсутствовать</small>
     </div>
-    <div class="goods">
+    <p  class="line" ><span (click)="showGoods(i)">Товары <i class="fa" [ngClass] = "{'fa-angle-down':!sGoods[i], ' fa-angle-up':sGoods[i]}"></i></span></p>
+    <div *ngIf="sGoods[i]" class="goods">
       <h4>Товары раздела</h4>
       <div *ngFor="let g of s.Goods">
         <h5>{{g.Name}}</h5>
