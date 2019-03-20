@@ -1,8 +1,18 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-header></app-header>
-<div class="mb-3">
-    <router-outlet></router-outlet>
+<div class="d-flex flex-column" style="min-height: 100vh">
+    <div class="head">
+        <app-header></app-header>
+    </div>
+    <div class="main">
+        <div class="mb-3">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <app-footer></app-footer>
+    </div>
 </div>
 
-<app-footer></app-footer>
+
 <app-modal></app-modal>
