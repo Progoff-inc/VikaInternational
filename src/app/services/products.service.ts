@@ -38,6 +38,13 @@ export class GoodsService{
     }
 
     /**
+     * Возвращает разделы с товарами
+     */
+    getAdminSections(){
+      return this.http.get<Section[]>(this.baseUrl + 'DealsController.php?Key=get-admin-sections');
+    }
+
+    /**
      * Добавление товара в карзину
      * @param good товар
      */
@@ -61,13 +68,29 @@ export class GoodsService{
     addSection(section:NewSection){
       return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-section',section);
     }
+    
+    /**
+     * Сохраняет изменения в разделе
+     * @param section Измененный раздел
+     */
+    updateSection(section:NewSection, id){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-section&Id='+id,section);
+    }
+
+    /**
+     * Сохраняет изменения в разделе
+     * @param section Измененный раздел
+     */
+    updateSectionGoods(goods:Good[]){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-goods', goods);
+    }
 
     /**
      * Добавление товаров раздела
      * @param goods Список новых товаров раздела
      */
     addGoods(goods:NewGood[]){
-      return this.http.post(this.baseUrl + 'DealsController.php?Key=add-section-goods', goods);
+      return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-section-goods', goods);
     }
 
     /**
