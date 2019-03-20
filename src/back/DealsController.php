@@ -3,7 +3,6 @@ require 'repositories.php';
 header("Access-Control-Allow-Origin: *"); 
 header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization");
-$db = new PDO('mysql:host=localhost;dbname=nomokoiw_cc;charset=UTF8','nomokoiw_cc','f%EO%6ta');
 
 $ctxt = new DataBase();
 if(isset($_GET['Key']))

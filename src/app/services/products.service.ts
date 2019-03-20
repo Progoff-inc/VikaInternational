@@ -59,7 +59,7 @@ export class GoodsService{
      * @param section Секция (Name, Image)
      */
     addSection(section:NewSection){
-      return this.http.post(this.baseUrl + 'DealsController.php?Key=add-section',section);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-section',section);
     }
 
     /**

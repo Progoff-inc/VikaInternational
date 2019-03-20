@@ -61,11 +61,11 @@ class DataBase {
         return $this->db->lastInsertId();
     }
     public function getSection($id){
-        $s = $this->db->prepare("SELECT * FROM users WHERE SectionId=?");
+        $s = $this->db->prepare("SELECT * FROM sections WHERE SectionId=?");
         $s->execute(array($id));
         $s->setFetchMode(PDO::FETCH_CLASS, 'Section');
         $u=$s->fetch();
-        $u->Deals = $this->getSectionGoods($u->SectionId);
+        $u->Goods = $this->getSectionGoods($u->SectionId);
         return $u;
     } 
     
@@ -131,9 +131,14 @@ class DataBase {
     }
 
     public function updateUserInfo($id, $phone, $email){
-        $s = $this->db->prepare("UPDATE users SET Phone=?, Email=? WHERE UserId=?");
-        $s->execute(array($phone, $email, $id));
-        return $id;
+        if($this->checkUser($email)){
+            $s = $this->db->prepare("UPDATE users SET Phone=?, Email=? WHERE UserId=?");
+            $s->execute(array($phone, $email, $id));
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public function getUserById($id){
@@ -147,10 +152,12 @@ class DataBase {
     }
     
     public function addUser($u){
+        
         if($this->checkUser($u['Email'])){
             $u['Password']= md5(md5($u['Password']));
-            $a = $this->genInsertQuery($u);
-            $s = $this->db->prepare($a[0]);
+            
+            $a = $this->genInsertQuery($u, 'users');
+            $s = $this->db->prepare('INSERT INTO users (Email,Name,Password,Phone) VALUES (?,?,?,?);');
             $s->execute($a[1]);
             
             return $this->getUserById($this->db->lastInsertId());
@@ -161,7 +168,7 @@ class DataBase {
         
     }
 
-    private function checkUser($e){
+    public function checkUser($e){
         $s = $this->db->prepare("SELECT * FROM users WHERE Email=?");
         $s->execute(array($e));
         return count($s->fetchAll())==0;
@@ -176,7 +183,10 @@ class DataBase {
     public function addSection($section){
         $res = $this->genInsertQuery($section,"sections");
         $s = $this->db->prepare($res[0]);
-        $s->execute($res[1]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        
         
         return $this->db->lastInsertId();
     }
@@ -184,7 +194,9 @@ class DataBase {
         for ($i = 0; $i <= count($goods); $i++) {
             $res = $this->genInsertQuery($goods[$i],"goods");
             $s = $this->db->prepare($res[0]);
-            $s->execute($res[1]);
+            if($res[1][0]!=null){
+                $s->execute($res[1]);
+            }
         }
         return $this->db->lastInsertId();
     }
