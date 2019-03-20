@@ -1,5 +1,4 @@
-import { Good, Section } from './models';
-import { Book } from '../booking/booking.component';
+import { Good, Section, Book} from './models';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -58,12 +57,17 @@ export class GoodsService{
     /**
      * Очистка корзины
      */
-    clearCart(){
-      if(confirm("Очистить корзину?")){
+    clearCart(q:boolean=true){
+      if (q){
+        if(confirm("Очистить корзину?")){
+          this.book.Cart = [];
+          sessionStorage.removeItem('Cart');
+        }
+      }
+      else {
         this.book.Cart = [];
         sessionStorage.removeItem('Cart');
       }
-      
     }
 
     /**

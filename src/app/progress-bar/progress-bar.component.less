@@ -1,0 +1,54 @@
+@green-color: rgb(126, 228, 113);
+@grey-color: rgb(179, 196, 176);
+
+.con-bar{
+    position: relative;
+    margin: 0 10px;
+    cursor: pointer;
+    .line-bar{
+        content: '';
+        display: block;
+        background-color:@grey-color;
+        height: 3px;
+        position: absolute;
+        top:50%;
+        right: -100%;
+        width: 110%;
+        z-index: 1;
+    }
+    &:last-child{
+        .line-bar{
+            display: none;
+        }
+    } 
+}
+.bar-item{
+    background-color: white;
+    border: 3px solid @grey-color;
+    box-shadow: 2px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    position: relative;
+    z-index: 2;
+}
+.act{
+    .bar-item{
+        border-color: @green-color;
+        background-color: @green-color;
+    }
+    .line-bar{
+        background-color:@green-color;
+    }
+}
+.complete{
+    .bar-item{
+        border-color: @green-color;
+    }
+    .line-bar{
+        background-color: @green-color;
+    }
+}
