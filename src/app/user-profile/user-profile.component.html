@@ -1,4 +1,4 @@
-<div *ngIf="us.user" class="container bg-light d-flex flex-column mt-3">
+<div *ngIf="us.user" class="container bg-white d-flex flex-column mt-3">
   <div class="d-flex justify-content-between align-items-center">
     <h3>{{us.user.Name}}</h3>
     <button class="btn btn-link text-danger" (click)="LogOut()">Выйти</button>
@@ -42,3 +42,7 @@
     </div>
   </div>
 </div>
+<div *ngIf="us.user" class="container my-3 px-0">
+  <app-add *ngIf="us.user.IsAdmin==1"></app-add>
+</div>
+

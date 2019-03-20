@@ -1,4 +1,4 @@
-import { Good, Section, Book} from './models';
+import { Good, Section, Book, NewSection, NewGood} from './models';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -52,6 +52,22 @@ export class GoodsService{
         sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
       }
       
+    }
+
+    /**
+     * Добавление раздела товаров
+     * @param section Секция (Name, Image)
+     */
+    addSection(section:NewSection){
+      return this.http.post(this.baseUrl + 'DealsController.php?Key=add-section',section);
+    }
+
+    /**
+     * Добавление товаров раздела
+     * @param goods Список новых товаров раздела
+     */
+    addGoods(goods:NewGood[]){
+      return this.http.post(this.baseUrl + 'DealsController.php?Key=add-section-goods', goods);
     }
 
     /**

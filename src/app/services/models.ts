@@ -92,3 +92,17 @@ export enum PayTypes{
   Cash = "cash", 
   Card = "card"
 }
+
+export interface NewSection{
+  Name:string;
+  Image:string;
+}
+
+export interface NewGood{
+  SectionId:number;
+  Name:string;
+  Description:string;
+  Price:number;
+  Color:string;
+  Image:string;
+}
