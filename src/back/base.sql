@@ -37,6 +37,12 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS deals (
 	DealId int(20) PRIMARY KEY AUTO_INCREMENT,
     UserId int(20),
+    Country int(20),
+    City int(20),
+    Address int(20),
+    PostIndex int(20),
+    PayType varchar(20),
+    DeliverType varchar(20),
     CreateDate datetime DEFAULT CURRENT_TIMESTAMP,
     
     CONSTRAINT du_fk FOREIGN KEY(UserId) REFERENCES users(UserId)

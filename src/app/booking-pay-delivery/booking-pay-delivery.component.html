@@ -27,7 +27,7 @@
       </div>
       <div class="form-group">
         <label for="InputPostIndex" [ngClass]="{'text-danger':(submittedAddress && g.PostIndex.errors)}">Почтовый индекс</label>
-        <input type="number" [ngClass]="{'border-danger':(submittedAddress && g.PostIndex.errors)}" formControlName="PostIndex" class="form-control" id="InputPostIndex" placeholder="Почтовый индекс">
+        <input type="text" [ngClass]="{'border-danger':(submittedAddress && g.PostIndex.errors)}" formControlName="PostIndex" class="form-control" id="InputPostIndex" placeholder="Почтовый индекс">
         <small class="form-text text-danger" *ngIf="submittedAddress && g.PostIndex.errors && g.PostIndex.errors.required">Введите почтовый индекс</small>
       </div>
     </form>
