@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Book, PayTypes, DeliverTypes } from '../booking/booking.component';
 import { GoodsService } from '../services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 

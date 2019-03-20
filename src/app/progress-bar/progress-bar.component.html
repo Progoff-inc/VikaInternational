@@ -1,3 +1,10 @@
-<p>
-  progress-bar works!
-</p>
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <div class="d-flex con-bar" [ngClass]="{'act':i==parent.curStep, 'complete':i<parent.curStep}" *ngFor="let s of steps; let i = index;">
+      <div (click)="chStep(i)"  class="bar-item">
+        {{s}}
+      </div>
+      <div class="line-bar"></div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <div class="container py-2" [ngSwitch]="curStep">
   <h3 class="text-center">Форма оформления заказа</h3>
-  <progress-bar></progress-bar>
+  <progress-bar [parent]="vm"></progress-bar>
   <booking-cart *ngSwitchCase="0" [parent]="vm"></booking-cart>
   <booking-contact-info *ngSwitchCase="1" [parent]="vm"></booking-contact-info>
   <booking-pay-delivery *ngSwitchCase="2" [parent]="vm"></booking-pay-delivery>

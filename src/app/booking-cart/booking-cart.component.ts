@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Book } from '../booking/booking.component';
 import { GoodsService } from '../services/products.service';
 
 @Component({
@@ -12,6 +11,9 @@ export class BookingCartComponent implements OnInit {
   constructor(public gs:GoodsService) { }
 
   ngOnInit() {
+    if(this.gs.book.Cart.length==0){
+      window.history.back();
+    }
   }
 
 }

@@ -11,7 +11,7 @@ export class BookingComponent implements OnInit {
   curStep:number;
   vm:any;
 
-  constructor() { }
+  constructor(public gs:GoodsService) { }
 
   ngOnInit() {
     this.vm = this;
@@ -19,41 +19,8 @@ export class BookingComponent implements OnInit {
   }
   nextStep(){
     this.curStep++;
+    if (5==this.curStep+1){
+      this.gs.clearCart(false);
+    }
   }
-
-}
-
-export class Book{
-  Cart:CartItem[] = [];
-  User:BookingUser;
-  DeliverType:DeliverTypes;
-  PayType:PayTypes
-
-  plus(g){
-    let i = this.Cart.find(x => x.Good.GoodId==g.Good.GoodId);
-    i.Count++;
-    sessionStorage.setItem('Cart',JSON.stringify(this.Cart));
-  }
-  minus(g){
-    let i = this.Cart.find(x => x.Good.GoodId==g.Good.GoodId);
-    i.Count--;
-    sessionStorage.setItem('Cart',JSON.stringify(this.Cart));
-    
-  }
-}
-
-export class BookingUser{
-  Name:string;
-  Email:string;
-  Phone:string;
-}
-
-export enum DeliverTypes{
-  Pickup = "pickup", 
-  Delivery = "delivery"
-}
-
-export enum PayTypes{
-  Cash = "cash", 
-  Card = "card"
 }

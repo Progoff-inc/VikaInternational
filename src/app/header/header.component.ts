@@ -14,6 +14,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
   }
+  goToCart(){
+    if(this.gs.book.Cart.length>0){
+      this.router.navigate(['/booking']);
+    }
+  }
   showCart(){
     if(this.gs.book.Cart.length>0){
       
