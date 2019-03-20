@@ -62,7 +62,11 @@ export class Book{
   Cart:CartItem[] = [];
   User:BookingUser;
   DeliverType:DeliverTypes;
-  PayType:PayTypes
+  PayType:PayTypes;
+  Country:string;
+  City:string;
+  Address:string;
+  PostIndex:string;
 
   plus(g){
     let i = this.Cart.find(x => x.Good.GoodId==g.Good.GoodId);

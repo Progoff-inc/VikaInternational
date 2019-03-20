@@ -12,5 +12,10 @@ export class BookingConfirmComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  chContact(){
+    this.parent.curStep=1;
+  }
+  chPayDel(){
+    this.parent.curStep=2;
+  }
 }

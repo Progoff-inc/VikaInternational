@@ -18,18 +18,14 @@ export class BookingPayDeliveryComponent implements OnInit {
 
   ngOnInit() {
     this.PayDelForm=this.fb.group({
-      DeliverTypes:['',Validators.required],
-      PayTypes:['',Validators.required]
-      // Pickup: ['',Validators.required],
-      // Delivery:['',Validators.required],
-      // Cash:['',Validators.required],
-      // Card:['',Validators.required]
+      DeliverTypes:[this.gs.book.DeliverType?this.gs.book.DeliverType:'',Validators.required],
+      PayTypes:[this.gs.book.PayType?this.gs.book.PayType:'',Validators.required]
     })
     this.AddressForm=this.fb.group({
-      Country: ['',Validators.required],
-      City: ['',Validators.required],
-      Address: ['',Validators.required],
-      PostIndex: ['',Validators.required]
+      Country: [this.gs.book.Country?this.gs.book.Country:'',Validators.required],
+      City: [this.gs.book.City?this.gs.book.City:'',Validators.required],
+      Address: [this.gs.book.Address?this.gs.book.Address:'',Validators.required],
+      PostIndex: [this.gs.book.PostIndex?this.gs.book.PostIndex:'',Validators.required]
     })
   }
   nextPage(){
@@ -43,6 +39,12 @@ export class BookingPayDeliveryComponent implements OnInit {
     if(this.PayDelForm.invalid){
       return;
     }
+    this.gs.book.PayType=this.PayDelForm.value.PayTypes;
+    this.gs.book.DeliverType=this.PayDelForm.value.DeliverTypes;
+    this.gs.book.Country=this.AddressForm.value.Country;
+    this.gs.book.City=this.AddressForm.value.City;
+    this.gs.book.Address=this.AddressForm.value.Address;
+    this.gs.book.PostIndex=this.AddressForm.value.PostIndex;
     this.parent.nextStep();
   }
 
