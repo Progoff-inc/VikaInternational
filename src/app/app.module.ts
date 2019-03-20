@@ -33,6 +33,7 @@ import { EnterFormComponent } from './enter-form/enter-form.component';
 import { UserService } from './services/user.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
+import { AddComponent } from './add/add.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ChangeInfoComponent } from './change-info/change-info.component';
     AuthFormComponent,
     EnterFormComponent,
     UserProfileComponent,
-    ChangeInfoComponent
+    ChangeInfoComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,
