@@ -1,4 +1,4 @@
-import { Good, Section, Book, NewSection, NewGood} from './models';
+import { Good, Section, Book, NewSection, NewGood, Sale, NewSale} from './models';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -91,6 +91,25 @@ export class GoodsService{
      */
     addGoods(goods:NewGood[]){
       return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-section-goods', goods);
+    }
+
+    /**
+     * Получение списка акций
+     */
+    getSales(){
+      return this.http.get<Sale[]>(this.baseUrl + 'DealsController.php?Key=get-sales');
+    }
+
+    /**
+     * Добавление новой акции
+     * @param sale Акция без SaleId
+     */
+    addSale(sale:NewSale){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-sale',sale);
+    }
+
+    updateSale(sale:Sale){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-sale',sale);
     }
 
     /**

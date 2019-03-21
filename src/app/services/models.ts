@@ -110,3 +110,18 @@ export interface NewGood{
   Color:string;
   Image:string;
 }
+
+export interface Sale{
+  SaleId:number;
+  Name:string;
+  Description:string;
+  Price:number;
+  Image:string;
+}
+
+export interface NewSale{
+  Name:string;
+  Description:string;
+  Price:number;
+  Image:string;
+}
