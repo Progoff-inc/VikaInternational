@@ -1,10 +1,11 @@
-import { Good, Section, Book, NewSection, NewGood, Sale, NewSale} from './models';
+import { Good, Section, Book, NewSection, NewGood, Sale, NewSale, NewDeal, NewCartItem, GoodTypes} from './models';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 
 @Injectable()
 export class GoodsService{
+    bookId:number=null;
     book:Book = new Book();
     baseUrl:string='http://client.nomokoiw.beget.tech/vi/';
 
@@ -55,7 +56,7 @@ export class GoodsService{
         sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
       }
       else{
-        this.book.Cart.unshift({Good:good, Count:1});
+        this.book.Cart.unshift({Good:good, Count:1, Type:GoodTypes.Good});
         sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
       }
       
@@ -139,7 +140,20 @@ export class GoodsService{
       })
       return sum;
     }
-    
+    /**
+     * Сохранение заказа
+     * @param deal объект deal типа NewDeal[]
+     */
+    addDeal(deal:NewDeal){
+      return this.http.post<number>(this.baseUrl+'DealsController.php?Key=add-deal',deal);
+    }
+    /**
+     * Добавление товаров сделки
+     * @param goods объект типа NewCartItem
+     */
+    addDealGoods(goods:NewCartItem[]){
+      return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-deal-goods', goods);
+    }
 }
 
 

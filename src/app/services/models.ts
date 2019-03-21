@@ -12,8 +12,15 @@ export interface Good{
     DealId?:number;
     GoodId?:number;
     Count:number;
+    Type:GoodTypes;
   
     Good:Good;
+  }
+  export class NewCartItem{
+    DealId:number;
+    GoodId:number;
+    Count:number;
+    Type:GoodTypes;
   }
 
   export class User{
@@ -35,6 +42,16 @@ export class Deal{
     
     User:User;
     Goods:CartItem[];
+}
+
+export class NewDeal{
+  UserId:number;
+  Country:string;
+  City:string;
+  Address:string;
+  PostIndex:string;
+  PayType:string;
+  DeliverType:string;
 }
 
 export interface Section{
@@ -103,6 +120,11 @@ export enum DeliverTypes{
 export enum PayTypes{
   Cash = "cash", 
   Card = "card"
+}
+
+export enum GoodTypes{
+  Good = "good", 
+  Sale = "sale"
 }
 
 export interface NewSection{
