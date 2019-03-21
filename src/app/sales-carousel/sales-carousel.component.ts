@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GoodsService } from '../services/products.service';
+import { Sale } from '../services/models';
 
 @Component({
   selector: 'sales-carousel',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sales-carousel.component.less']
 })
 export class SalesCarouselComponent implements OnInit {
-
-  constructor() { }
+  sales:Sale[];
+  constructor(private gs:GoodsService) { }
 
   ngOnInit() {
+    this.gs.getSales().subscribe(data => {
+      this.sales = data;
+    })
   }
 
 }

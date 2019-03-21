@@ -34,6 +34,11 @@ import { UserService } from './services/user.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
 import { AddComponent } from './add/add.component';
+import { AddSectionComponent } from './add-section/add-section.component';
+import { UpdateSectionComponent } from './update-section/update-section.component';
+import { UpdateGoodComponent } from './update-good/update-good.component';
+import { AddSaleComponent } from './add-sale/add-sale.component';
+import { UpdateSaleComponent } from './update-sale/update-sale.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +64,12 @@ import { AddComponent } from './add/add.component';
     EnterFormComponent,
     UserProfileComponent,
     ChangeInfoComponent,
-    AddComponent
+    AddComponent,
+    AddSectionComponent,
+    UpdateSectionComponent,
+    UpdateGoodComponent,
+    AddSaleComponent,
+    UpdateSaleComponent
   ],
   imports: [
     BrowserModule,

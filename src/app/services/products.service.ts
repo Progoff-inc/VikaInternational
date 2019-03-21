@@ -1,4 +1,4 @@
-import { Good, Section, Book} from './models';
+import { Good, Section, Book, NewSection, NewGood, Sale, NewSale} from './models';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -38,6 +38,13 @@ export class GoodsService{
     }
 
     /**
+     * Возвращает разделы с товарами
+     */
+    getAdminSections(){
+      return this.http.get<Section[]>(this.baseUrl + 'DealsController.php?Key=get-admin-sections');
+    }
+
+    /**
      * Добавление товара в карзину
      * @param good товар
      */
@@ -52,6 +59,57 @@ export class GoodsService{
         sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
       }
       
+    }
+
+    /**
+     * Добавление раздела товаров
+     * @param section Секция (Name, Image)
+     */
+    addSection(section:NewSection){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-section',section);
+    }
+    
+    /**
+     * Сохраняет изменения в разделе
+     * @param section Измененный раздел
+     */
+    updateSection(section:NewSection, id){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-section&Id='+id,section);
+    }
+
+    /**
+     * Сохраняет изменения в разделе
+     * @param section Измененный раздел
+     */
+    updateSectionGoods(goods:Good[]){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-goods', goods);
+    }
+
+    /**
+     * Добавление товаров раздела
+     * @param goods Список новых товаров раздела
+     */
+    addGoods(goods:NewGood[]){
+      return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-section-goods', goods);
+    }
+
+    /**
+     * Получение списка акций
+     */
+    getSales(){
+      return this.http.get<Sale[]>(this.baseUrl + 'DealsController.php?Key=get-sales');
+    }
+
+    /**
+     * Добавление новой акции
+     * @param sale Акция без SaleId
+     */
+    addSale(sale:NewSale){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-sale',sale);
+    }
+
+    updateSale(sale:Sale){
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-sale',sale);
     }
 
     /**

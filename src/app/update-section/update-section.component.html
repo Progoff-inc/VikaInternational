@@ -1,0 +1,86 @@
+<div class="container-fluid py-3">
+  <div class="section" *ngFor="let s of sections; let i = index;">
+    <h3  style="font-weight:400">{{s.Name}}</h3>
+    <div class="form-group">
+      <label  [ngClass]="{'text-danger':s.Name==''}">Название раздела</label>
+      <input [(ngModel)]="s.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Name==''}" class="form-control"  placeholder="Название раздела">
+      <small  class="form-text text-danger" *ngIf="s.Name==''">Название не может быть пустым</small>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail13" [ngClass]="{'text-danger':s.Image==''}">Изображение</label>
+      <input [(ngModel)]="s.Image" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Image==''}" class="form-control" id="exampleInputEmail13"  placeholder="Ссылка на зображение раздела">
+      <small  class="form-text text-danger" *ngIf="s.Image==''">Изображение не может отсутствовать</small>
+    </div>
+    <p  class="line" ><span (click)="showGoods(i)">Товары <i class="fa" [ngClass] = "{'fa-angle-down':!sGoods[i], ' fa-angle-up':sGoods[i]}"></i></span></p>
+    <div *ngIf="sGoods[i]" class="goods">
+      <h4>Товары раздела</h4>
+      <div *ngFor="let g of s.Goods">
+        <h5>{{g.Name}}</h5>
+        <div class="new-good d-flex flex-wrap justify-content-between" >
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':g.Name==''}">Название товара</label>
+            <input [(ngModel)]="g.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':g.Name==''}" class="form-control"  placeholder="Название товара">
+            <small  class="form-text text-danger" *ngIf="g.Name==''">Введите название товара</small>
+          </div>
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':(g.Color=='')}">Цвет товара</label>
+            <input [(ngModel)]="g.Color" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':g.Color==''}" class="form-control"  placeholder="Цвет товара">
+            <small  class="form-text text-danger" *ngIf="g.Color==''">Введите цвет товара</small>
+          </div>
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':(g.Image=='')}">Изображение</label>
+            <input [(ngModel)]="g.Image" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(g.Image=='')}"  class="form-control"  placeholder="Ссылка на изображение раздела">
+            <small  class="form-text text-danger" *ngIf="g.Image==''">Введите ссылку на изображение</small>
+          </div>
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':(!g.Price)}">Цена товара</label>
+            <input type="number" [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(!g.Price)}" class="form-control"  placeholder="Цена товара">
+            <small  class="form-text text-danger" *ngIf="!g.Price">Введите цену товара</small>
+          </div>
+          
+        </div>
+        <div class="form-group">
+          <label  [ngClass]="{'text-danger':(!g.Description)}">Описание товара</label>
+          <textarea [(ngModel)]="g.Description" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(!g.Description)}" class="form-control"  placeholder="Описание товара" rows="3"></textarea>
+          <small  class="form-text text-danger" *ngIf="!g.Description">Введите описание товара</small>
+        </div>
+      </div>
+      <h4 *ngIf="goods[i].length>0">Новые товары</h4>
+      <div *ngFor="let g of goods[i]">
+          <div class="new-good d-flex flex-wrap justify-content-between" >
+            <div class="form-group">
+              <label  [ngClass]="{'text-danger':(submits[i] && g.Name=='')}">Название товара</label>
+              <input [(ngModel)]="g.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && g.Name=='')}" class="form-control"  placeholder="Название товара">
+              <small  class="form-text text-danger" *ngIf="submits[i] && g.Name==''">Введите название товара</small>
+            </div>
+            <div class="form-group">
+              <label  [ngClass]="{'text-danger':(submits[i] && g.Color=='')}">Цвет товара</label>
+              <input [(ngModel)]="g.Color" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && g.Color=='')}" class="form-control"  placeholder="Цвет товара">
+              <small  class="form-text text-danger" *ngIf="submits[i] && g.Color==''">Введите цвет товара</small>
+            </div>
+            <div class="form-group">
+              <label  [ngClass]="{'text-danger':(submits[i] && g.Image=='')}">Изображение</label>
+              <input [(ngModel)]="g.Image" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && g.Image=='')}"  class="form-control"  placeholder="Ссылка на зображение раздела">
+              <small  class="form-text text-danger" *ngIf="submits[i] && g.Image==''">Введите ссылку на изображение</small>
+            </div>
+            <div class="form-group">
+              <label  [ngClass]="{'text-danger':(submits[i] && !g.Price)}">Цена товара</label>
+              <input type="number" [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && !g.Price)}" class="form-control"  placeholder="Цена товара">
+              <small  class="form-text text-danger" *ngIf="submits[i] && !g.Price">Введите цену товара</small>
+            </div>
+            
+          </div>
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':(submits[i] && !g.Description)}">Описание товара</label>
+            <textarea [(ngModel)]="g.Description" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && !g.Description)}" class="form-control"  placeholder="Описание товара" rows="3"></textarea>
+            <small  class="form-text text-danger" *ngIf="submits[i] && !g.Description">Введите описание товара</small>
+          </div>
+        </div>
+      
+      <button class="btn btn-link" (click)="addGood(s.SectionId,i)">Добавить товар</button>
+    </div>
+    
+
+    <button *ngIf="checkChanges(s) || goods[i].length>0" type="submit" class="btn btn-primary" (click)="saveChanges(s,i)">Сохранить</button>
+  </div>
+</div>

@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add.component.less']
 })
 export class AddComponent implements OnInit {
-
+  curAdd = 0;
   constructor() { }
 
   ngOnInit() {
+  }
+  chAdd(i){
+    this.curAdd=i;
   }
 
 }

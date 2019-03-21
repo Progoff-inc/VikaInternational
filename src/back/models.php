@@ -3,7 +3,7 @@
 
 class Good{
     public $GoodId;
-    public $SectionId
+    public $SectionId;
     public $Name;
     public $Description;
     public $Price;

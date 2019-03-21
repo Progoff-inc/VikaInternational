@@ -1,5 +1,5 @@
-<div *ngIf="us.user" class="container bg-light d-flex flex-column mt-3">
-  <div class="d-flex justify-content-between align-items-center">
+<div *ngIf="us.user" class="container bg-white d-flex flex-column mt-3">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
     <h3>{{us.user.Name}}</h3>
     <button class="btn btn-link text-danger" (click)="LogOut()">Выйти</button>
   </div>
@@ -7,8 +7,8 @@
   <div class="main-info">
     <h4>Контактная информация<i class="fas fa-pencil-alt" (click)="changeInfo()"></i></h4>
     
-    <div class="d-flex">
-      <div class="form-group mr-0 mr-sm-5 flex-wrap">
+    <div class="d-flex flex-wrap">
+      <div class="form-group mr-5 ">
         <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>
         <p id="em">{{us.user.Email?us.user.Email:'Не указан'}}</p>
       </div>
@@ -42,3 +42,7 @@
     </div>
   </div>
 </div>
+<div *ngIf="us.user" class="container my-3 px-0">
+  <app-add *ngIf="us.user.IsAdmin==1"></app-add>
+</div>
+

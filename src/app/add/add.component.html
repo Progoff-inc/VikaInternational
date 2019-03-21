@@ -1,14 +1,21 @@
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" href="#">Active</a>
+    <a class="nav-link" [ngClass]="{'active':curAdd==0, 'bg-white':curAdd==0}" (click)="chAdd(0)">Добавить раздел</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" [ngClass]="{'active':curAdd==1, 'bg-white':curAdd==1}" (click)="chAdd(1)">Изменить раздел</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" [ngClass]="{'active':curAdd==2, 'bg-white':curAdd==2}" (click)="chAdd(2)">Добавить акцию</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="#">Disabled</a>
+    <a class="nav-link" [ngClass]="{'active':curAdd==3, 'bg-white':curAdd==3}" (click)="chAdd(3)">Изменить акции</a>
   </li>
 </ul>
+<div class="adds  bg-white">
+  <add-section *ngIf="curAdd==0"></add-section>
+  <update-section *ngIf="curAdd==1"></update-section>
+  <add-sale *ngIf="curAdd==2"></add-sale>
+  <update-sale *ngIf="curAdd==3"></update-sale>
+  
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Section } from '../services/models';
+import { Section, Sale } from '../services/models';
 import { GoodsService } from '../services/products.service';
 
 @Component({
@@ -9,13 +9,14 @@ import { GoodsService } from '../services/products.service';
 })
 export class HomeComponent implements OnInit {
   sections:Section[]
-  
+  sales:Sale[];
   constructor( private gs:GoodsService) { }
 
   ngOnInit() {
     this.gs.getSections().subscribe(data => {
       this.sections = data;
     })
+    
   }
 }
 

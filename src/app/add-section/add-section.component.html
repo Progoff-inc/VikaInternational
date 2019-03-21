@@ -1,0 +1,54 @@
+<div class="container-fluid py-3 ">
+  <form [formGroup]="sectionForm">
+    <h3  style="font-weight:400">Добавление раздела</h3>
+    <div class="form-group">
+      <label  [ngClass]="{'text-danger':(submitted && f.Name.errors)}">Название раздела</label>
+      <input [ngClass]="{'border-danger':(submitted && f.Name.errors)}" formControlName="Name" class="form-control"  placeholder="Название раздела">
+      <small  class="form-text text-danger" *ngIf="submitted && f.Name.errors && f.Name.errors.required">Введите название раздела</small>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail13" [ngClass]="{'text-danger':(submitted && f.Image.errors)}">Изображение</label>
+      <input [ngClass]="{'border-danger':(submitted && f.Image.errors)}" formControlName="Image" class="form-control" id="exampleInputEmail13"  placeholder="Ссылка на зображение раздела">
+      <small  class="form-text text-danger" *ngIf="submitted && f.Image.errors && f.Image.errors.required">Введите ссылку на изображение</small>
+    </div>
+    <div class="goods">
+      <h4>Товары раздела</h4>
+      <div *ngFor="let g of goods">
+        <div class="new-good d-flex flex-wrap justify-content-between" >
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':(submitted && g.Name=='')}">Название товара</label>
+            <input [(ngModel)]="g.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && g.Name=='')}" class="form-control"  placeholder="Название товара">
+            <small  class="form-text text-danger" *ngIf="submitted && g.Name==''">Введите название товара</small>
+          </div>
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':(submitted && g.Color=='')}">Цвет товара</label>
+            <input [(ngModel)]="g.Color" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && g.Color=='')}" class="form-control"  placeholder="Цвет товара">
+            <small  class="form-text text-danger" *ngIf="submitted && g.Color==''">Введите цвет товара</small>
+          </div>
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':(submitted && g.Image=='')}">Изображение</label>
+            <input [(ngModel)]="g.Image" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && g.Image=='')}"  class="form-control"  placeholder="Ссылка на зображение раздела">
+            <small  class="form-text text-danger" *ngIf="submitted && g.Image==''">Введите ссылку на изображение</small>
+          </div>
+          <div class="form-group">
+            <label  [ngClass]="{'text-danger':(submitted && !g.Price)}">Цена товара</label>
+            <input [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && !g.Price)}" class="form-control"  placeholder="Цена товара">
+            <small  class="form-text text-danger" *ngIf="submitted && !g.Price">Введите цену товара</small>
+          </div>
+          
+        </div>
+        <div class="form-group">
+          <label  [ngClass]="{'text-danger':(submitted && !g.Description)}">Описание товара</label>
+          <textarea [(ngModel)]="g.Description" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && !g.Description)}" class="form-control"  placeholder="Описание товара" rows="3"></textarea>
+          <small  class="form-text text-danger" *ngIf="submitted && !g.Description">Введите описание товара</small>
+        </div>
+      </div>
+      
+      <button class="btn btn-link" (click)="addGood()">Добавить товар</button>
+    </div>
+    
+
+    <button type="submit" class="btn btn-primary" (click)="addSection()">Добавить</button>
+  </form>
+  
+</div>

@@ -15,6 +15,8 @@ h3{
     font-weight: 400;
     font-size: 40px;
     margin: 10px 0;
+    word-wrap: normal;
+    word-break: break-all;
 } 
 h5{
     font-weight: 300;
@@ -39,29 +41,38 @@ p{
 .good{
     margin-bottom: 10px;
 }
-.line {
-    margin-top: 10px;
-    font-size: 12pt;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    span {
-        background-color: #ffffff;
-        position: relative;
-        z-index: 1;
-        padding: 0px 8px;
-        cursor: pointer;
-        color: rgb(138, 138, 138);
+
+@media(max-width:500px){
+    h4{
+        font-weight: 350;
+        font-size: 25px;
+        i{
+            font-size: 20px;
+            margin-left: 5px;
+            &:hover{
+                color: rgb(74, 74, 230);
+                cursor: pointer;
+            }
+        }
     }
-    &:after {
-        content: '';
-        display: block;
-        width: 50%;
-        height: 1px;
-        background-color: rgb(236, 236, 236);
-        position: absolute;
-        top: 50%;
-        margin-top: -1px;
-        z-index: 0;
+    
+    h3{
+        font-weight: 400;
+        font-size: 35px;
+        margin: 10px 0;
+        word-wrap: normal;
+    } 
+    h5{
+        font-weight: 300;
+        font-size: 20px;
     }
+    label{
+        font-weight: 300;
+        font-size: 18px;
+        margin: 0;
+    }
+    p{
+        font-size: 15px;
+    }   
 }
+

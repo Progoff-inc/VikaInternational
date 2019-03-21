@@ -3,7 +3,35 @@ body{
     background-image: url("./assets/images/bg.jpg");
     min-height: 100%;
     display: flex;flex-direction: column;
+    min-width: 320px;
 }
 *{
     box-sizing: border-box;
+}
+
+.line {
+    margin-top: 10px;
+    font-size: 12pt;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    span {
+        background-color: #ffffff;
+        position: relative;
+        z-index: 1;
+        padding: 0px 8px;
+        cursor: pointer;
+        color: rgb(138, 138, 138);
+    }
+    &:after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 1px;
+        background-color: rgb(236, 236, 236);
+        position: absolute;
+        top: 50%;
+        margin-top: -1px;
+        z-index: 0;
+    }
 }
