@@ -7,6 +7,8 @@ export class ModalService{
     modal:TemplateRef<any>;
     type:string;
     inpt:any;
+    closeFunc:Function;
+    
     
     constructor(private modalService: BsModalService){
 
@@ -17,11 +19,10 @@ export class ModalService{
         this.inpt = undefined;
         this.modalRef.hide();
     }
-    open(type, inpt?){
-        
+    open(type, inpt?,func?){
+        this.closeFunc=func?func:undefined;
         this.type = type;
         this.inpt = inpt?inpt:undefined;
-        console.log(inpt);
         this.modalRef = this.modalService.show(this.modal);
     }
 }

@@ -80,5 +80,13 @@ export class UserService{
             return false;
         }) 
     }
+
+    /**
+     * Проверка уникальности email
+     * @param email email пользователя
+     */
+    checkEmail(email){
+        return this.http.get<boolean>(this.baseUrl + 'UserController.php?Key=check-email&Email='+email);
+    }
 }
 

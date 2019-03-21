@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { GoodsService } from '../services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'booking-contact-info',
@@ -12,14 +13,10 @@ export class BookingContactInfoComponent implements OnInit {
   contactForm:FormGroup;
   submitted=false;
   @Input() parent;
-  constructor(public gs:GoodsService, private fb:FormBuilder, private us:UserService) { }
+  constructor(public gs:GoodsService, private fb:FormBuilder, private us:UserService, private ms:ModalService) { }
 
   ngOnInit() {
-    this.contactForm = this.fb.group({
-      Name: [this.us.user?(this.gs.book.User?this.gs.book.User.Name:this.us.user.Name):(this.gs.book.User?this.gs.book.User.Name:''), Validators.required],
-      Email: [this.us.user?(this.gs.book.User?this.gs.book.User.Email:this.us.user.Email):(this.gs.book.User?this.gs.book.User.Email:''), [Validators.required, Validators.email]],
-      Phone: [this.us.user?(this.gs.book.User?this.gs.book.User.Phone:this.us.user.Phone):(this.gs.book.User?this.gs.book.User.Phone:''), Validators.required],
-    });
+    this.setForm();
   }
 
   nextPage(){
@@ -27,10 +24,30 @@ export class BookingContactInfoComponent implements OnInit {
     if(this.contactForm.invalid){
       return;
     }
-    this.gs.book.User=JSON.parse(JSON.stringify(this.contactForm.value));
-    this.parent.nextStep();
+    if(this.us.user){
+      this.gs.book.User=JSON.parse(JSON.stringify(this.contactForm.value));
+      this.parent.nextStep();
+    }
+    else{
+      this.us.checkEmail(this.contactForm.value.Email).subscribe(data=>{
+        if (data){
+          this.gs.book.User=JSON.parse(JSON.stringify(this.contactForm.value));
+          this.parent.nextStep();
+        }
+        else {
+          this.ms.open('enter',this.contactForm.value.Email);
+        }
+      })
+    }
   }
 
+  setForm(){
+    this.contactForm = this.fb.group({
+      Name: ['', Validators.required],
+      Email: ['', [Validators.required, Validators.email]],
+      Phone: ['', Validators.required],
+    });
+  }
   get f() { return this.contactForm.controls; };
 
 }

@@ -1,18 +1,18 @@
 <form class="form my-3 mx-3 py-3 px-3" [formGroup]="contactForm">
   <div class="form-group">
     <label for="InputName" [ngClass]="{'text-danger':(submitted && f.Name.errors)}">Имя</label>
-    <input [ngClass]="{'border-danger':(submitted && f.Name.errors)}" formControlName="Name" type="text" class="form-control" id="InputName" placeholder="Ваше имя">
+    <input [ngClass]="{'border-danger':(submitted && f.Name.errors)}" [(ngModel)]="gs.book.User.Name" formControlName="Name" type="text" class="form-control" id="InputName" placeholder="Ваше имя">
     <small  class="form-text text-danger" *ngIf="submitted && f.Name.errors && f.Name.errors.required">Введите Ваше имя</small>
   </div>
   <div class="form-group">
     <label for="InputEmail" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>
-    <input type="email" [ngClass]="{'border-danger':(submitted && f.Email.errors)}" formControlName="Email" class="form-control" id="InputEmail" placeholder="Ваш Email">
+    <input type="email" [ngClass]="{'border-danger':(submitted && f.Email.errors)}" [(ngModel)]="gs.book.User.Email" formControlName="Email" class="form-control" id="InputEmail" placeholder="Ваш Email">
     <small class="form-text text-danger" *ngIf="submitted && f.Email.errors && f.Email.errors.required">Введите Ваш Email</small>
     <small class="form-text text-danger" *ngIf="submitted && f.Email.errors && f.Email.errors.email">Некорректный Email</small>
   </div>
   <div class="form-group">
     <label for="InputPhone" [ngClass]="{'text-danger':(submitted && f.Phone.errors)}">Телефон</label>
-    <input type="tel" [ngClass]="{'border-danger':(submitted && f.Phone.errors)}" formControlName="Phone" class="form-control" id="InputPhone" placeholder="Ваш телефон">
+    <input type="tel" [ngClass]="{'border-danger':(submitted && f.Phone.errors)}" [(ngModel)]="gs.book.User.Phone" formControlName="Phone" class="form-control" id="InputPhone" placeholder="Ваш телефон">
     <small  class="form-text text-danger" *ngIf="submitted && f.Phone.errors && f.Phone.errors.required">Введите Ваш телефон</small>
   </div>
   <button type="submit" class="btn btn-primary" (click)="nextPage()">Далее</button>

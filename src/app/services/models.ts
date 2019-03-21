@@ -59,6 +59,9 @@ export interface UserInfo{
 }
 
 export class Book{
+  constructor(){
+    this.User=new BookingUser();
+  }
   Cart:CartItem[] = [];
   User:BookingUser;
   DeliverType:DeliverTypes;
@@ -82,6 +85,11 @@ export class Book{
 }
 
 export class BookingUser{
+  constructor(){
+    this.Name='';
+    this.Email='';
+    this.Phone='';
+  }
   Name:string;
   Email:string;
   Phone:string;
