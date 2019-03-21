@@ -16,4 +16,7 @@ export class BookingSuccessComponent implements OnInit {
   goHome(){
     this.router.navigate(['']);
   }
+  goToProfile(){
+    this.router.navigate(['user-profile']);
+  }
 }

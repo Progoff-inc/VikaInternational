@@ -19,8 +19,5 @@ export class BookingComponent implements OnInit {
   }
   nextStep(){
     this.curStep++;
-    if (5==this.curStep+1){
-      this.gs.clearCart(false);
-    }
   }
 }

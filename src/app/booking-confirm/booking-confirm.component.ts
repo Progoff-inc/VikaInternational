@@ -41,7 +41,6 @@ export class BookingConfirmComponent implements OnInit {
           Type:c.Type
         })
       })
-      console.log(cart);
       this.gs.addDealGoods(cart).subscribe((d)=>{
         this.gs.clearCart(false);
         this.parent.nextStep();
