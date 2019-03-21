@@ -31,18 +31,19 @@ export class BookingConfirmComponent implements OnInit {
       DeliverType:this.gs.book.DeliverType
     }
     this.gs.addDeal(deal).subscribe(dealId=>{
-      console.log(dealId);
       this.gs.bookId=dealId;
       let cart =[];
       this.gs.book.Cart.forEach(c=>{
         cart.push({
           DealId:dealId,
-          GoodId:c.GoodId,
+          GoodId:c.Good.GoodId,
           Count:c.Count,
           Type:c.Type
         })
       })
-      this.gs.addDealGoods(cart).subscribe(()=>{
+      console.log(cart);
+      this.gs.addDealGoods(cart).subscribe((d)=>{
+        this.gs.clearCart(false);
         this.parent.nextStep();
       });
     })

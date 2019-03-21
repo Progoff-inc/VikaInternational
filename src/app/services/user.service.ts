@@ -5,6 +5,7 @@ import { CartItem } from './models';
 import { HttpClient } from '@angular/common/http';
 import { error } from '@angular/compiler/src/util';
 import { ModalService } from './modal.service';
+import { GoodsService } from './products.service';
 // import { OnInit } from '@angular/core';
 
 @Injectable()
@@ -12,7 +13,11 @@ export class UserService{
     public user:User;
     baseUrl:string='http://client.nomokoiw.beget.tech/vi/';
 
-    constructor(private router:Router, private http: HttpClient, private ms:ModalService){
+    constructor(private router:Router, private http: HttpClient, private gs:GoodsService){
+        this.updateUser();
+    }
+
+    updateUser(){
         if(localStorage.getItem('user')){
             let u:User = JSON.parse(localStorage.getItem('user'));
             this.getUserById(u.UserId);
@@ -72,6 +77,7 @@ export class UserService{
             if(user){
                 
                 this.user = user;
+                this.gs.book.User = {Name:user.Name, Email:user.Email, Phone:user.Phone};
                 localStorage.setItem('user',JSON.stringify(user));
                 return true;
             }

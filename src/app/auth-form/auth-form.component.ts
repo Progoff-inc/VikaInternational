@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../services/modal.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { GoodsService } from '../services/products.service';
 
 @Component({
   selector: 'auth-form',
@@ -12,7 +13,7 @@ export class AuthFormComponent implements OnInit {
   userForm:FormGroup;
   submitted = false;
   showError = false;
-  constructor(public ms:ModalService, private fb: FormBuilder, private us:UserService) { }
+  constructor(public ms:ModalService, private gs:GoodsService, private fb: FormBuilder, private us:UserService) { }
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -48,12 +49,12 @@ export class AuthFormComponent implements OnInit {
       if(user){
         sessionStorage.setItem('user',JSON.stringify(user));
           this.us.user = user;
+          this.gs.book.User = {Name:user.Name, Email:user.Email, Phone:user.Phone};
           this.ms.close();
       }
       else{
           this.showError = true;
       }
-      
     });
     
   }

@@ -15,9 +15,13 @@ export class UserProfileComponent implements OnInit {
       if(!localStorage.getItem('user') && !sessionStorage.getItem('user')){
         this.showModal();
       }
+      else{
+        this.us.updateUser();
+      }
   }
 
   ngOnInit() {
+    
 
   }
   showModal(){
