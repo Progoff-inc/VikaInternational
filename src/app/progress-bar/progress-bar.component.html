@@ -1,6 +1,6 @@
 <div class="container">
   <div class="d-flex justify-content-center">
-    <div class="d-flex con-bar" [ngClass]="{'act':i==parent.curStep, 'complete':i<parent.curStep}" *ngFor="let s of steps; let i = index;">
+    <div class="d-flex con-bar" [ngClass]="{'act':i==parent.curStep, 'complete':comp(i)}" *ngFor="let s of steps; let i = index;">
       <div (click)="chStep(i)"  class="bar-item">
         {{s}}
       </div>
