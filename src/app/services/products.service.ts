@@ -1,4 +1,4 @@
-import { Good, Section, Book, NewSection, NewGood, Sale, NewSale, NewDeal, NewCartItem, GoodTypes} from './models';
+import { Good, Section, Book, NewSection, NewGood, Sale, NewSale, NewDeal, NewCartItem, GoodTypes, UploadTypes} from './models';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -153,6 +153,22 @@ export class GoodsService{
      */
     addDealGoods(goods:NewCartItem[]){
       return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-deal-goods', goods);
+    }
+
+
+    /**
+     * Загрузка файлов на сервер
+     * @param id Id родителя изображения
+     * @param type тип родителя изображения
+     * @param data изображение (FormData)
+     */
+    UploadFile(id, type:UploadTypes, data) {
+      return this.http.post(this.baseUrl + 'DealsController.php?Key=upload-file&Id='+id+'&Type='+type, data, {
+        reportProgress:true,
+        observe:'events'
+      });
+
+    
     }
 }
 

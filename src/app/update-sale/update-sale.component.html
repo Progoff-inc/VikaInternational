@@ -7,9 +7,15 @@
       <small  class="form-text text-danger" *ngIf="s.Name==''">Название не может быть пустым</small>
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail13" [ngClass]="{'text-danger':s.Image==''}">Изображение</label>
-      <input [(ngModel)]="s.Image" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Image==''}" class="form-control" id="exampleInputEmail13"  placeholder="Ссылка на зображение раздела">
-      <small  class="form-text text-danger" *ngIf="s.Image==''">Изображение не может отсутствовать</small>
+      <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted && !image)}">Изображение</label>
+      <div class="d-flex align-items-start my-2">
+        <img *ngIf="!!s.Image" class="w-25" src="{{s.Image}}"><i *ngIf="!!s.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(s)"></i>
+      </div>
+      <p class="img-text" *ngIf="goodsFiles[i]"><span>{{goodsFiles[i].name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload(i)"></i> </p>
+      <input type="file" (change)="putFile($event, i)"  style="display:none" #gfileload>
+      <button *ngIf="!goodsFiles[i] && !s.Image" class="btn btn-link border-primary" (click)="gfileload.click()">Загрузить картинку</button>
+      <small  class="form-text text-danger" *ngIf="!goodsFiles[i] && !s.Image">Добавьте изображение</small>
+      <small  class="form-text text-danger" *ngIf="goodsImageInvalids[i]">Загрузите изображение .jpg</small>
     </div>
     <div class="form-group">
       <label for="exampleInputEmail13" [ngClass]="{'text-danger':(s.Price=='')}">Цена акции</label>
@@ -24,6 +30,6 @@
     
     
 
-    <button *ngIf="checkChanges(s)" type="submit" class="btn btn-primary" (click)="saveChanges(s)">Сохранить</button>
+    <button *ngIf="checkChanges(s, i) || goodsFiles[i]" type="submit" class="btn btn-primary" (click)="saveChanges(s, i)">Сохранить</button>
   </div>
 </div>

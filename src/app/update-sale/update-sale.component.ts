@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GoodsService } from '../services/products.service';
-import { Section, NewGood, Sale } from '../services/models';
+import { Section, NewGood, Sale, UploadTypes } from '../services/models';
+import { HttpEventType } from '@angular/common/http';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'update-sale',
@@ -11,10 +13,16 @@ export class UpdateSaleComponent implements OnInit {
   sales:Sale[];
   goods = [];
   salesCopy:Sale[];
-  constructor(private gs:GoodsService) { }
+  goodsImageInvalids:boolean[] = [];
+  goodsFiles = [];
+  constructor(private gs:GoodsService, private ls:LoadService) { }
 
   ngOnInit() {
     this.gs.getSales().subscribe(data => {
+      data.forEach(s => {
+        this.goodsFiles.push(null);
+      })
+      console.log(this.goodsFiles);
       this.sales = data;
       this.salesCopy = JSON.parse(JSON.stringify(data));
     })
@@ -23,18 +31,54 @@ export class UpdateSaleComponent implements OnInit {
     let s1 = this.salesCopy.find(se => se.SaleId==s.SaleId);
     return !this.deepEqual(s,s1);
   }
-  saveChanges(s:Sale){
+  saveChanges(s:Sale, i){
     for(let j = 0; j<Object.keys(s).length; j++){
       if(s[Object.keys(s)[j]]=='' || !s[Object.keys(s)[j]]){
-        return
+        if(Object.keys(s)[j] == 'Image' && this.goodsFiles[i]){
+          continue
+        }
+        else{
+          console.log(this.goodsFiles[i]);
+          return
+        }
+        
       }
     }
+    this.ls.showLoad=true;
+    
     
     this.gs.updateSale(s).subscribe((d)=>{
-      let s1 = this.salesCopy.find(se => se.SaleId==s.SaleId);
-      Object.keys(s).forEach(k => {
-        s1[k]=s[k]
-      })
+      if(this.goodsFiles[i]){
+        this.ls.load = 0;
+        var formData = new FormData();
+        formData.append('Data', this.goodsFiles[i]);
+        this.gs.UploadFile(s.SaleId, UploadTypes.Sale, formData).subscribe(event=>{
+          if(event.type == HttpEventType.UploadProgress){
+            this.ls.load = Math.round(event.loaded/event.total * 100);
+            
+          }
+          else if(event.type == HttpEventType.Response){
+            s.Image=event.body[0];
+            this.goodsFiles[i] = null;
+            let s1 = this.salesCopy.find(se => se.SaleId==s.SaleId);
+            Object.keys(s).forEach(k => {
+              s1[k]=s[k]
+            })
+            console.log(event);
+            this.ls.load = -1;
+            this.ls.showLoad=false;
+          }
+          
+        })
+      }else{
+        let s1 = this.salesCopy.find(se => se.SaleId==s.SaleId);
+        Object.keys(s).forEach(k => {
+          s1[k]=s[k]
+        })
+        this.ls.showLoad=false;
+      }
+      
+      
       
     });
   }
@@ -64,32 +108,25 @@ export class UpdateSaleComponent implements OnInit {
     }
     return propertiesInA == propertiesInB;
   }
-  addGood(sid,i){
-    console.log(sid);
-    if(this.goods[i].length==0 || this.checkGood(this.goods[i][this.goods[i].length-1])){
-      this.goods[i].push({
-        SectionId:sid,
-        Name:'',
-        Description:'',
-        Price:null,
-        Color:'',
-        Image:''
-      })
-    }
-    
 
+  unloadLink(s){
+    s.Image = null;
   }
-  checkGood(g){
-    let res = true;
-    Object.keys(g).forEach(k => {
+
+  putFile(event, i){
+    if(event.target.files[0].type=='image/jpeg'){
+      this.goodsFiles[i]=<File>event.target.files[0];
+      console.log(this.goodsFiles[i])
+      this.goodsImageInvalids[i]=false;
       
-      if((g[k]=='' || !g[k])&&k!='SectionId'){
-        console.log(k);
-        res = false;
-        
-      }
-    })
-    return res;
+    }else{
+      this.goodsImageInvalids[i]=true;
+    }
+
+    
+  }
+  unload(i){
+    this.goodsFiles[i]=null;
   }
 
 }

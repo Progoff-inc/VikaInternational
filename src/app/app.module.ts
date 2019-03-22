@@ -39,6 +39,8 @@ import { UpdateSectionComponent } from './update-section/update-section.componen
 import { UpdateGoodComponent } from './update-good/update-good.component';
 import { AddSaleComponent } from './add-sale/add-sale.component';
 import { UpdateSaleComponent } from './update-sale/update-sale.component';
+import { LoadService } from './services/load.service';
+import { LoadComponent } from './load/load.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import { UpdateSaleComponent } from './update-sale/update-sale.component';
     UpdateSectionComponent,
     UpdateGoodComponent,
     AddSaleComponent,
-    UpdateSaleComponent
+    UpdateSaleComponent, 
+    LoadComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,7 @@ import { UpdateSaleComponent } from './update-sale/update-sale.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [GoodsService, UserService, FormBuilder, HttpClient, ModalService, BsModalService],
+  providers: [GoodsService, UserService, FormBuilder, HttpClient, ModalService, BsModalService, LoadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

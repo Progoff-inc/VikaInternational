@@ -127,9 +127,14 @@ export enum GoodTypes{
   Sale = "sale"
 }
 
+export enum UploadTypes{
+  Sale = "sale", 
+  Section = "section",
+  Good = "good"
+}
+
 export interface NewSection{
   Name:string;
-  Image:string;
 }
 
 export interface NewGood{
@@ -138,7 +143,6 @@ export interface NewGood{
   Description:string;
   Price:number;
   Color:string;
-  Image:string;
 }
 
 export interface Sale{
@@ -154,4 +158,10 @@ export interface NewSale{
   Description:string;
   Price:number;
   Image:string;
+}
+
+export interface NewSectionImage{
+  SectionId?:number;
+  Type?:UploadTypes;
+  Image:File;
 }

@@ -1,4 +1,4 @@
-<div *ngIf="section" class="container d-flex justify-content-center flex-wrap my-3" style="min-height:90vh">
+<div *ngIf="section" class="container d-flex justify-content-center flex-wrap my-3 align-items-start" style="min-height:90vh">
   <div class="card rounded-0 p-2" style="width: 18rem; margin: 5px;" *ngFor="let g of section.Goods">
       <a routerLink="/product/{{g.Id}}"><img src="{{g.Image}}" class="card-img-top" ></a>
     <div class="card-body">

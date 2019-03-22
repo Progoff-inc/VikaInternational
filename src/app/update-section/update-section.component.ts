@@ -13,16 +13,27 @@ export class UpdateSectionComponent implements OnInit {
   sectionsCopy:Section[];
   submits:boolean[] = [];
   sGoods:boolean[] = [];
+
+  sectionsFiles:SectionFile[] = [];
+  sectionsImageInvalids:SectionImageInvalid[] = [];
+  goodsFiles:File[] = [];
   constructor(private gs:GoodsService) { }
 
   ngOnInit() {
     this.gs.getAdminSections().subscribe(data => {
       this.sections = data;
-      data.forEach(x => {
+      for(let i = 0;i<data.length; i++) {
         this.submits.push(false);
         this.sGoods.push(false);
         this.goods.push([]);
-      })
+        
+        this.sectionsFiles.push(new SectionFile());
+        this.sectionsImageInvalids.push(new SectionImageInvalid());
+        data[i].Goods.forEach(g => {
+          this.sectionsFiles[i].Goods.push(null);
+          this.sectionsImageInvalids[i].Goods.push(false);
+        })
+      }
       this.sectionsCopy = JSON.parse(JSON.stringify(data));
     })
   }
@@ -42,7 +53,7 @@ export class UpdateSectionComponent implements OnInit {
       }
     }
     
-    this.gs.updateSection({Name:s.Name, Image:s.Image}, s.SectionId).subscribe((d)=>{
+    this.gs.updateSection({Name:s.Name}, s.SectionId).subscribe((d)=>{
       console.log(d);
       this.gs.updateSectionGoods(s.Goods).subscribe(()=> {
         if(this.goods[i].length>0){
@@ -126,4 +137,53 @@ export class UpdateSectionComponent implements OnInit {
     return res;
   }
 
+  putFile(event, type='section', i, j?){
+    if(event.target.files[0].type=='image/jpeg'){
+      if(type=='section'){
+        this.sectionsFiles[i].File = <File>event.target.files[0];
+        this.sectionsImageInvalids[i].Invalid = false;
+      }
+      else{
+        this.sectionsFiles[i].Goods[j]=<File>event.target.files[0];
+        this.sectionsImageInvalids[i].Goods[j]=false;
+      }
+      
+    }else{
+      if(type=='section'){
+        this.sectionsImageInvalids[i].Invalid = true;
+      }
+      else{
+        this.sectionsImageInvalids[i].Goods[j]=true;
+      }
+    }
+
+    
+  }
+  unload(type='section', i, j?){
+    if(type=='section'){
+      this.sectionsFiles[i].File = null;
+    }
+    else{
+      this.sectionsFiles[i].Goods[j]=null;
+    }
+  }
+
+}
+
+export class SectionFile{
+  constructor(){
+    this.File = null;
+    this.Goods = [];
+  }
+  File:File;
+  Goods:File[];
+}
+
+export class SectionImageInvalid{
+  constructor(){
+    this.Invalid = false;
+    this.Goods = [];
+  }
+  Invalid:boolean;
+  Goods:boolean[];
 }
