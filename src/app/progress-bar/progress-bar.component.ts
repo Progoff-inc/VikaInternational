@@ -32,16 +32,16 @@ export class ProgressBarComponent implements OnInit {
     }
   }
   comp(i){
-    if(this.gs.bookId==null&&i==0){
+    if(i==0){
       return true;
     }
-    if(this.gs.bookId==null&&this.gs.book.User&&i==1){
+    if(this.gs.book.User&&i==1){
       return true;
     }
-    if(this.gs.bookId==null&&this.gs.book.DeliverType&&this.gs.book.PayType&&i==2){
+    if(this.gs.book.DeliverType&&this.gs.book.PayType&&i==2){
       return true;
     }
-    if(this.gs.bookId==null&&this.gs.book.Cart&&this.gs.book.User&&this.gs.book.DeliverType&&this.gs.book.PayType&&i==3){
+    if(this.gs.book.User&&this.gs.book.DeliverType&&this.gs.book.PayType&&i==3){
       return true;
     }
   }
