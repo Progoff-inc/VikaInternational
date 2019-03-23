@@ -135,6 +135,7 @@ export enum UploadTypes{
 
 export interface NewSection{
   Name:string;
+  Image?:string;
 }
 
 export interface NewGood{

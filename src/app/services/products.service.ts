@@ -163,7 +163,7 @@ export class GoodsService{
      * @param data изображение (FormData)
      */
     UploadFile(id, type:UploadTypes, data) {
-      return this.http.post(this.baseUrl + 'DealsController.php?Key=upload-file&Id='+id+'&Type='+type, data, {
+      return this.http.post<string>(this.baseUrl + 'DealsController.php?Key=upload-file&Id='+id+'&Type='+type, data, {
         reportProgress:true,
         observe:'events'
       });
