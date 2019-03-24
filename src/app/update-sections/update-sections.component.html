@@ -11,7 +11,7 @@
     </div>
     
     <div class="change-section" *ngIf="curSection && curSection.SectionId == s.SectionId">
-      <update-section [section]="s" [save]="save"></update-section>
+      <update-section [section]="s" [parent]="vm"></update-section>
     </div>
   </div>
 </div>

@@ -11,7 +11,7 @@ import { deepEqual } from 'assert';
 export class UpdateSectionsComponent implements OnInit {
   sections:Section[];
   curSection:Section;
-
+  vm:UpdateSectionsComponent;
   
   constructor(private gs:GoodsService) { }
 
@@ -19,6 +19,8 @@ export class UpdateSectionsComponent implements OnInit {
     this.gs.getAdminSections().subscribe(data => {
       this.sections = data;
     })
+    this.vm=this;
+    
   }
   change(s:Section){
     this.curSection=s;

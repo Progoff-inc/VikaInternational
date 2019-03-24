@@ -3,6 +3,7 @@ import { GoodsService } from '../services/products.service';
 import { Section, NewGood, UploadTypes } from '../services/models';
 import { HttpEventType } from '@angular/common/http';
 import { LoadService } from '../services/load.service';
+import { UpdateSectionsComponent } from '../update-sections/update-sections.component';
 
 @Component({
   selector: 'update-section',
@@ -11,7 +12,7 @@ import { LoadService } from '../services/load.service';
 })
 export class UpdateSectionComponent implements OnInit {
   @Input() section:Section;
-  @Input() save:Function;
+  @Input() parent:UpdateSectionsComponent;
   sectionCopy:Section;
   goods:NewGood[] = [];
   
@@ -34,6 +35,9 @@ export class UpdateSectionComponent implements OnInit {
     return !this.deepEqual(this.section,this.sectionCopy);
   }
 
+  saveChanges(s,i){
+    this.parent.hide();
+  }
 
 
   
