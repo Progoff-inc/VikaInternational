@@ -167,8 +167,18 @@ export class GoodsService{
         reportProgress:true,
         observe:'events'
       });
+    }
 
-    
+    removeSale(id){
+      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-sale&Id='+id);
+    }
+
+    removeSection(id){
+      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-section&Id='+id);
+    }
+
+    removeGood(id){
+      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-good&Id='+id);
     }
 }
 

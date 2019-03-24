@@ -1,6 +1,10 @@
 <div class="container-fluid py-3">
   <div class="section" *ngFor="let s of sales; let i = index;">
-    <h3  style="font-weight:400">{{s.Name}}</h3>
+    <div class="d-flex justify-content-between">
+        <h3  style="font-weight:400">{{s.Name}}</h3>
+        <button class="btn btn-link text-danger" (click)="remove(s.SaleId)">Удалить</button>
+    </div>
+    
     <div class="form-group">
       <label  [ngClass]="{'text-danger':s.Name==''}">Название раздела</label>
       <input [(ngModel)]="s.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Name==''}" class="form-control"  placeholder="Название раздела">

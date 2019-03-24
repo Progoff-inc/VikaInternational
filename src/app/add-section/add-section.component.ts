@@ -121,7 +121,7 @@ export class AddSectionComponent implements OnInit {
     }
   }
   addGood(){
-    if(this.goods.length==0 || this.checkGood(this.goods[this.goods.length-1])){
+    if(this.goods.length==0 || this.checkGood(this.goods[this.goods.length-1]) || !this.goodsFiles[this.goods.length-1]){
       this.goods.push({
         SectionId:0,
         Name:'',
@@ -146,6 +146,12 @@ export class AddSectionComponent implements OnInit {
       }
     })
     return res;
+  }
+
+  removeNew(i){
+    this.goods.splice(i,1);
+    this.goodsFiles.splice(i,1);
+    this.goodsImageInvalids.splice(i,1);
   }
   get f() { return this.sectionForm.controls; };
 

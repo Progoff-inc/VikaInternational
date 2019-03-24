@@ -19,7 +19,11 @@
     <p  class="line" ><span >Товары <i class="fa fa-angle-down" ></i></span></p>
     <div class="goods">
       <div *ngFor="let g of section.Goods; let j = index;">
-        <h5>{{g.Name}}</h5>
+        
+        <div class="d-flex justify-content-between">
+            <h5>{{g.Name}}</h5>
+            <button class="btn btn-link text-danger"  (click)="removeNew(j)">Отменить добавление</button>
+        </div>
         <div class="new-good d-flex flex-wrap justify-content-between" >
           
           <div class="form-group">

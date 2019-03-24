@@ -11,6 +11,7 @@ import { deepEqual } from 'assert';
 export class UpdateSectionsComponent implements OnInit {
   sections:Section[];
   curSection:Section;
+  curIndex = null;
   vm:UpdateSectionsComponent;
   
   constructor(private gs:GoodsService) { }
@@ -22,15 +23,21 @@ export class UpdateSectionsComponent implements OnInit {
     this.vm=this;
     
   }
-  change(s:Section){
+  change(s:Section, i){
     this.curSection=s;
-    
+    this.curIndex = i;
   }
-  remove(id:any){
-    confirm(id);
+  remove(id, i){
+    this.gs.removeSection(id).subscribe(d => {
+      if(this.curIndex==i){
+        this.curSection = null;
+      }
+      this.sections.splice(i,1);
+    })
   }
   hide(){
     this.curSection=null;
+    this.curIndex=null;
   }
 
   

@@ -128,5 +128,13 @@ export class UpdateSaleComponent implements OnInit {
   unload(i){
     this.goodsFiles[i]=null;
   }
+  remove(id, i){
+    this.gs.removeSale(id).subscribe(d => {
+      this.sales.splice(i,1);
+      this.salesCopy.splice(i,1);
+      this.goodsImageInvalids.splice(i,1);
+      this.goodsFiles.splice(i,1);
+    })
+  }
 
 }

@@ -190,7 +190,7 @@ export class UpdateSectionComponent implements OnInit {
     return propertiesInA == propertiesInB;
   }
   addGood(){
-    if(this.goods.length==0 || this.checkGood(this.goods[this.goods.length-1])){
+    if(this.goods.length==0 || this.checkGood(this.goods[this.goods.length-1]) || !this.goodsFiles[this.goods.length-1]){
       this.goods.push({
         SectionId:this.section.SectionId,
         Name:'',
@@ -199,6 +199,7 @@ export class UpdateSectionComponent implements OnInit {
         Color:''
       })
       this.goodsFiles.push(null);
+      this.goodsImageInvalids.push(false);
     }
     
 
@@ -234,7 +235,6 @@ export class UpdateSectionComponent implements OnInit {
         this.sGoodsImageInvalids[i]=false;
       }
       else{
-        console.log(111)
         this.goodsFiles[i]=<File>event.target.files[0];
         console.log( this.goodsFiles[i])
         this.goodsImageInvalids[i]=false;
@@ -270,6 +270,21 @@ export class UpdateSectionComponent implements OnInit {
   }
   getUrl(f:File){
     return URL.createObjectURL(f).split('blob:')[1];
+  }
+
+  remove(id, i){
+    this.gs.removeGood(id).subscribe(d => {
+      this.sectionCopy.Goods.splice(i,1);
+      this.section.Goods.splice(i,1);
+      this.sGoodsFiles.splice(i,1);
+      this.sGoodsImageInvalids.splice(i,1);
+    })
+  }
+
+  removeNew(i){
+      this.goods.splice(i,1);
+      this.goodsFiles.splice(i,1);
+      this.goodsImageInvalids.splice(i,1);
   }
 
 }
