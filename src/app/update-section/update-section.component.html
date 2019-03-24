@@ -1,49 +1,51 @@
 <div class="container-fluid py-3">
-  <div class="section" *ngFor="let s of sections; let i = index;">
-    <h3  style="font-weight:400">{{s.Name}}</h3>
+  <div class="section">
     <div class="form-group">
-      <label  [ngClass]="{'text-danger':s.Name==''}">Название раздела</label>
-      <input [(ngModel)]="s.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Name==''}" class="form-control"  placeholder="Название раздела">
-      <small  class="form-text text-danger" *ngIf="s.Name==''">Название не может быть пустым</small>
+      <label  [ngClass]="{'text-danger':section.Name==''}">Название раздела</label>
+      <input [(ngModel)]="section.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':section.Name==''}" class="form-control"  placeholder="Название раздела">
+      <small  class="form-text text-danger" *ngIf="section.Name==''">Название не может быть пустым</small>
     </div>
     <div class="form-group">
       <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted )}">Изображение</label>
       <div class="d-flex align-items-start my-2">
-        <img *ngIf="!!s.Image" class="w-25" src="{{s.Image}}"><i *ngIf="!!s.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(s)"></i>
+        <img *ngIf="!!section.Image" class="w-25" src="{{section.Image}}"><i *ngIf="!!section.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(section)"></i>
       </div>
-      <p class="img-text" *ngIf="sectionsFiles[i].File"><span>{{sectionsFiles[i].File.name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload('section', i)"></i> </p>
-      <input type="file" (change)="putFile($event, 'section', i)"  style="display:none" #gfileload>
-      <button *ngIf="!sectionsFiles[i].File && !s.Image" class="btn btn-link border-primary" (click)="gfileload.click()">Загрузить картинку</button>
-      <small  class="form-text text-danger" *ngIf="!sectionsFiles[i].File && !s.Image">Добавьте изображение</small>
-      <small  class="form-text text-danger" *ngIf="sectionsImageInvalids[i].Invalid">Загрузите изображение .jpg</small>
+      <p class="img-text" *ngIf="image"><span>{{image.name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload()"></i> </p>
+      <input type="file" (change)="putFile($event, 'section')"  style="display:none" #fileload>
+      <button type="button" *ngIf="!image && !section.Image" class="btn btn-link border-primary" (click)="fileload.click()">Загрузить картинку</button>
+      <small  class="form-text text-danger" *ngIf="!image && !section.Image">Добавьте изображение</small>
+      <small  class="form-text text-danger" *ngIf="invelidImage">Загрузите изображение .jpg</small>
     </div>
-    <p  class="line" ><span (click)="showGoods(i)">Товары <i class="fa" [ngClass] = "{'fa-angle-down':!sGoods[i], ' fa-angle-up':sGoods[i]}"></i></span></p>
-    <div *ngIf="sGoods[i]" class="goods">
-      <h4>Товары раздела</h4>
-      <div *ngFor="let g of s.Goods; let j = index;">
+    <p  class="line" ><span >Товары <i class="fa fa-angle-down" ></i></span></p>
+    <div class="goods">
+      <div *ngFor="let g of section.Goods; let j = index;">
         <h5>{{g.Name}}</h5>
         <div class="new-good d-flex flex-wrap justify-content-between" >
-          <div class="form-group">
-            <label  [ngClass]="{'text-danger':g.Name==''}">Название товара</label>
-            <input [(ngModel)]="g.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':g.Name==''}" class="form-control"  placeholder="Название товара">
-            <small  class="form-text text-danger" *ngIf="g.Name==''">Введите название товара</small>
-          </div>
-          <div class="form-group">
-            <label  [ngClass]="{'text-danger':(g.Color=='')}">Цвет товара</label>
-            <input [(ngModel)]="g.Color" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':g.Color==''}" class="form-control"  placeholder="Цвет товара">
-            <small  class="form-text text-danger" *ngIf="g.Color==''">Введите цвет товара</small>
-          </div>
+          
           <div class="form-group">
             <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted )}">Изображение</label>
-            <div class="d-flex align-items-start my-2">
-              <img *ngIf="!!g.Image" class="w-25" src="{{g.Image}}"><i *ngIf="!!g.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(g)"></i>
+            <div *ngIf="!!g.Image"  class="d-flex align-items-start my-2">
+              <img class="w-25" src="{{g.Image}}"><i  class="fa fa-times" aria-hidden="true" (click)="unloadLink(g)"></i>
             </div>
-            <p class="img-text" *ngIf="sectionsFiles[i].Goods[j]"><span>{{sectionsFiles[i].Goods[j].name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload('good',i,j)"></i> </p>
-            <input type="file" (change)="putFile($event, 'good', i, j)"  style="display:none" #gfileload>
-            <button *ngIf="!sectionsFiles[i].Goods[j] && !g.Image" class="btn btn-link border-primary" (click)="gfileload.click()">Загрузить картинку</button>
-            <small  class="form-text text-danger" *ngIf="!sectionsFiles[i].Goods[j] && !g.Image">Добавьте изображение</small>
-            <small  class="form-text text-danger" *ngIf="sectionsImageInvalids[i].Goods[j]">Загрузите изображение .jpg</small>
+            <!-- <div *ngIf="goodsFiles[j]"  class="d-flex align-items-start my-2">
+                <img class="w-25" src="{{getUrl(goodsFiles[j])}}"><i  class="fa fa-times" aria-hidden="true" (click)="unload('good',j)"></i>
+            </div> -->
+            <p class="img-text" *ngIf="sGoodsFiles[j]"><span>{{sGoodsFiles[j].name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload('section-good',j)"></i> </p>
+            <input type="file" (change)="putFile($event, 'section-good', j)"  style="display:none" #gfileload>
+            <button type="button" *ngIf="!sGoodsFiles[j] && !g.Image" class="btn btn-link border-primary" (click)="gfileload.click()">Загрузить картинку</button>
+            <small  class="form-text text-danger" *ngIf="!sGoodsFiles[j] && !g.Image">Добавьте изображение</small>
+            <small  class="form-text text-danger" *ngIf="sGoodsImageInvalids[j]">Загрузите изображение .jpg</small>
           </div>
+          <div class="form-group">
+              <label  [ngClass]="{'text-danger':g.Name==''}">Название товара</label>
+              <input [(ngModel)]="g.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':g.Name==''}" class="form-control"  placeholder="Название товара">
+              <small  class="form-text text-danger" *ngIf="g.Name==''">Введите название товара</small>
+            </div>
+            <div class="form-group">
+              <label  [ngClass]="{'text-danger':(g.Color=='')}">Цвет товара</label>
+              <input [(ngModel)]="g.Color" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':g.Color==''}" class="form-control"  placeholder="Цвет товара">
+              <small  class="form-text text-danger" *ngIf="g.Color==''">Введите цвет товара</small>
+            </div>
           <div class="form-group">
             <label  [ngClass]="{'text-danger':(!g.Price)}">Цена товара</label>
             <input type="number" [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(!g.Price)}" class="form-control"  placeholder="Цена товара">
@@ -57,48 +59,48 @@
           <small  class="form-text text-danger" *ngIf="!g.Description">Введите описание товара</small>
         </div>
       </div>
-      <h4 *ngIf="goods[i].length>0">Новые товары</h4>
-      <div *ngFor="let g of goods[i]; let j = index">
+      <h4 *ngIf="goods.length>0">Новые товары</h4>
+      <div *ngFor="let g of goods; let j = index">
           <div class="new-good d-flex flex-wrap justify-content-between" >
             <div class="form-group">
-              <label  [ngClass]="{'text-danger':(submits[i] && g.Name=='')}">Название товара</label>
-              <input [(ngModel)]="g.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && g.Name=='')}" class="form-control"  placeholder="Название товара">
-              <small  class="form-text text-danger" *ngIf="submits[i] && g.Name==''">Введите название товара</small>
+              <label  [ngClass]="{'text-danger':(g.Name=='')}">Название товара</label>
+              <input [(ngModel)]="g.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(g.Name=='')}" class="form-control"  placeholder="Название товара">
+              <small  class="form-text text-danger" *ngIf="g.Name==''">Введите название товара</small>
             </div>
             <div class="form-group">
-              <label  [ngClass]="{'text-danger':(submits[i] && g.Color=='')}">Цвет товара</label>
-              <input [(ngModel)]="g.Color" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && g.Color=='')}" class="form-control"  placeholder="Цвет товара">
-              <small  class="form-text text-danger" *ngIf="submits[i] && g.Color==''">Введите цвет товара</small>
+              <label  [ngClass]="{'text-danger':(g.Color=='')}">Цвет товара</label>
+              <input [(ngModel)]="g.Color" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(g.Color=='')}" class="form-control"  placeholder="Цвет товара">
+              <small  class="form-text text-danger" *ngIf="g.Color==''">Введите цвет товара</small>
             </div>
             <div class="form-group">
               <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted )}">Изображение</label>
               <div class="d-flex align-items-start my-2">
                 <img *ngIf="!!g.Image" class="w-25" src="{{g.Image}}"><i *ngIf="!!g.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(g)"></i>
               </div>
-              <p class="img-text" *ngIf="goodsFiles[i][j]"><span>{{goodsFiles[i][j].name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload('good',i,j)"></i> </p>
-              <input type="file" (change)="putFile($event, 'good', i, j)"  style="display:none" #gfileload>
-              <button *ngIf="!goodsFiles[i][j] && !g.Image" class="btn btn-link border-primary" (click)="gfileload.click()">Загрузить картинку</button>
-              <small  class="form-text text-danger" *ngIf="!goodsFiles[i][j] && !g.Image">Добавьте изображение</small>
-              <small  class="form-text text-danger" *ngIf="sectionsImageInvalids[i].Goods[j]">Загрузите изображение .jpg</small>
+              <p class="img-text" *ngIf="goodsFiles[j]"><span>{{goodsFiles[j].name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload('good',i)"></i> </p>
+              <input type="file" (change)="putFile($event, 'good', j)"  style="display:none" #gfileload>
+              <button *ngIf="!goodsFiles[j] && !g.Image" class="btn btn-link border-primary" (click)="gfileload.click()">Загрузить картинку</button>
+              <small  class="form-text text-danger" *ngIf="!goodsFiles[j] && !g.Image">Добавьте изображение</small>
+              <small  class="form-text text-danger" *ngIf="goodsImageInvalids[j]">Загрузите изображение .jpg</small>
             </div>
             <div class="form-group">
-              <label  [ngClass]="{'text-danger':(submits[i] && !g.Price)}">Цена товара</label>
-              <input type="number" [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && !g.Price)}" class="form-control"  placeholder="Цена товара">
-              <small  class="form-text text-danger" *ngIf="submits[i] && !g.Price">Введите цену товара</small>
+              <label  [ngClass]="{'text-danger':(!g.Price)}">Цена товара</label>
+              <input type="number" [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(!g.Price)}" class="form-control"  placeholder="Цена товара">
+              <small  class="form-text text-danger" *ngIf="!g.Price">Введите цену товара</small>
             </div>
             
           </div>
           <div class="form-group">
-            <label  [ngClass]="{'text-danger':(submits[i] && !g.Description)}">Описание товара</label>
-            <textarea [(ngModel)]="g.Description" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submits[i] && !g.Description)}" class="form-control"  placeholder="Описание товара" rows="3"></textarea>
-            <small  class="form-text text-danger" *ngIf="submits[i] && !g.Description">Введите описание товара</small>
+            <label  [ngClass]="{'text-danger':(!g.Description)}">Описание товара</label>
+            <textarea [(ngModel)]="g.Description" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(!g.Description)}" class="form-control"  placeholder="Описание товара" rows="3"></textarea>
+            <small  class="form-text text-danger" *ngIf="!g.Description">Введите описание товара</small>
           </div>
         </div>
       
-      <button class="btn btn-link" (click)="addGood(s.SectionId,i)">Добавить товар</button>
+      <button class="btn btn-link" (click)="addGood(section.SectionId,i)">Добавить товар</button>
     </div>
     
 
-    <button *ngIf="checkChanges(s) || goods[i].length>0" type="submit" class="btn btn-primary" (click)="saveChanges(s,i)">Сохранить</button>
+    <button *ngIf="checkChanges(s) || goods.length>0" type="submit" class="btn btn-primary" (click)="saveChanges(s,i)">Сохранить</button>
   </div>
 </div>

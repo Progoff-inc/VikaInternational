@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { GoodsService } from '../services/products.service';
 import { Section, NewGood, UploadTypes } from '../services/models';
 import { HttpEventType } from '@angular/common/http';
@@ -10,175 +10,31 @@ import { LoadService } from '../services/load.service';
   styleUrls: ['./update-section.component.less']
 })
 export class UpdateSectionComponent implements OnInit {
-  sections:Section[];
-  goods = [];
-  sectionsCopy:Section[];
-  submits:boolean[] = [];
-  sGoods:boolean[] = [];
-  loadGoodsCount = [0,0];
-  sectionsFiles:SectionFile[] = [];
-  sectionsImageInvalids:SectionImageInvalid[] = [];
-  goodsFiles = [];
+  @Input() section:Section;
+  @Input() save:Function;
+  sectionCopy:Section;
+  goods:NewGood[] = [];
+  
+  image:File;
+  invalidImage = false;
+  goodsImageInvalids:boolean[] = [];
+  sGoodsImageInvalids:boolean[] = [];
+  goodsFiles:File[] = [];
+  sGoodsFiles:File[] = [];
   constructor(private gs:GoodsService, private ls:LoadService) { }
 
   ngOnInit() {
-    this.gs.getAdminSections().subscribe(data => {
-      this.sections = data;
-      for(let i = 0;i<data.length; i++) {
-        this.submits.push(false);
-        this.sGoods.push(false);
-        this.goods.push([]);
-        this.goodsFiles.push([]);
-        
-        this.sectionsFiles.push(new SectionFile());
-        this.sectionsImageInvalids.push(new SectionImageInvalid());
-        data[i].Goods.forEach(g => {
-          this.sectionsFiles[i].Goods.push(null);
-          this.sectionsImageInvalids[i].Goods.push(false);
-        })
-      }
-      this.sectionsCopy = JSON.parse(JSON.stringify(data));
+    this.sectionCopy = JSON.parse(JSON.stringify(this.section));
+    this.section.Goods.forEach(()=>{
+      this.sGoodsImageInvalids.push(false);
+      this.sGoodsFiles.push(null);
     })
   }
-  showGoods(i){
+  checkChanges(){
+    return !this.deepEqual(this.section,this.sectionCopy);
+  }
 
-    this.sGoods[i]=!this.sGoods[i];
-  }
-  checkChanges(s:Section){
-    let s1 = this.sectionsCopy.find(se => se.SectionId==s.SectionId);
-    return !this.deepEqual(s,s1);
-  }
-  saveChanges(s:Section, i){
-    this.submits[i]=true;
-    for(let j = 0; j<this.goods[i].length; j++){
-      if(!this.checkGood(this.goods[i][j])){
-        return
-      }
-    }
-    
-    this.gs.updateSection({Name:s.Name, Image:s.Image}, s.SectionId).subscribe((d)=>{
-      var ss = this.sectionsCopy.find(se => se.SectionId==s.SectionId);
-      ss.Name = s.Name;
-      
-      console.log(d);
-      if(this.sectionsFiles[i].File){
-        let formData = new FormData();
-        formData.append('Data', this.sectionsFiles[i].File);
-        this.gs.UploadFile(s.SectionId, UploadTypes.Section, formData).subscribe((event)=>{
-          if(event.type == HttpEventType.UploadProgress){
-            this.ls.load = Math.round(event.loaded/event.total * 100);
-            
-          }
-          else if(event.type == HttpEventType.Response){
-            this.sectionsFiles[i].File = null;
-            ss.Image =event.body[0];
-            s.Image = event.body[0];
-          }
-        })
-        
-        
-      }
-      if(!this.deepEqual(s.Goods, this.sectionsCopy[i].Goods)){
-        this.loadGoodsCount[0]=this.sectionsFiles[i].Goods.filter(x => x).length;
-        this.gs.updateSectionGoods(s.Goods).subscribe(()=> {
-          
-          if(this.loadGoodsCount[0]>0){
-            for(let j = 0; j<s.Goods.length;j++){
-              if(this.sectionsFiles[i].Goods[j]){
-                let gFormData = new FormData();
-                gFormData.append('Data', this.sectionsFiles[i].Goods[j]);
-                this.gs.UploadFile(s.Goods[j].GoodId, UploadTypes.Good, gFormData).subscribe((event)=>{
-                  if(event.type == HttpEventType.UploadProgress){
-                    console.log(event);
-                    this.ls.load = Math.round(event.loaded/event.total * 100);
-                    
-                  }
-                  else if(event.type == HttpEventType.Response){
-                    this.loadGoodsCount[0]--;
-                    this.ls.load= 0;
-                    s.Goods[j].Image=event.body[0];
-                    if(this.loadGoodsCount[0]==0){
-                      s.Goods.forEach(g => {
-                        let sG = ss.Goods.find(s => s.GoodId == g.GoodId);
-                        Object.keys(sG).forEach(k => {
-                          sG[k]=g[k];
-                        })
-                      })
-                      if(this.loadGoodsCount[1]==0){
-                      
-                        this.ls.load = -1;
-                        this.ls.showLoad=false;
-                      }
-                    }
-                    
-                  }
-                })
-              }
-            }
-          }
-          else if(this.goods[i].length==0){
-            ss.Goods = JSON.parse(JSON.stringify(s.Goods));
-          }
-          
-          
-          
-        })
-      }
-      if(this.goods[i].length>0){
-        this.loadGoodsCount[1]=this.goods[i].length;
-        this.gs.addGoods(this.goods[i]).subscribe(data=> {
-          console.log(data);
-          this.goods[i] = [];
-          this.submits[i] = false;
-         
-          for(let j = 0; j<data.length;j++) {
-            let gFormData = new FormData();
-            gFormData.append('Data', this.sectionsFiles[i].Goods[j]);
-            this.gs.UploadFile(data[j].GoodId, UploadTypes.Good, gFormData).subscribe((event)=>{
-              if(event.type == HttpEventType.UploadProgress){
-                console.log(event);
-                this.ls.load = Math.round(event.loaded/event.total * 100);
-                
-              }
-              else if(event.type == HttpEventType.Response){
-                this.loadGoodsCount[1]--;
-                this.ls.load= 0;
-                data[j].Image=event.body[0];
-                if(this.loadGoodsCount[1]==0){
-                  this.goods[i]=[];
-                  this.goodsFiles[i]=[];
-                  data.forEach(d => {
-                    ss.Goods.push(d);
-                    s.Goods.push(d);
-                  })
-                  if(this.loadGoodsCount[0]==0){
-                    this.ls.load = -1;
-                    this.ls.showLoad=false;
-                  }
-                  
-                }
-                
-              }
-              
-            })
-            
-          }
-        });
-        
-      }
-      if(this.deepEqual(s.Goods, this.sectionsCopy[i].Goods) && this.goods[i].length==0){
-        this.submits[i] = false;
-        
-        
-          var ss = this.sectionsCopy.find(se => se.SectionId==s.SectionId);
-          ss.Name = s.Name;
-          ss.Image = s.Image;
-          ss.Goods = JSON.parse(JSON.stringify(s.Goods));
-      }
-      
-      
-    });
-  }
+
 
   
   deepEqual(a, b) {
@@ -205,17 +61,16 @@ export class UpdateSectionComponent implements OnInit {
     }
     return propertiesInA == propertiesInB;
   }
-  addGood(sid,i){
-    console.log(sid);
-    if(this.goods[i].length==0 || this.checkGood(this.goods[i][this.goods[i].length-1])){
-      this.goods[i].push({
-        SectionId:sid,
+  addGood(){
+    if(this.goods.length==0 || this.checkGood(this.goods[this.goods.length-1])){
+      this.goods.push({
+        SectionId:this.section.SectionId,
         Name:'',
         Description:'',
         Price:null,
         Color:''
       })
-      this.goodsFiles[i].push(null);
+      this.goodsFiles.push(null);
     }
     
 
@@ -233,58 +88,56 @@ export class UpdateSectionComponent implements OnInit {
     return res;
   }
 
-  putFile(event, type='section', i, j?){
+  putFile(event, type='section', i?){
     console.log(event.target.files);
     if(event.target.files[0].type=='image/jpeg'){
       if(type=='section'){
-        this.sectionsFiles[i].File = <File>event.target.files[0];
-        this.sectionsImageInvalids[i].Invalid = false;
+        this.image = <File>event.target.files[0];
+        
+        this.invalidImage = false;
+      }
+      else if(type=='section-good'){
+        
+        this.sGoodsFiles[i]=<File>event.target.files[0];
+        this.sGoodsImageInvalids[i]=false;
       }
       else{
         console.log(111)
-        this.sectionsFiles[i].Goods[j]=<File>event.target.files[0];
-        this.sectionsImageInvalids[i].Goods[j]=false;
+        this.goodsFiles[i]=<File>event.target.files[0];
+        console.log( this.goodsFiles[i])
+        this.goodsImageInvalids[i]=false;
       }
       
     }else{
       if(type=='section'){
-        this.sectionsImageInvalids[i].Invalid = true;
+        this.invalidImage = true;
+      }
+      else if(type='section-good'){
+        this.sGoodsImageInvalids[i]=true;
       }
       else{
-        this.sectionsImageInvalids[i].Goods[j]=true;
+        this.goodsImageInvalids[i]=true;
       }
     }
 
     
   }
-  unload(type='section', i, j?){
+  unload(type='section', i?){
     if(type=='section'){
-      this.sectionsFiles[i].File = null;
+      this.image = null;
+    }
+    else if(type='section-good'){
+      this.sGoodsFiles[i]=null;
     }
     else{
-      this.sectionsFiles[i].Goods[j]=null;
+      this.goodsFiles[i]=null;
     }
   }
   unloadLink(s){
     s.Image = null;
   }
-
-}
-
-export class SectionFile{
-  constructor(){
-    this.File = null;
-    this.Goods = [];
+  getUrl(f:File){
+    return URL.createObjectURL(f).split('blob:')[1];
   }
-  File:File;
-  Goods:File[];
-}
 
-export class SectionImageInvalid{
-  constructor(){
-    this.Invalid = false;
-    this.Goods = [];
-  }
-  Invalid:boolean;
-  Goods:boolean[];
 }
