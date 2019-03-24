@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GoodsService } from '../services/products.service';
 import { Good } from '../services/models';
 import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-product',
@@ -10,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(public gs:GoodsService, private route:ActivatedRoute) { }
+  constructor(public gs:GoodsService, private route:ActivatedRoute, private location:Location) { }
   good:Good;
   ngOnInit() {
     this.gs.getProduct(this.route.snapshot.paramMap.get("id")).subscribe(data => {
@@ -20,5 +21,7 @@ export class ProductComponent implements OnInit {
   choosePhoto(p){
     this.good.Image = p;
   }
-
+  goBack(){
+    this.location.back();
+  }
 }

@@ -13,8 +13,8 @@
         <h4>Цвет: {{good.Color}}</h4>
         <h4>Цена: {{good.Price}}<i style="font-size: 20px" class="fas fa-ruble-sign"></i></h4>
         <div>
-          <button  class="btn btn-primary mr-2" (click)="gs.addCartProduct(good)">Купить</button>
-          <a routerLink="/goods" class="btn btn-info">Назад</a>
+          <button class="btn btn-primary mr-2" (click)="gs.addCartProduct(good)">Купить</button>
+          <button class="btn btn-info" (click)="goBack()">Назад</button>
         </div>
       </div>
     </div>
