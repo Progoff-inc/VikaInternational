@@ -2,7 +2,7 @@
   <div class="section" *ngFor="let s of sales; let i = index;">
     <div class="d-flex justify-content-between">
         <h3  style="font-weight:400">{{s.Name}}</h3>
-        <button class="btn btn-link text-danger" (click)="remove(s.SaleId)">Удалить</button>
+        <button class="btn btn-link text-danger" (click)="remove(s.SaleId, i)">Удалить</button>
     </div>
     
     <div class="form-group">

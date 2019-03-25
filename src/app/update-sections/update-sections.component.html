@@ -6,7 +6,7 @@
         <div class="buttons">
           <button *ngIf="!(curSection && curSection.SectionId == s.SectionId)" class="btn btn-link border-success" (click)="change(s, i)">Изменить</button>
           <button *ngIf="curSection && curSection.SectionId == s.SectionId" class="btn btn-link border-primary" (click)="hide()">Скрыть</button>
-          <button class="btn btn-link text-danger" (click)="remove(s.SectionId)">Удалить</button>
+          <button class="btn btn-link text-danger" (click)="remove(s.SectionId, i)">Удалить</button>
         </div>
     </div>
     
