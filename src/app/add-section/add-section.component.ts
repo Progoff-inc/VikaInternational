@@ -30,8 +30,16 @@ export class AddSectionComponent implements OnInit {
   }
   addSection(){
     this.submitted = true;
-    if(this.sectionForm.invalid){
+    if(this.sectionForm.invalid || !this.image || this.invalidImage){
       return
+    }
+    for(let i = 0; i< this.goodsImageInvalids.length; i++){
+      if(this.goodsImageInvalids[i]){
+        return
+      }
+      if(!this.goodsFiles[i]){
+        return;
+      }
     }
     if(this.goods.length==0){
       return

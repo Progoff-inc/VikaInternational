@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS goods (
     Image varchar(255) NOT NULL,
     Color varchar(200) NULL,
     
-    CONSTRAINT ds_fk FOREIGN KEY(SectionId) REFERENCES sections(SectionId)
+    CONSTRAINT ds_fk FOREIGN KEY(SectionId) REFERENCES sections(SectionId) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS sales (

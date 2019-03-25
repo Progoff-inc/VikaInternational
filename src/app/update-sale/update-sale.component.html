@@ -11,7 +11,7 @@
       <small  class="form-text text-danger" *ngIf="s.Name==''">Название не может быть пустым</small>
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted && !image)}">Изображение</label>
+      <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted && !goodsFiles[i])}">Изображение</label>
       <div class="d-flex align-items-start my-2">
         <img *ngIf="!!s.Image" class="w-25" src="{{s.Image}}"><i *ngIf="!!s.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(s)"></i>
       </div>

@@ -21,6 +21,7 @@ export class UpdateSaleComponent implements OnInit {
     this.gs.getSales().subscribe(data => {
       data.forEach(s => {
         this.goodsFiles.push(null);
+        this.goodsImageInvalids.push(false);
       })
       console.log(this.goodsFiles);
       this.sales = data;
@@ -32,6 +33,11 @@ export class UpdateSaleComponent implements OnInit {
     return !this.deepEqual(s,s1);
   }
   saveChanges(s:Sale, i){
+    for(let i = 0; i< this.goodsImageInvalids.length; i++){
+      if(this.goodsImageInvalids[i]){
+        return
+      }
+    }
     for(let j = 0; j<Object.keys(s).length; j++){
       if(s[Object.keys(s)[j]]=='' || !s[Object.keys(s)[j]]){
         if(Object.keys(s)[j] == 'Image' && this.goodsFiles[i]){

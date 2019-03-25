@@ -27,7 +27,7 @@ export class AddSaleComponent implements OnInit {
 
   addSale(){
     this.submitted = true;
-    if(!this.image){
+    if(!this.image || this.invalidImage){
       return;
     }
     if(this.saleForm.invalid){

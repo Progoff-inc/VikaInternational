@@ -22,7 +22,7 @@
         
         <div class="d-flex justify-content-between">
             <h5>{{g.Name}}</h5>
-            <button class="btn btn-link text-danger"  (click)="removeNew(j)">Отменить добавление</button>
+            <button class="btn btn-link text-danger"  (click)="remove(g.GoodId, j)">Удалить</button>
         </div>
         <div class="new-good d-flex flex-wrap justify-content-between" >
           
@@ -65,6 +65,10 @@
       </div>
       <h4 *ngIf="goods.length>0">Новые товары</h4>
       <div *ngFor="let g of goods; let j = index">
+          <div class="d-flex justify-content-between">
+              <h5>{{g.Name}}</h5>
+              <button class="btn btn-link text-danger"  (click)="removeNew(j)">Отменить добавление</button>
+          </div>
           <div class="new-good d-flex flex-wrap justify-content-between" >
             <div class="form-group">
               <label  [ngClass]="{'text-danger':(g.Name=='')}">Название товара</label>
