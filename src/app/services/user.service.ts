@@ -107,8 +107,8 @@ export class UserService{
      * Восстановление пароля
      * @param email Почта пользователя
      */
-    rememberPassword(email){
-        return this.http.post(this.baseUrl + 'UserController.php?Key=remember-password', email);
+    rememberPassword(email, password){
+        return this.http.get(this.baseUrl + 'UserController.php?Key=remember-password&Email='+ email+"&Password="+password);
     }
     /**
      * Генерация пароля

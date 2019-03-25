@@ -194,7 +194,42 @@ class DataBase {
             return false;
         }
     }
-
+    
+    public function updatePassword($id, $p, $np){
+        if($this->getUserPassword($id)==md5(md5($p))){
+            $s = $this->db->prepare("UPDATE users SET Password=? WHERE UserId=?");
+            $s->execute(array(md5(md5($np)), $id));
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function rememberPassword($email, $pass){
+        if(!$this->checkUser($email)){
+            
+            $s = $this->db->prepare("UPDATE users SET Password=? WHERE Email=?");
+            $s->execute(array(md5(md5($pass)), $email));
+            $subject = "Восстановление пароля"; 
+            
+            $message = "<h2>Для входа в аккаунт был сгенерирован новый пароль.</h2>
+            </br> <p><b>Ваш логин: </b>$email<b></br>Ваш пароль: </b>$pass</br></p></br>
+            <p>Пароль можно изменить в личном кабинете.</p> </br>";
+            
+            $headers  = "Content-type: text/html; charset=utf-8 \r\n";
+            
+            mail($email, $subject, $message, $headers);
+            
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function getUserPassword($id){
+        $s = $this->db->prepare("SELECT Password FROM users WHERE UserId=?");
+        $s->execute(array($id));
+        return $s->fetch()['Password'];
+    }
     public function getUserById($id){
         $s = $this->db->prepare("SELECT * FROM users WHERE UserId=?");
         $s->execute(array($id));

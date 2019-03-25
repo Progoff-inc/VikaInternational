@@ -54,6 +54,9 @@ export class EnterFormComponent implements OnInit {
     });
     
   }
+  remember(){
+    this.ms.type = 'remember-password';
+  }
 
   get f() { return this.userForm.controls; }
 
