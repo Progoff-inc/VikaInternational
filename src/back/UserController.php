@@ -26,6 +26,9 @@ if(isset($_GET['Key']))
             $b = json_decode(file_get_contents('php://input'), true);
             echo json_encode($ctxt->setAdmin($_GET['Id'], $_GET['IsAdmin']));
             break;
+        case 'get-email':
+            echo json_encode($ctxt->getUserEmail($_GET['Id']));
+            break;
         case 'update-user-info':
             $b = json_decode(file_get_contents('php://input'), true);
             echo json_encode($ctxt->updateUserInfo($b['UserId'], $b['Phone'], $b['Email']));

@@ -46,4 +46,12 @@ class Section{
 
     public $Goods;
 }
+
+class Sale{
+    public $SaleId;
+    public $Name;
+    public $Description;
+    public $Price;
+    public $Image;
+}
 ?>
