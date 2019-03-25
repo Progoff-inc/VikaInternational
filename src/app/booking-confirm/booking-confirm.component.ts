@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GoodsService } from '../services/products.service';
 import { UserService } from '../services/user.service';
-import { NewDeal, User, NewUser } from '../services/models';
+import { NewDeal, User, NewUser, GoodTypes } from '../services/models';
 
 @Component({
   selector: 'booking-confirm',
@@ -36,7 +36,7 @@ export class BookingConfirmComponent implements OnInit {
       this.gs.book.Cart.forEach(c=>{
         cart.push({
           DealId:dealId,
-          GoodId:c.Good.GoodId,
+          GoodId:c.Type==GoodTypes.Good?c.Good.GoodId:c.Good.SaleId,
           Count:c.Count,
           Type:c.Type
         })

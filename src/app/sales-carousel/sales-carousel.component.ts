@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GoodsService } from '../services/products.service';
-import { Sale } from '../services/models';
+import { Sale, GoodTypes } from '../services/models';
 
 @Component({
   selector: 'sales-carousel',
@@ -16,5 +16,7 @@ export class SalesCarouselComponent implements OnInit {
       this.sales = data;
     })
   }
-
+  addSale(s){
+    this.gs.addCartProduct(s, GoodTypes.Sale);
+  }
 }

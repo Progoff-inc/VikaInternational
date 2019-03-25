@@ -30,7 +30,8 @@
       <ol class="goods" *ngIf="d.ShowGoods">
         <li class="good" *ngFor="let g of d.Goods">
           <div class="d-flex flex-column mb-1">
-            <a routerLink="/product/{{g.Good.Id}}"><label>{{g.Good.Name}}</label></a>
+            <a *ngIf="g.Type=='good'" routerLink="/product/{{g.Good.Id}}"><label>{{g.Good.Name}}</label></a>
+            <label *ngIf="g.Type=='sale'">{{g.Good.Name}}</label>
           </div>
           <div class="d-flex flex-column">
             <p class="my-1">Количество: {{g.Count}}</p>

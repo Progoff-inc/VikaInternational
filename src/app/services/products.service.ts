@@ -47,18 +47,32 @@ export class GoodsService{
 
     /**
      * Добавление товара в карзину
-     * @param good товар
+     * @param good товар или акция
+     * @param type тип товара
      */
-    addCartProduct(good:Good){
-      let i = this.book.Cart.map(x => x.Good.GoodId).indexOf(good.GoodId);
-      if(i>-1){
-        this.book.Cart[i].Count+=1
-        sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
+    addCartProduct(good:any, type:GoodTypes = GoodTypes.Good){
+      if(type == GoodTypes.Good){
+        let i = this.book.Cart.filter(c => c.Type == GoodTypes.Good).map(x => x.Good.GoodId).indexOf(good.GoodId);
+        if(i>-1){
+          this.book.Cart[i].Count+=1
+          sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
+        }
+        else{
+          this.book.Cart.unshift({Good:good, Count:1, Type:GoodTypes.Good});
+          sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
+        }
+      }else{
+        let i = this.book.Cart.filter(c => c.Type == GoodTypes.Sale).map(x => x.Good.SaleId).indexOf(good.SaleId);
+        if(i>-1){
+          this.book.Cart[i].Count+=1
+          sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
+        }
+        else{
+          this.book.Cart.unshift({Good:good, Count:1, Type:GoodTypes.Sale});
+          sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
+        }
       }
-      else{
-        this.book.Cart.unshift({Good:good, Count:1, Type:GoodTypes.Good});
-        sessionStorage.setItem('Cart',JSON.stringify(this.book.Cart));
-      }
+      
       
     }
 
