@@ -85,6 +85,7 @@ export class AddSectionComponent implements OnInit {
               if(this.loadGoodsCount==0){
                 this.sectionForm.reset();
                 this.goods=[];
+                this.image=null;
                 this.submitted = false;
                 this.ls.load = -1;
                 this.ls.showLoad=false;

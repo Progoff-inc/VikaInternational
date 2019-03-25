@@ -82,7 +82,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted )}">Изображение</label>
-              <div class="d-flex align-items-start my-2">
+              <div class="d-flex align-items-start">
                 <img *ngIf="!!g.Image" class="w-25" src="{{g.Image}}"><i *ngIf="!!g.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(g)"></i>
               </div>
               <p class="img-text" *ngIf="goodsFiles[j]"><span>{{goodsFiles[j].name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload('good',i)"></i> </p>
