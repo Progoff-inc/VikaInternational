@@ -42,6 +42,7 @@ import { UpdateSaleComponent } from './update-sale/update-sale.component';
 import { LoadService } from './services/load.service';
 import { LoadComponent } from './load/load.component';
 import { UpdateSectionsComponent } from './update-sections/update-sections.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,7 @@ import { UpdateSectionsComponent } from './update-sections/update-sections.compo
     UpdateGoodComponent,
     AddSaleComponent,
     UpdateSaleComponent, 
-    LoadComponent, UpdateSectionsComponent
+    LoadComponent, UpdateSectionsComponent, ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

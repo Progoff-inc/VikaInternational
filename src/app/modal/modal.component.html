@@ -4,6 +4,7 @@
     <auth-form *ngIf="ms.type=='auth'"></auth-form>
     <enter-form *ngIf="ms.type=='enter'" [email]="ms.inpt" ></enter-form>
     <change-info *ngIf="ms.type=='change'" [change]="ms.inpt"></change-info>
+    <change-password *ngIf="ms.type=='change-password'" [change]="ms.inpt"></change-password>
   </div>
   
   

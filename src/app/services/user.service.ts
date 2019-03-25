@@ -94,6 +94,22 @@ export class UserService{
     checkEmail(email){
         return this.http.get<boolean>(this.baseUrl + 'UserController.php?Key=check-email&Email='+email);
     }
+
+    /**
+     * Изменение пароля пользователя
+     * @param password Объект с UserId, Password, NewPassword
+     */
+    updatePassword(password){
+        return this.http.post(this.baseUrl + 'UserController.php?Key=update-password', password);
+    }
+
+    /**
+     * Восстановление пароля
+     * @param email Почта пользователя
+     */
+    rememberPassword(email){
+        return this.http.post(this.baseUrl + 'UserController.php?Key=remember-password', email);
+    }
     /**
      * Генерация пароля
      */

@@ -8,15 +8,16 @@
     <h4>Контактная информация<i class="fas fa-pencil-alt" (click)="changeInfo()"></i></h4>
     
     <div class="d-flex flex-wrap">
-      <div class="form-group mr-5 ">
+      <div class="form-group mr-5 mb-0 ">
         <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>
         <p id="em">{{us.user.Email?us.user.Email:'Не указан'}}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-0">
         <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Телефон</label>
         <p id="em">{{us.user.Phone?us.user.Phone:'Не указан'}}</p>
       </div>
     </div>
+    <button class="btn btn-link pl-0" (click)="changePassword()">Изменить пароль</button>
   </div>
   <div class="deals">
     <h4 class="mb-4">{{us.user.Deals.length>0?'Заказы':'Заказы отсутствуют'}}</h4>
