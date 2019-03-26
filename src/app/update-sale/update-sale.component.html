@@ -1,4 +1,7 @@
 <div class="container-fluid py-3">
+  <div *ngIf="sales.length==0" class="d-flex justify-content-center align-items-center">
+    <h3 style="font-weight:400">Акции отсутствуют</h3>
+  </div>
   <div class="section" *ngFor="let s of sales; let i = index;">
     <div class="d-flex justify-content-between">
         <h3  style="font-weight:400">{{s.Name}}</h3>
@@ -6,8 +9,8 @@
     </div>
     
     <div class="form-group">
-      <label  [ngClass]="{'text-danger':s.Name==''}">Название раздела</label>
-      <input [(ngModel)]="s.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Name==''}" class="form-control"  placeholder="Название раздела">
+      <label  [ngClass]="{'text-danger':s.Name==''}">Название акции</label>
+      <input [(ngModel)]="s.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Name==''}" class="form-control"  placeholder="Название акции">
       <small  class="form-text text-danger" *ngIf="s.Name==''">Название не может быть пустым</small>
     </div>
     <div class="form-group">
@@ -23,7 +26,7 @@
     </div>
     <div class="form-group">
       <label for="exampleInputEmail13" [ngClass]="{'text-danger':(s.Price=='')}">Цена акции</label>
-      <input [ngClass]="{'border-danger':(s.Price=='')}" [(ngModel)]="s.Price" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputEmail13"  placeholder="Цена акции">
+      <input type="number" [ngClass]="{'border-danger':(s.Price=='')}" [(ngModel)]="s.Price" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputEmail13"  placeholder="Цена акции">
       <small  class="form-text text-danger" *ngIf="s.Price==''">Введите цену акции</small>
     </div>
     <div class="form-group">
