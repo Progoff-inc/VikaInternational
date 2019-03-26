@@ -36,7 +36,6 @@ import { ChangeInfoComponent } from './change-info/change-info.component';
 import { AddComponent } from './add/add.component';
 import { AddSectionComponent } from './add-section/add-section.component';
 import { UpdateSectionComponent } from './update-section/update-section.component';
-import { UpdateGoodComponent } from './update-good/update-good.component';
 import { AddSaleComponent } from './add-sale/add-sale.component';
 import { UpdateSaleComponent } from './update-sale/update-sale.component';
 import { LoadService } from './services/load.service';
@@ -72,7 +71,6 @@ import { RememberPasswordComponent } from './remember-password/remember-password
     AddComponent,
     AddSectionComponent,
     UpdateSectionComponent,
-    UpdateGoodComponent,
     AddSaleComponent,
     UpdateSaleComponent, 
     LoadComponent, UpdateSectionsComponent, ChangePasswordComponent, RememberPasswordComponent

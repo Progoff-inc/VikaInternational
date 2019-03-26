@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { GoodsService } from '../services/products.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'booking-success',
@@ -9,9 +10,10 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./booking-success.component.less']
 })
 export class BookingSuccessComponent implements OnInit {
-  constructor(public gs:GoodsService,private router:Router,private us:UserService) { }
+  constructor(public gs:GoodsService,private router:Router,private us:UserService, private ls:LoadService) { }
 
   ngOnInit() {
+    this.ls.showLoad=false;
   }
 
   goHome(){

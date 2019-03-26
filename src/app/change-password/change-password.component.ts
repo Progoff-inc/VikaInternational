@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { ModalService } from '../services/modal.service';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'change-password',
@@ -13,7 +14,7 @@ export class ChangePasswordComponent implements OnInit {
   userForm:FormGroup;
   submitted = false;
   invalid = false;
-  constructor(private fb:FormBuilder, private us:UserService, private ms:ModalService) { }
+  constructor(private fb:FormBuilder, private us:UserService, private ms:ModalService, private ls:LoadService) { }
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -30,8 +31,10 @@ export class ChangePasswordComponent implements OnInit {
     if(this.v.NewPassword!=this.v.PasswordConfirm){
       return
     }
+    this.ls.showLoad=true;
     this.us.updatePassword({UserId:this.change.UserId, Password:this.v.Password, NewPassword:this.v.NewPassword}).subscribe(res => {
       if(res){
+        this.ls.showLoad=false;
         this.ms.close();
       }
       else{

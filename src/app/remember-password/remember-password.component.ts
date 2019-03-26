@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'remember-password',
@@ -12,7 +13,7 @@ export class RememberPasswordComponent implements OnInit {
   submitted = false;
   showInfo = false;
   showError = false;
-  constructor(private fb:FormBuilder, private us:UserService) { }
+  constructor(private fb:FormBuilder, private us:UserService, private ls:LoadService) { }
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -24,13 +25,16 @@ export class RememberPasswordComponent implements OnInit {
     if(this.userForm.invalid){
       return;
     }
+    this.ls.showLoad=true;
     this.us.rememberPassword(this.userForm.value.Email, this.us.GenPassword()).subscribe((res)=>{
       console.log(res);
       if(res){
+        this.ls.showLoad=false;
         this.showInfo = true;
         this.showError=false;
       }
       else{
+        this.ls.showLoad=false;
         this.showError = true;
       }
       

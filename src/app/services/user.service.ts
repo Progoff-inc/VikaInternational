@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { error } from '@angular/compiler/src/util';
 import { ModalService } from './modal.service';
 import { GoodsService } from './products.service';
+import { LoadService } from './load.service';
 // import { OnInit } from '@angular/core';
 
 @Injectable()
@@ -13,7 +14,7 @@ export class UserService{
     public user:User;
     baseUrl:string='http://client.nomokoiw.beget.tech/vi/';
 
-    constructor(private router:Router, private http: HttpClient, private gs:GoodsService){
+    constructor(private router:Router, private http: HttpClient, private gs:GoodsService, private ls:LoadService){
         this.updateUser();
     }
 
@@ -73,9 +74,10 @@ export class UserService{
      * @param id идентификатор пользователя
      */
     getUserById(id){
+        this.ls.showLoad=true;
         this.http.get<User>(this.baseUrl + 'UserController.php?Key=get-user-by-id&Id='+id).subscribe(user => {
             if(user){
-                
+                this.ls.showLoad=false;
                 this.user = user;
                 this.gs.book.User = {Name:user.Name, Email:user.Email, Phone:user.Phone};
                 localStorage.setItem('user',JSON.stringify(user));
@@ -83,6 +85,7 @@ export class UserService{
             }
             
         }, error => {
+            this.ls.showLoad=false;
             return false;
         }) 
     }

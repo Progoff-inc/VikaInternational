@@ -18,6 +18,7 @@ export class UpdateSaleComponent implements OnInit {
   constructor(private gs:GoodsService, private ls:LoadService) { }
 
   ngOnInit() {
+    this.ls.showLoad=true;
     this.gs.getSales().subscribe(data => {
       data.forEach(s => {
         this.goodsFiles.push(null);
@@ -26,6 +27,7 @@ export class UpdateSaleComponent implements OnInit {
       console.log(this.goodsFiles);
       this.sales = data;
       this.salesCopy = JSON.parse(JSON.stringify(data));
+      this.ls.showLoad=false;
     })
   }
   checkChanges(s:Sale){

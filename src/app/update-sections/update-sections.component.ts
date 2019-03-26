@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Section, NewGood } from '../services/models';
 import { GoodsService } from '../services/products.service';
 import { deepEqual } from 'assert';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'update-sections',
@@ -14,11 +15,13 @@ export class UpdateSectionsComponent implements OnInit {
   curIndex = null;
   vm:UpdateSectionsComponent;
   
-  constructor(private gs:GoodsService) { }
+  constructor(private gs:GoodsService, private ls:LoadService) { }
 
   ngOnInit() {
+    this.ls.showLoad=true;
     this.gs.getAdminSections().subscribe(data => {
       this.sections = data;
+      this.ls.showLoad=false;
     })
     this.vm=this;
     
@@ -28,11 +31,13 @@ export class UpdateSectionsComponent implements OnInit {
     this.curIndex = i;
   }
   remove(id, i){
+    this.ls.showLoad=true;
     this.gs.removeSection(id).subscribe(d => {
       if(this.curIndex==i){
         this.curSection = null;
       }
       this.sections.splice(i,1);
+      this.ls.showLoad=false;
     })
   }
   hide(){
