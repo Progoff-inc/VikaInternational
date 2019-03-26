@@ -117,21 +117,6 @@ class DataBase {
         return $s->fetch();
     }
     
-    public function getDeal($id) {
-        $s = $this->db->prepare("SELECT * FROM deals WHERE DealId=?");
-        $s->execute(array($id));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Deal');
-        
-        return $s->fetch();
-    }
-    public function getSale($id) {
-        $s = $this->db->prepare("SELECT * FROM sales WHERE SaleId=?");
-        $s->execute(array($id));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Sale');
-        
-        return $s->fetch();
-    }
-    
 
     
     public function addDeal($deal){
@@ -141,34 +126,18 @@ class DataBase {
             $s->execute($res[1]);
         }
         $id = $this->db->lastInsertId();
-        
-        
+        mail($this->getUserEmail($deal['UserId']), "Привет!", "Тестируем письмо! \n Номер заказа: $id"); 
         return $id;
     }
     
     public function addDealGoods($dealsgoods){
-        $cart="";
-         $str = file_get_contents("NotifyMail.html");
-         $did = "";
-         $sum = 0;
         for ($i = 0; $i < count($dealsgoods); $i++) {
-            $did = $dealsgoods[$i]['DealId'];
-            $g = $this->getGood($dealsgoods[$i]['GoodId']);
-            $cart.="<tr><td style='padding:5px 10px'><img src='".$g->Image."' style='width:100%'></td><td style='padding:5px 10px'>".$g->Name."</td><td style='padding:5px 10px'>".$g->Color."</td><td style='padding:5px 10px'>".$dealsgoods[$i]['Count']."</td><td style='padding:5px 10px'>".$g->Price."</td></tr>";
             $res = $this->genInsertQuery($dealsgoods[$i],"dealsgoods");
-            $sum+=$dealsgoods[$i]['Count']*$g->Price;
             $s = $this->db->prepare($res[0]);
             if($res[1][0]!=null){
                 $s->execute($res[1]);
             }
         }
-        $str = str_replace ( '#dealId#' , $did, $str);
-        $str = str_replace ( '#sum#' , $sum, $str);
-        $str = str_replace ( '#cart#' , $cart, $str);
-        $subject = "Оформление заказа";
-        $headers  = "Content-type: text/html; charset=utf-8 \r\n";
-        $did = $this->getDeal($did);
-        mail($this->getUserEmail($did->UserId), $subject, $str, $headers); 
         return true;
     }
     
@@ -301,7 +270,7 @@ class DataBase {
             //$headers .= "From: От кого письмо <from@example.com>\r\n"; 
             //$headers .= "Reply-To: reply-to@example.com\r\n"; 
             
-            mail($em, $subject, $str, $headers); 
+            mail($em, $subject, $message, $headers); 
             return $this->getUserById($this->db->lastInsertId());
         }
         else{

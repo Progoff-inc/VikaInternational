@@ -12,6 +12,7 @@ export class ProgressBarComponent implements OnInit {
   constructor(public gs:GoodsService) { }
 
   ngOnInit() {
+    console.log(this.gs.book)
   }
   
   chStep(i){

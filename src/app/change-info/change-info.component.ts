@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalService } from '../services/modal.service';
 import { UserService } from '../services/user.service';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'change-info',
@@ -13,7 +14,7 @@ export class ChangeInfoComponent implements OnInit {
   submitted = false;
   userForm:FormGroup;
   showError = false;
-  constructor(private fb:FormBuilder, private ms:ModalService, private us:UserService) { 
+  constructor(private fb:FormBuilder, private ms:ModalService, private us:UserService, private ls:LoadService) { 
     
   }
 
@@ -35,19 +36,22 @@ export class ChangeInfoComponent implements OnInit {
     if(this.userForm.invalid){
       return;
     }
-    console.log(this.userForm.value);
+    this.ls.showLoad=true;
     let userInfo = {UserId:this.us.user.UserId, Email:this.userForm.value.Email, Phone:this.userForm.value.Phone};
     this.us.updateUserInfo(userInfo).subscribe((data)=>{
       if(data){
         this.us.user.Phone= userInfo.Phone;
         this.us.user.Email = userInfo.Email;
-        
+        this.ls.showLoad=false;
+        this.ms.close();
       }
       else{
+        this.ls.showLoad=false;
         if(this.us.user.Email != userInfo.Email){
           this.showError = true;
         }
         else{
+          
           this.ms.close();
         }
         

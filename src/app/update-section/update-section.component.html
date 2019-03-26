@@ -19,7 +19,11 @@
     <p  class="line" ><span >Товары <i class="fa fa-angle-down" ></i></span></p>
     <div class="goods">
       <div *ngFor="let g of section.Goods; let j = index;">
-        <h5>{{g.Name}}</h5>
+        
+        <div class="d-flex justify-content-between">
+            <h5>{{g.Name}}</h5>
+            <button class="btn btn-link text-danger"  (click)="remove(g.GoodId, j)">Удалить</button>
+        </div>
         <div class="new-good d-flex flex-wrap justify-content-between" >
           
           <div class="form-group">
@@ -61,6 +65,10 @@
       </div>
       <h4 *ngIf="goods.length>0">Новые товары</h4>
       <div *ngFor="let g of goods; let j = index">
+          <div class="d-flex justify-content-between">
+              <h5>{{g.Name}}</h5>
+              <button class="btn btn-link text-danger"  (click)="removeNew(j)">Отменить добавление</button>
+          </div>
           <div class="new-good d-flex flex-wrap justify-content-between" >
             <div class="form-group">
               <label  [ngClass]="{'text-danger':(g.Name=='')}">Название товара</label>
@@ -74,7 +82,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted )}">Изображение</label>
-              <div class="d-flex align-items-start my-2">
+              <div class="d-flex align-items-start">
                 <img *ngIf="!!g.Image" class="w-25" src="{{g.Image}}"><i *ngIf="!!g.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(g)"></i>
               </div>
               <p class="img-text" *ngIf="goodsFiles[j]"><span>{{goodsFiles[j].name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload('good',i)"></i> </p>

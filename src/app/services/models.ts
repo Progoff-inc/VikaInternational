@@ -14,7 +14,7 @@ export interface Good{
     Count:number;
     Type:GoodTypes;
   
-    Good:Good;
+    Good:any;
   }
   export class NewCartItem{
     DealId:number;

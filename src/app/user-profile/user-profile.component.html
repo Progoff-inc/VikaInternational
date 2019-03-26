@@ -8,15 +8,16 @@
     <h4>Контактная информация<i class="fas fa-pencil-alt" (click)="changeInfo()"></i></h4>
     
     <div class="d-flex flex-wrap">
-      <div class="form-group mr-5 ">
+      <div class="form-group mr-5 mb-0 ">
         <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Email</label>
         <p id="em">{{us.user.Email?us.user.Email:'Не указан'}}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-0">
         <label for="em" [ngClass]="{'text-danger':(submitted && f.Email.errors)}">Телефон</label>
         <p id="em">{{us.user.Phone?us.user.Phone:'Не указан'}}</p>
       </div>
     </div>
+    <button class="btn btn-link pl-0" (click)="changePassword()">Изменить пароль</button>
   </div>
   <div class="deals">
     <h4 class="mb-4">{{us.user.Deals.length>0?'Заказы':'Заказы отсутствуют'}}</h4>
@@ -29,7 +30,8 @@
       <ol class="goods" *ngIf="d.ShowGoods">
         <li class="good" *ngFor="let g of d.Goods">
           <div class="d-flex flex-column mb-1">
-            <a routerLink="/product/{{g.Good.Id}}"><label>{{g.Good.Name}}</label></a>
+            <a *ngIf="g.Type=='good'" routerLink="/product/{{g.Good.Id}}"><label>{{g.Good.Name}}</label></a>
+            <label *ngIf="g.Type=='sale'">{{g.Good.Name}}</label>
           </div>
           <div class="d-flex flex-column">
             <p class="my-1">Количество: {{g.Count}}</p>

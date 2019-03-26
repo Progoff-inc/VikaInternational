@@ -3,6 +3,7 @@ import { GoodsService } from '../services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { ModalService } from '../services/modal.service';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'booking-contact-info',
@@ -13,7 +14,7 @@ export class BookingContactInfoComponent implements OnInit {
   contactForm:FormGroup;
   submitted=false;
   @Input() parent;
-  constructor(public gs:GoodsService, private fb:FormBuilder, private us:UserService, private ms:ModalService) { }
+  constructor(public gs:GoodsService, private fb:FormBuilder, private us:UserService, private ms:ModalService, private ls:LoadService) { }
 
   ngOnInit() {
     this.setForm();
@@ -29,12 +30,15 @@ export class BookingContactInfoComponent implements OnInit {
       this.parent.nextStep();
     }
     else{
+      this.ls.showLoad=true;
       this.us.checkEmail(this.contactForm.value.Email).subscribe(data=>{
         if (data){
+          this.ls.showLoad=false;
           this.gs.book.User=JSON.parse(JSON.stringify(this.contactForm.value));
           this.parent.nextStep();
         }
         else {
+          this.ls.showLoad=false;
           this.ms.open('enter',this.contactForm.value.Email);
         }
       })
