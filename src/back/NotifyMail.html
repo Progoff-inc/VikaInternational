@@ -1,12 +1,101 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Благодарим за покупку!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .container{
+            width: 80%;
+            margin: 0% 10%;
+        }
+        .head{
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to right, #eaeffe, #b1caff);
+        }
+        .logo{
+            width: 33%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 10px;
+            height: 50px;
+        }
+        .right{
+            width: 33%;
+            float: left;
+        }
+        .headText{
+            font-size: 10px;
+            padding: 0 10px;
+            width: 33%;
+            text-decoration: unset;
+            color: unset;
+            font-family: 'Great Vibes', cursive;
+        }
+        .MailText{
+            padding: 5px 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        p{
+            width: 80%;
+            margin: 0% 10%;
+            padding: 5px 5px;
+        }
+        .pfooter{
+            width: 100%;
+            margin: 0%;
+            padding: 2px 2px;
+        }
+        .table{
+            width: 80%;
+            margin: 0% 10%;
+            border: 1px solid black;
+        }
+        td{
+            border: 1px solid black;
+        }
+        .footer{
+            padding: 5px 20px;
+            align-items: center;
+            background: linear-gradient(to right, #eaeffe, #b1caff);
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="head">
+            <div class="headText">
+                <h1>Vika International</h1>
+            </div>
+            <div class="logo">
+                <img src="../assets/images/logo.png" style="height:50px">
+            </div>
+            <div class="right"></div>
+        </div>
+        <div class="MailText">
+            <p>Спасибо за покупку на сайте vikainternational!</p>
+            <p>Ниже приведена информация по Вашему заказу. Вы можете отследить его в личном кабинете</p>
+            <table class="table"> 
+                <thead>
+                    <td>Изображение</td>
+                    <td>Наименование</td>
+                    <td>Цвет</td>
+                    <td>Количество</td>
+                    <td>Цена</td>
+                </thead>
+                <tbody>
+                    #cart#
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <div>
+                <p class="pfooter">С уважением,<br>команда Vika International</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
