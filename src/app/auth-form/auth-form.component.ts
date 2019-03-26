@@ -3,6 +3,7 @@ import { ModalService } from '../services/modal.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { GoodsService } from '../services/products.service';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'auth-form',
@@ -13,7 +14,7 @@ export class AuthFormComponent implements OnInit {
   userForm:FormGroup;
   submitted = false;
   showError = false;
-  constructor(public ms:ModalService, private gs:GoodsService, private fb: FormBuilder, private us:UserService) { }
+  constructor(private ls:LoadService, public ms:ModalService, private gs:GoodsService, private fb: FormBuilder, private us:UserService) { }
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -38,6 +39,7 @@ export class AuthFormComponent implements OnInit {
     if(this.userForm.value.Password != this.userForm.value.PasswordConfirm){
       return;
     }
+    this.ls.showLoad=true;
     let u = {
       Email:this.userForm.value.Email,
       Name:this.userForm.value.Name,
@@ -50,9 +52,11 @@ export class AuthFormComponent implements OnInit {
         sessionStorage.setItem('user',JSON.stringify(user));
           this.us.user = user;
           this.gs.book.User = {Name:user.Name, Email:user.Email, Phone:user.Phone};
+          this.ls.showLoad=false;
           this.ms.close();
       }
       else{
+        this.ls.showLoad=false;
           this.showError = true;
       }
     });

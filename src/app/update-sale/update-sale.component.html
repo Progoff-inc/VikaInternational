@@ -1,13 +1,17 @@
 <div class="container-fluid py-3">
   <div class="section" *ngFor="let s of sales; let i = index;">
-    <h3  style="font-weight:400">{{s.Name}}</h3>
+    <div class="d-flex justify-content-between">
+        <h3  style="font-weight:400">{{s.Name}}</h3>
+        <button class="btn btn-link text-danger" (click)="remove(s.SaleId, i)">Удалить</button>
+    </div>
+    
     <div class="form-group">
       <label  [ngClass]="{'text-danger':s.Name==''}">Название раздела</label>
       <input [(ngModel)]="s.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':s.Name==''}" class="form-control"  placeholder="Название раздела">
       <small  class="form-text text-danger" *ngIf="s.Name==''">Название не может быть пустым</small>
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted && !image)}">Изображение</label>
+      <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted && !goodsFiles[i])}">Изображение</label>
       <div class="d-flex align-items-start my-2">
         <img *ngIf="!!s.Image" class="w-25" src="{{s.Image}}"><i *ngIf="!!s.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(s)"></i>
       </div>

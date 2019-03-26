@@ -28,38 +28,54 @@ class DataBase {
         $res = array('UPDATE '.$t.' SET ',array());
         $q = '';
         for ($i = 0; $i < count($keys); $i++) {
-            $res[0] = $res[0].$keys[$i].'=?, ';
-            $res[1][]=$values[$i];
+            if($values[$i]!='now()'){
+                $res[0] = $res[0].$keys[$i].'=?, ';
+                $res[1][]=$values[$i];
+            }
+            else{
+                $res[0] = $res[0].$keys[$i].'=now(), ';
+            }
+            
             
         }
         $res[0]=rtrim($res[0],', ');
-        $res[0]=$res[0].' WHERE Id = '.$id;
+        $res[0]=$res[0].' WHERE '.rtrim($t,'s').'Id = '.$id;
         
         return $res;
         
     }
     
+    private function removeFile($filelink){
+        $path = explode('vi/',$filelink);
+        unlink($path[1]);
+        
+    }
+    
     //####################Deals Controller#########################
-    public function getSections() {
+    public function getSections($all) {
         $sth = $this->db->query("SELECT * FROM sections");
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Section');
-        return $sth->fetchAll();
-    }
-    public function addDeal($deal){
-        $res = $this->genInsertQuery($deal,"deals");
-        $s = $this->db->prepare($res[0]);
-        $s->execute($res[1]);
-        
-        return $this->db->lastInsertId();
-    }
-    public function addDealGoods($goods){
-        for ($i = 0; $i <= count($goods); $i++) {
-            $res = $this->genInsertQuery($goods[$i],"dealsgoods");
-            $s = $this->db->prepare($res[0]);
-            $s->execute($res[1]);
+        if($all){
+            $res = [];
+            while($c = $sth->fetch()){
+                $c->Goods = $this->getSectionGoods($c->SectionId);
+                $res[] = $c;
+            }
+            return $res;
         }
-        return $this->db->lastInsertId();
+        else{
+            return $sth->fetchAll();
+        }
+        
     }
+    
+    public function getSales() {
+        $sth = $this->db->query("SELECT * FROM sales");
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Sale');
+        return $sth->fetchAll();
+        
+    }
+    
     public function getSection($id){
         $s = $this->db->prepare("SELECT * FROM sections WHERE SectionId=?");
         $s->execute(array($id));
@@ -93,6 +109,44 @@ class DataBase {
         $s->setFetchMode(PDO::FETCH_CLASS, 'Good');
         
         return $s->fetch();
+    }
+    
+
+    
+    public function addDeal($deal){
+        $res = $this->genInsertQuery($deal,"deals");
+        $s = $this->db->prepare($res[0]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        $id = $this->db->lastInsertId();
+        mail($this->getUserEmail($deal['UserId']), "Привет!", "Тестируем письмо! \n Номер заказа: $id"); 
+        return $id;
+    }
+    
+    public function addDealGoods($dealsgoods){
+        for ($i = 0; $i < count($dealsgoods); $i++) {
+            $res = $this->genInsertQuery($dealsgoods[$i],"dealsgoods");
+            $s = $this->db->prepare($res[0]);
+            if($res[1][0]!=null){
+                $s->execute($res[1]);
+            }
+        }
+        return true;
+    }
+    
+    public function getUserEmail($id){
+        $s = $this->db->prepare("SELECT Email FROM users WHERE UserId=?");
+        $s->execute(array($id));
+        return $s->fetch()['Email'];
+    }
+    
+    public function getImage($id, $t){
+        $tid=ucfirst($t)."Id";
+        $t .="s";
+        $s = $this->db->prepare("SELECT Image FROM $t WHERE $tid=?");
+        $s->execute(array($id));
+        return $s->fetch()['Image'];
     }
     
     //####################Cars Controller#########################
@@ -140,7 +194,42 @@ class DataBase {
             return false;
         }
     }
-
+    
+    public function updatePassword($id, $p, $np){
+        if($this->getUserPassword($id)==md5(md5($p))){
+            $s = $this->db->prepare("UPDATE users SET Password=? WHERE UserId=?");
+            $s->execute(array(md5(md5($np)), $id));
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function rememberPassword($email, $pass){
+        if(!$this->checkUser($email)){
+            
+            $s = $this->db->prepare("UPDATE users SET Password=? WHERE Email=?");
+            $s->execute(array(md5(md5($pass)), $email));
+            $subject = "Восстановление пароля"; 
+            
+            $message = "<h2>Для входа в аккаунт был сгенерирован новый пароль.</h2>
+            </br> <p><b>Ваш логин: </b>$email<b></br>Ваш пароль: </b>$pass</br></p></br>
+            <p>Пароль можно изменить в личном кабинете.</p> </br>";
+            
+            $headers  = "Content-type: text/html; charset=utf-8 \r\n";
+            
+            mail($email, $subject, $message, $headers);
+            
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function getUserPassword($id){
+        $s = $this->db->prepare("SELECT Password FROM users WHERE UserId=?");
+        $s->execute(array($id));
+        return $s->fetch()['Password'];
+    }
     public function getUserById($id){
         $s = $this->db->prepare("SELECT * FROM users WHERE UserId=?");
         $s->execute(array($id));
@@ -154,12 +243,26 @@ class DataBase {
     public function addUser($u){
         
         if($this->checkUser($u['Email'])){
+            $psd=$u['Password'];
+            $em=$u['Email'];
             $u['Password']= md5(md5($u['Password']));
             
             $a = $this->genInsertQuery($u, 'users');
             $s = $this->db->prepare('INSERT INTO users (Email,Name,Password,Phone) VALUES (?,?,?,?);');
             $s->execute($a[1]);
+            //mail($em, "Регистрация", "Вы успешно зарегистрировались на сайте VikaInternational\n\nВаш логин: $em\n Ваш пароль: $psd");
             
+            
+            $subject = "Заголовок письма"; 
+            
+            $message = "<h2>Вы успешно зарегистрировались на сайте VikaInternational</h2>
+            </br> <b>Ваш логин: </b>$em </br><b>Ваш пароль: </b>$psd</br>";
+            
+            $headers  = "Content-type: text/html; charset=utf-8 \r\n"; 
+            //$headers .= "From: От кого письмо <from@example.com>\r\n"; 
+            //$headers .= "Reply-To: reply-to@example.com\r\n"; 
+            
+            mail($em, $subject, $message, $headers); 
             return $this->getUserById($this->db->lastInsertId());
         }
         else{
@@ -191,28 +294,135 @@ class DataBase {
         return $this->db->lastInsertId();
     }
     public function addSectionGoods($goods){
-        for ($i = 0; $i <= count($goods); $i++) {
+        $result = [];
+        
+        for ($i = 0; $i < count($goods); $i++) {
             $res = $this->genInsertQuery($goods[$i],"goods");
             $s = $this->db->prepare($res[0]);
             if($res[1][0]!=null){
                 $s->execute($res[1]);
             }
+            
+            $goods[$i]['GoodId']=$this->db->lastInsertId();
+            
+            $result[]=$goods[$i];
         }
+        return $result;
+    }
+    
+    public function uploadFile($pid, $files, $t){
+        $img=$this->getImage($pid, $t);
+        if($img){
+            $this->removeFile($img);
+        }
+        $url = "http://client.nomokoiw.beget.tech/vi/";
+        $n = basename($t."_".$pid."_".$files['Data']['name']);
+        $tid=ucfirst($t)."Id";
+        $t .="s";
+        $d = "Files/$n";
+        if(file_exists("Files")){
+            
+            if(move_uploaded_file($files['Data']['tmp_name'], $d)){
+                $s = $this->db->prepare("UPDATE $t SET Image=? WHERE $tid=?");
+                $s->execute(array($url.$d, $pid));
+                return($url.$d);
+            }else{
+                return($_FILES['Data']['tmp_name']);
+            }
+        }else{
+            mkdir("Files");
+            if(move_uploaded_file($files['Data']['tmp_name'], $d)){
+                $s = $this->db->prepare("UPDATE $t SET Image=? WHERE $tid=?");
+                $s->execute(array($url.$d, $pid));
+                return($url.$d);
+            }else{
+                return($_FILES['Data']['tmp_name']);
+            }
+        }
+        
+        return false;
+    }
+    
+    public function addSale($sale){
+        $res = $this->genInsertQuery($sale,"sales");
+        $s = $this->db->prepare($res[0]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        
+        
         return $this->db->lastInsertId();
+    }
+    public function removeSale($id){
+        $img=$this->getImage($id, 'sale');
+        if($img){
+            $this->removeFile($img);
+        }
+        $s = $this->db->prepare("DELETE FROM sales WHERE SaleId=?");
+        $s->execute(array($id));
+        
+        
+        return true;
+    }
+    public function removeSection($id){
+        $img=$this->getImage($id, 'section');
+        if($img){
+            $this->removeFile($img);
+        }
+        $s = $this->db->prepare("SELECT * FROM goods WHERE SectionId=?");
+        $s->execute(array($id));
+        $s->setFetchMode(PDO::FETCH_CLASS, 'Good');
+        while($c = $s->fetch()){
+            $img=$this->getImage($c->GoodId, 'goods');
+            if($img){
+                $this->removeFile($img);
+            }
+        }
+        $s = $this->db->prepare("DELETE FROM sections WHERE SectionId=?");
+        $s->execute(array($id));
+        
+        
+        return true;
+    }
+    public function removeGood($id){
+        $img=$this->getImage($id, 'good');
+        if($img){
+            $this->removeFile($img);
+        }
+        $s = $this->db->prepare("DELETE FROM goods WHERE GoodId=?");
+        $s->execute(array($id));
+        
+        
+        return true;
+    }
+    public function updateSale($sale){
+        $id=$sale['SaleId'];
+        unset($sale['SaleId']);
+        $a = $this->genUpdateQuery(array_keys($sale), array_values($sale), "sales", $id);
+        $s = $this->db->prepare($a[0]);
+        $s->execute($a[1]);
+        return $a;
     }
 
     public function updateSection($section, $id){
-        $a = $this->genUpdateQuery($section['Keys'], $section['Values'], "sections", $id);
+        
+        $a = $this->genUpdateQuery(array_keys($section), array_values($section), "sections", $id);
         $s = $this->db->prepare($a[0]);
         $s->execute($a[1]);
         return $a;
     }
-    public function updateGood($good, $id){
-        $a = $this->genUpdateQuery($good['Keys'], $good['Values'], "goods", $id);
-        $s = $this->db->prepare($a[0]);
-        $s->execute($a[1]);
+    public function updateGoods($goods){
+        for ($i = 0; $i <= count($goods); $i++) {
+            $id=$goods[$i]['GoodId'];
+            unset($goods['GoodId']);
+            $a = $this->genUpdateQuery(array_keys($goods[$i]), array_values($goods[$i]), "goods", $id);
+            $s = $this->db->prepare($a[0]);
+            $s->execute($a[1]);
+        }
+        
         return $a;
     }
+    
 
     //####################Admin Controller##########################
 }

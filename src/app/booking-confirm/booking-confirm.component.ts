@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GoodsService } from '../services/products.service';
 import { UserService } from '../services/user.service';
-import { NewDeal, User, NewUser } from '../services/models';
+import { NewDeal, User, NewUser, GoodTypes } from '../services/models';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'booking-confirm',
@@ -10,7 +11,7 @@ import { NewDeal, User, NewUser } from '../services/models';
 })
 export class BookingConfirmComponent implements OnInit {
   @Input() parent;
-  constructor(public gs:GoodsService, private us:UserService) { }
+  constructor(public gs:GoodsService, private us:UserService, private ls:LoadService) { }
 
   ngOnInit() {
   }
@@ -30,13 +31,14 @@ export class BookingConfirmComponent implements OnInit {
       PayType:this.gs.book.PayType,
       DeliverType:this.gs.book.DeliverType
     }
+    this.ls.showLoad=true;
     this.gs.addDeal(deal).subscribe(dealId=>{
       this.gs.bookId=dealId;
       let cart =[];
       this.gs.book.Cart.forEach(c=>{
         cart.push({
           DealId:dealId,
-          GoodId:c.Good.GoodId,
+          GoodId:c.Type==GoodTypes.Good?c.Good.GoodId:c.Good.SaleId,
           Count:c.Count,
           Type:c.Type
         })
@@ -58,6 +60,7 @@ export class BookingConfirmComponent implements OnInit {
         Phone:this.gs.book.User.Phone,
         Password:this.us.GenPassword()
       }
+      this.ls.showLoad=true;
       this.us.regUser(user).subscribe(user=>{
         this.us.user=user;
         this.gs.book.User = {Name:user.Name, Email:user.Email, Phone:user.Phone};

@@ -6,9 +6,10 @@
   <div class="carousel-inner">
     <div class="carousel-item" [ngClass]="{'active':i==0}" *ngFor="let s of sales; let i = index;">
       <div class="d-flex flex-wrap align-items-stretch justify-content-center h-100">
-        <div class="d-flex flex-column justify-content-center" style="width:400px;">
+        <div class="d-flex flex-column justify-content-center align-items-start" style="width:400px;">
           <p class="sale-head">{{s.Name}}</p>
           <p class="sale-sm-head">{{s.Description}}</p>
+          <button class="btn btn-primary" (click)="addSale(s)">Добавить</button>
         </div>
         <div class="d-flex align-items-center" style="width:400px;">
           <img src="{{s.Image}}"  style="width: 100%;">

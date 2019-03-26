@@ -30,8 +30,16 @@ export class AddSectionComponent implements OnInit {
   }
   addSection(){
     this.submitted = true;
-    if(this.sectionForm.invalid){
+    if(this.sectionForm.invalid || !this.image || this.invalidImage){
       return
+    }
+    for(let i = 0; i< this.goodsImageInvalids.length; i++){
+      if(this.goodsImageInvalids[i]){
+        return
+      }
+      if(!this.goodsFiles[i]){
+        return;
+      }
     }
     if(this.goods.length==0){
       return
@@ -77,6 +85,7 @@ export class AddSectionComponent implements OnInit {
               if(this.loadGoodsCount==0){
                 this.sectionForm.reset();
                 this.goods=[];
+                this.image=null;
                 this.submitted = false;
                 this.ls.load = -1;
                 this.ls.showLoad=false;
@@ -121,7 +130,7 @@ export class AddSectionComponent implements OnInit {
     }
   }
   addGood(){
-    if(this.goods.length==0 || this.checkGood(this.goods[this.goods.length-1])){
+    if(this.goods.length==0 || this.checkGood(this.goods[this.goods.length-1]) || !this.goodsFiles[this.goods.length-1]){
       this.goods.push({
         SectionId:0,
         Name:'',
@@ -146,6 +155,12 @@ export class AddSectionComponent implements OnInit {
       }
     })
     return res;
+  }
+
+  removeNew(i){
+    this.goods.splice(i,1);
+    this.goodsFiles.splice(i,1);
+    this.goodsImageInvalids.splice(i,1);
   }
   get f() { return this.sectionForm.controls; };
 

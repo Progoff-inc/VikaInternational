@@ -10,7 +10,18 @@ if(isset($_GET['Key']))
     
     switch ($_GET['Key']) {
         case 'get-sections':
-            echo json_encode($ctxt->getSections());
+            echo json_encode($ctxt->getSections(false));
+            break;
+        case 'get-sales':
+            echo json_encode($ctxt->getSales());
+            break;
+        case 'add-sale':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->addSale($b));
+            break;
+        case 'update-sale':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->updateSale($b));
             break;
         case 'get-section-goods':
             echo json_encode($ctxt->getSectionGoods($_GET['Id']));
@@ -18,6 +29,20 @@ if(isset($_GET['Key']))
         case 'get-good':
             echo json_encode($ctxt->getGood($_GET['Id']));
             break;
+            
+        case 'remove-section':
+            echo json_encode($ctxt->removeSection($_GET['Id']));
+            break;
+            
+        case 'remove-good':
+            echo json_encode($ctxt->removeGood($_GET['Id']));
+            break;
+            
+        case 'remove-sale':
+            echo json_encode($ctxt->removeSale($_GET['Id']));
+            break;
+            
+            
         case 'get-section':
             echo json_encode($ctxt->getSection($_GET['Id']));
             break;
@@ -34,6 +59,9 @@ if(isset($_GET['Key']))
             $b = json_decode(file_get_contents('php://input'), true); 
             echo json_encode($ctxt->addSection($b));
             break;
+        case 'get-admin-sections':
+            echo json_encode($ctxt->getSections(true));
+            break;
         case 'add-section-goods':
             $b = json_decode(file_get_contents('php://input'), true); 
             echo json_encode($ctxt->addSectionGoods($b));
@@ -42,9 +70,13 @@ if(isset($_GET['Key']))
             $b = json_decode(file_get_contents('php://input'), true); 
             echo json_encode($ctxt->updateSection($b, $_GET['Id']));
             break;
-        case 'update-good':
+        case 'update-goods':
             $b = json_decode(file_get_contents('php://input'), true); 
-            echo json_encode($ctxt->updateGood($b, $_GET['Id']));
+            echo json_encode($ctxt->updateGoods($b));
+            break;
+        case 'upload-file':
+            $inp = json_decode(file_get_contents('php://input'), true);
+            echo json_encode(array($ctxt->uploadFile($_GET['Id'], $_FILES, $_GET['Type'])));
             break;
         default:
             echo "Введенный ключ несуществует";
