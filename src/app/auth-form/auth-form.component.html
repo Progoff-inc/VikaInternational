@@ -1,8 +1,8 @@
 <form [formGroup]="userForm">
   <h3 class="text-center" style="font-weight:400">Регистрация</h3>
   <div class="form-group">
-    <label for="na" [ngClass]="{'text-danger':(submitted && f.Name.errors)}">Ваше имя</label>
-    <input [ngClass]="{'border-danger':(submitted && f.Name.errors)}" formControlName="Name" class="form-control" id="na" placeholder="Ваше имя">
+    <label for="name" [ngClass]="{'text-danger':(submitted && f.Name.errors)}">Ваше имя</label>
+    <input [ngClass]="{'border-danger':(submitted && f.Name.errors)}" formControlName="Name" class="form-control" id="name" placeholder="Ваше имя">
     <small  class="form-text text-danger" *ngIf="submitted && f.Name.errors && f.Name.errors.required">Введите Ваше имя</small>
   </div>
   <div class="form-group">
@@ -12,8 +12,8 @@
       <small id="emailHelp1" class="form-text text-danger" *ngIf="submitted && f.Email.errors && f.Email.errors.email">Некорректный email</small>
   </div>
   <div class="form-group">
-    <label for="exampleInputEmail13" [ngClass]="{'text-danger':(submitted && f.Phone.errors)}">Phone</label>
-    <input [ngClass]="{'border-danger':(submitted && f.Phone.errors)}" formControlName="Phone" class="form-control" id="exampleInputEmail13"  placeholder="Ваш телефон">
+    <label for="exampleInputEmail13" [ngClass]="{'text-danger':(submitted && f.Phone.errors)}">Телефон</label>
+    <input type="tel" [ngClass]="{'border-danger':(submitted && f.Phone.errors)}" formControlName="Phone" class="form-control" id="exampleInputEmail13"  placeholder="Ваш телефон">
   </div>
   <div class="form-group">
       <label for="exampleInputPassword1" [ngClass]="{'text-danger':(submitted && f.Password && f.Password.errors)}">Пароль</label>
