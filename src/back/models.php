@@ -14,6 +14,7 @@ class Good{
 class CartItem{
     public $DealId;
     public $GoodId;
+    public $Type;
     public $Count;
 
     public $Good;
@@ -45,5 +46,13 @@ class Section{
     public $Description;
 
     public $Goods;
+}
+
+class Sale{
+    public $SaleId;
+    public $Name;
+    public $Description;
+    public $Price;
+    public $Image;
 }
 ?>
