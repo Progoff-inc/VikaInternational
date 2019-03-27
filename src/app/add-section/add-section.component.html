@@ -43,7 +43,7 @@
           </div>
           <div class="form-group">
             <label  [ngClass]="{'text-danger':(submitted && !g.Price)}">Цена товара</label>
-            <input [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && !g.Price)}" class="form-control"  placeholder="Цена товара">
+            <input type="number" [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && !g.Price)}" class="form-control"  placeholder="Цена товара">
             <small  class="form-text text-danger" *ngIf="submitted && !g.Price">Введите цену товара</small>
           </div>
           

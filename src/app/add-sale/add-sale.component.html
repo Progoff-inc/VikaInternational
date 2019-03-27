@@ -3,8 +3,8 @@
     <h3  style="font-weight:400">Добавление акции</h3>
     <div class="form-group">
       <label  [ngClass]="{'text-danger':(submitted && f.Name.errors)}">Название акции</label>
-      <input [ngClass]="{'border-danger':(submitted && f.Name.errors)}" formControlName="Name" class="form-control"  placeholder="Название раздела">
-      <small  class="form-text text-danger" *ngIf="submitted && f.Name.errors && f.Name.errors.required">Введите название раздела</small>
+      <input [ngClass]="{'border-danger':(submitted && f.Name.errors)}" formControlName="Name" class="form-control"  placeholder="Название акции">
+      <small  class="form-text text-danger" *ngIf="submitted && f.Name.errors && f.Name.errors.required">Введите название акции</small>
     </div>
     <div class="form-group">
       <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted && !image)}">Изображение</label>
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
       <label for="exampleInputEmail13" [ngClass]="{'text-danger':(submitted && f.Price.errors)}">Цена акции</label>
-      <input [ngClass]="{'border-danger':(submitted && f.Price.errors)}" formControlName="Price" class="form-control" id="exampleInputEmail13"  placeholder="Цена акции">
+      <input type="number" [ngClass]="{'border-danger':(submitted && f.Price.errors)}" formControlName="Price" class="form-control" id="exampleInputEmail13"  placeholder="Цена акции">
       <small  class="form-text text-danger" *ngIf="submitted && f.Price.errors && f.Price.errors.required">Введите цену акции</small>
     </div>
     <div class="form-group">

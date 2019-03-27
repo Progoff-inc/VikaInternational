@@ -92,13 +92,19 @@ class DataBase {
         
         return $s->fetchAll();
     }
+    
     public function getDealGoods($id) {
         $s = $this->db->prepare("SELECT * FROM dealsgoods WHERE DealId=?");
         $s->execute(array($id));
         $s->setFetchMode(PDO::FETCH_CLASS, 'CartItem');
         $res = [];
         while($c = $s->fetch()){
-            $c->Good = $this->getGood($c->GoodId);
+            if($c->Type=='good'){
+                $c->Good = $this->getGood($c->GoodId);
+            }else{
+                $c->Good = $this->getSale($c->GoodId);
+            }
+            
             $res[] = $c;
         }
         return $res;
@@ -246,7 +252,9 @@ class DataBase {
             $psd=$u['Password'];
             $em=$u['Email'];
             $u['Password']= md5(md5($u['Password']));
-            
+            $str = file_get_contents("RegistrationMail.html");
+            $str = str_replace ( '#login#' , $em, $str);
+            $str = str_replace ( '#password#' , $psd, $str);
             $a = $this->genInsertQuery($u, 'users');
             $s = $this->db->prepare('INSERT INTO users (Email,Name,Password,Phone) VALUES (?,?,?,?);');
             $s->execute($a[1]);

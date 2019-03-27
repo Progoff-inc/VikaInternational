@@ -6,7 +6,7 @@
       <small  class="form-text text-danger" *ngIf="section.Name==''">Название не может быть пустым</small>
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted )}">Изображение</label>
+      <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(!image && !section.Image )}">Изображение</label>
       <div class="d-flex align-items-start my-2">
         <img *ngIf="!!section.Image" class="w-25" src="{{section.Image}}"><i *ngIf="!!section.Image" class="fa fa-times" aria-hidden="true" (click)="unloadLink(section)"></i>
       </div>
@@ -14,7 +14,7 @@
       <input type="file" (change)="putFile($event, 'section')"  style="display:none" #fileload>
       <button type="button" *ngIf="!image && !section.Image" class="btn btn-link border-primary" (click)="fileload.click()">Загрузить картинку</button>
       <small  class="form-text text-danger" *ngIf="!image && !section.Image">Добавьте изображение</small>
-      <small  class="form-text text-danger" *ngIf="invelidImage">Загрузите изображение .jpg</small>
+      <small  class="form-text text-danger" *ngIf="invalidImage">Загрузите изображение .jpg</small>
     </div>
     <p  class="line" ><span >Товары <i class="fa fa-angle-down" ></i></span></p>
     <div class="goods">
@@ -27,7 +27,7 @@
         <div class="new-good d-flex flex-wrap justify-content-between" >
           
           <div class="form-group">
-            <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted )}">Изображение</label>
+            <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(!sGoodsFiles[j] && !g.Image)}">Изображение</label>
             <div *ngIf="!!g.Image"  class="d-flex align-items-start my-2">
               <img class="w-25" src="{{g.Image}}"><i  class="fa fa-times" aria-hidden="true" (click)="unloadLink(g)"></i>
             </div>
@@ -105,10 +105,10 @@
           </div>
         </div>
       
-      <button class="btn btn-link" (click)="addGood(section.SectionId,i)">Добавить товар</button>
+      <button class="btn btn-link" (click)="addGood()">Добавить товар</button>
     </div>
     
 
-    <button *ngIf="checkChanges(s) || goods.length>0" type="submit" class="btn btn-primary" (click)="saveChanges(s,i)">Сохранить</button>
+    <button *ngIf="checkChanges() || goods.length>0" type="submit" class="btn btn-primary" (click)="saveChanges(s,i)">Сохранить</button>
   </div>
 </div>
