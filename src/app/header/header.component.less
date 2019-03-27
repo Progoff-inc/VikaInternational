@@ -50,6 +50,13 @@
         width: 50%
     }
 }
+
+.user{
+    color:white;
+    cursor: pointer;
+    
+}
+
 @media (max-width:767px){
     .head{
         .note{
@@ -67,7 +74,8 @@
     }
     .cart:hover{
         i{
-            color: lightblue !important;
+            transition: 0.3s;
+            text-shadow: 0 0 10px black;
         }
         .cart-items{
             display: block;
@@ -75,6 +83,10 @@
     }
     .cart-item:hover{
         background: linear-gradient(to right, #eaeffe, #b1caff);
+    }
+    .user:hover{
+        transition: 0.3s;
+        text-shadow: 0 0 10px black;
     }
 }
 .cart-items{

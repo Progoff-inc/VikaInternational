@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GoodsService } from '../services/products.service';
 import { ModalService } from '../services/modal.service';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   showC=false;
-  constructor(public gs:GoodsService, public ms:ModalService, private router:Router) { }
+  constructor(public gs:GoodsService, public ms:ModalService, private router:Router, public us:UserService) { }
 
   ngOnInit() {
   }
