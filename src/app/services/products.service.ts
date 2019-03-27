@@ -194,6 +194,8 @@ export class GoodsService{
     removeGood(id){
       return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-good&Id='+id);
     }
+
+    
 }
 
 
