@@ -10,7 +10,7 @@ import { LoadService } from '../services/load.service';
   styleUrls: ['./update-sale.component.less']
 })
 export class UpdateSaleComponent implements OnInit {
-  sales:Sale[];
+  sales:Sale[] = [];
   goods = [];
   salesCopy:Sale[];
   goodsImageInvalids:boolean[] = [];

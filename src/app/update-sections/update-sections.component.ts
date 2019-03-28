@@ -10,7 +10,7 @@ import { LoadService } from '../services/load.service';
   styleUrls: ['./update-sections.component.less']
 })
 export class UpdateSectionsComponent implements OnInit {
-  sections:Section[];
+  sections:Section[] = [];
   curSection:Section;
   curIndex = null;
   vm:UpdateSectionsComponent;

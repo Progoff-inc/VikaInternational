@@ -14,6 +14,7 @@ class Good{
 class CartItem{
     public $DealId;
     public $GoodId;
+    public $Type;
     public $Count;
 
     public $Good;
