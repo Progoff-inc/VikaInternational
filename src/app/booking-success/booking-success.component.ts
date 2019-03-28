@@ -17,11 +17,9 @@ export class BookingSuccessComponent implements OnInit {
   }
 
   goHome(){
-    this.clearBook();
     this.router.navigate(['']);
   }
   goToProfile(){
-    this.clearBook();
     this.router.navigate(['user-profile']);
   }
   clearBook(){
@@ -32,5 +30,18 @@ export class BookingSuccessComponent implements OnInit {
     delete this.gs.book.PostIndex;
     delete this.gs.book.DeliverType;
     delete this.gs.book.PayType;
+  }
+  ngOnDestroy(){
+    console.log("Активный объект:")
+    console.log(this.gs.book);
+    delete this.gs.bookId;
+    delete this.gs.book.Country;
+    delete this.gs.book.City;
+    delete this.gs.book.Address;
+    delete this.gs.book.PostIndex;
+    delete this.gs.book.DeliverType;
+    delete this.gs.book.PayType;
+    console.log("Объект по закрытию компонета:")
+    console.log(this.gs.book);
   }
 }
