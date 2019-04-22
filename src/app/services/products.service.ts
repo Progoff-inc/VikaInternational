@@ -7,13 +7,22 @@ import { UserService } from './user.service';
 @Injectable()
 export class GoodsService{
     bookId:number=null;
+    private token:string;
     book:Book = new Book();
     baseUrl:string='http://client.nomokoiw.beget.tech/vi/';
 
-    constructor(private http: HttpClient, private us:UserService ){
+    constructor(private http: HttpClient){
       if(sessionStorage.getItem('Cart')){
         this.book.Cart = JSON.parse(sessionStorage.getItem('Cart'));
       }
+    }
+
+    getToken(){
+      return this.token;
+    }
+
+    setToken(token:string){
+        this.token = token;
     }
 
     /**
@@ -82,7 +91,7 @@ export class GoodsService{
      * @param section Секция (Name, Image)
      */
     addSection(section:NewSection){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-section&Token='+this.us.getToken(),section);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-section&Token='+this.token,section);
     }
     
     /**
@@ -90,7 +99,7 @@ export class GoodsService{
      * @param section Измененный раздел
      */
     updateSection(section:NewSection, id){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-section&Id='+id+'&Token='+this.us.getToken(),section);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-section&Id='+id+'&Token='+this.token,section);
     }
 
     /**
@@ -98,7 +107,7 @@ export class GoodsService{
      * @param section Измененный раздел
      */
     updateSectionGoods(goods:Good[]){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-goods&Token='+this.us.getToken(), goods);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-goods&Token='+this.token, goods);
     }
 
     /**
@@ -106,7 +115,7 @@ export class GoodsService{
      * @param goods Список новых товаров раздела
      */
     addGoods(goods:NewGood[]){
-      return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-section-goods&Token='+this.us.getToken(), goods);
+      return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-section-goods&Token='+this.token, goods);
     }
 
     /**
@@ -121,11 +130,11 @@ export class GoodsService{
      * @param sale Акция без SaleId
      */
     addSale(sale:NewSale){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-sale&Token='+this.us.getToken(),sale);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-sale&Token='+this.token,sale);
     }
 
     updateSale(sale:Sale){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-sale&Token='+this.us.getToken(),sale);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-sale&Token='+this.token,sale);
     }
 
     /**
@@ -178,22 +187,22 @@ export class GoodsService{
      * @param data изображение (FormData)
      */
     UploadFile(id, type:UploadTypes, data) {
-      return this.http.post<string>(this.baseUrl + 'DealsController.php?Key=upload-file&Id='+id+'&Type='+type+'&Token='+this.us.getToken(), data, {
+      return this.http.post<string>(this.baseUrl + 'DealsController.php?Key=upload-file&Id='+id+'&Type='+type+'&Token='+this.token, data, {
         reportProgress:true,
         observe:'events'
       });
     }
 
     removeSale(id){
-      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-sale&Id='+id);
+      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-sale&Id='+id+'&Token='+this.token);
     }
 
     removeSection(id){
-      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-section&Id='+id);
+      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-section&Id='+id+'&Token='+this.token);
     }
 
     removeGood(id){
-      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-good&Id='+id);
+      return this.http.delete(this.baseUrl + 'DealsController.php?Key=remove-good&Id='+id+'&Token='+this.token);
     }
 
     

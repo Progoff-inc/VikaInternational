@@ -33,11 +33,17 @@ export class UpdateSectionsComponent implements OnInit {
   remove(id, i){
     this.ls.showLoad=true;
     this.gs.removeSection(id).subscribe(d => {
-      if(this.curIndex==i){
-        this.curSection = null;
+      if(d){
+        if(this.curIndex==i){
+          this.curSection = null;
+        }
+        this.sections.splice(i,1);
+        
+      }else{
+        throw new Error("Отказано в доступе");
       }
-      this.sections.splice(i,1);
       this.ls.showLoad=false;
+      
     })
   }
   hide(){

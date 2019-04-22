@@ -38,22 +38,27 @@ export class AddSaleComponent implements OnInit {
     const formData = new FormData();
     formData.append('Data', this.image);
     this.gs.addSale(this.saleForm.value).subscribe(id => {
-      
-      
-      this.gs.UploadFile(id, UploadTypes.Sale, formData).subscribe(event=>{
-        if(event.type == HttpEventType.UploadProgress){
-          this.ls.load = Math.round(event.loaded/event.total * 100);
+      if(id){
+        this.gs.UploadFile(id, UploadTypes.Sale, formData).subscribe(event=>{
+          if(event.type == HttpEventType.UploadProgress){
+            this.ls.load = Math.round(event.loaded/event.total * 100);
+            
+          }
+          else if(event.type == HttpEventType.Response){
+            this.image=null;
+            this.ls.load = -1;
+            this.ls.showLoad=false;
+            this.saleForm.reset();
+            this.submitted=false;
+          }
           
-        }
-        else if(event.type == HttpEventType.Response){
-          this.image=null;
-          this.ls.load = -1;
-          this.ls.showLoad=false;
-          this.saleForm.reset();
-          this.submitted=false;
-        }
-        
-      })
+        })
+      }else{
+        throw new Error("Отказано в доступе");
+      }
+      
+      
+      
     })
   }
   

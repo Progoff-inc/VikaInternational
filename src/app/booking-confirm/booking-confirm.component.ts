@@ -62,9 +62,10 @@ export class BookingConfirmComponent implements OnInit {
       }
       this.ls.showLoad=true;
       this.us.regUser(user).subscribe(user=>{
-        this.us.user=user;
-        this.gs.book.User = {Name:user.Name, Email:user.Email, Phone:user.Phone};
-        this.addDeal(user.UserId);
+        this.us.user=user[0];
+        this.us.setToken(user[1]);
+        this.gs.book.User = {Name:user[0].Name, Email:user[0].Email, Phone:user[0].Phone};
+        this.addDeal(user[0].UserId);
       })
     }
   }

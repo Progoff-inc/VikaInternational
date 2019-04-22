@@ -54,48 +54,53 @@ export class AddSectionComponent implements OnInit {
     var formData = new FormData();
     formData.append('Data', this.image);
     this.gs.addSection(this.sectionForm.value).subscribe(id => {
-      this.goods.forEach(g => {
-        g.SectionId = id;
-      })
-      this.gs.UploadFile(id, UploadTypes.Section, formData).subscribe(event=>{
-        if(event.type == HttpEventType.UploadProgress){
-          this.ls.load = Math.round(event.loaded/event.total * 100);
+      if(id){
+        this.goods.forEach(g => {
+          g.SectionId = id;
+        })
+        this.gs.UploadFile(id, UploadTypes.Section, formData).subscribe(event=>{
+          if(event.type == HttpEventType.UploadProgress){
+            this.ls.load = Math.round(event.loaded/event.total * 100);
+            
+          }
+          else if(event.type == HttpEventType.Response){
+            
+          }
           
-        }
-        else if(event.type == HttpEventType.Response){
-          
-        }
-        
-      })
-      this.gs.addGoods(this.goods).subscribe((goods)=> {
-        this.loadGoodsCount = goods.length;
-        for(let i =0; i<goods.length;i++){
-          this.ls.load= 0;
-          var gFormData  = new FormData();
-          gFormData.append('Data', this.goodsFiles[i]);
-          this.gs.UploadFile(goods[i].GoodId, UploadTypes.Good, gFormData).subscribe(event=>{
-            if(event.type == HttpEventType.UploadProgress){
-              console.log(event);
-              this.ls.load = Math.round(event.loaded/event.total * 100);
-              
-            }
-            else if(event.type == HttpEventType.Response){
-              this.loadGoodsCount--;
-              this.ls.load= 0;
-              if(this.loadGoodsCount==0){
-                this.sectionForm.reset();
-                this.goods=[];
-                this.image=null;
-                this.submitted = false;
-                this.ls.load = -1;
-                this.ls.showLoad=false;
+        })
+        this.gs.addGoods(this.goods).subscribe((goods)=> {
+          this.loadGoodsCount = goods.length;
+          for(let i =0; i<goods.length;i++){
+            this.ls.load= 0;
+            var gFormData  = new FormData();
+            gFormData.append('Data', this.goodsFiles[i]);
+            this.gs.UploadFile(goods[i].GoodId, UploadTypes.Good, gFormData).subscribe(event=>{
+              if(event.type == HttpEventType.UploadProgress){
+                console.log(event);
+                this.ls.load = Math.round(event.loaded/event.total * 100);
+                
               }
-            }
-          })
-        }
+              else if(event.type == HttpEventType.Response){
+                this.loadGoodsCount--;
+                this.ls.load= 0;
+                if(this.loadGoodsCount==0){
+                  this.sectionForm.reset();
+                  this.goods=[];
+                  this.image=null;
+                  this.submitted = false;
+                  this.ls.load = -1;
+                  this.ls.showLoad=false;
+                }
+              }
+            })
+          }
+            
           
-        
-      })
+        })
+      }else{
+        throw new Error("Отказано в доступе");
+      }
+      
      
     })
   }

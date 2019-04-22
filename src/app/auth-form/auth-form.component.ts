@@ -55,6 +55,7 @@ export class AuthFormComponent implements OnInit {
           this.gs.book.User = {Name:user[0].Name, Email:user[0].Email, Phone:user[0].Phone};
           this.ls.showLoad=false;
           this.ms.close();
+
       }
       else{
         this.ls.showLoad=false;

@@ -12,7 +12,7 @@ import { LoadService } from './load.service';
 @Injectable()
 export class UserService{
     public user:User;
-    private token:string;
+    
     baseUrl:string='http://client.nomokoiw.beget.tech/vi/';
 
     constructor(private router:Router, private http: HttpClient, private gs:GoodsService, private ls:LoadService){
@@ -20,11 +20,11 @@ export class UserService{
     }
 
     getToken(){
-        return this.token;
+        return this.gs.getToken();
     }
 
     setToken(token:string){
-        this.token = token;
+        this.gs.setToken(token);
     }
 
     updateUser(){
@@ -65,9 +65,12 @@ export class UserService{
      * @param userInfo Объект содержащий UserId, Email, Phone
      */
     updateUserInfo(userInfo:UserInfo){
-        return this.http.post(this.baseUrl + 'UserController.php?Key=update-user-info&Token='+this.token, userInfo);
+        return this.http.post(this.baseUrl + 'UserController.php?Key=update-user-info&Token='+this.gs.getToken(), userInfo);
     }
 
+    /**
+     * Выход пользователя
+     */
     logOut(){
         if(localStorage.getItem('user')){
             localStorage.removeItem('user');
@@ -75,10 +78,22 @@ export class UserService{
         if(sessionStorage.getItem('user')){
             sessionStorage.removeItem('user');
         }
-        this.user = null;
-        this.token = null;
+        
+        
+        this.userExit().subscribe(()=>{
+            this.user = null;
+            this.setToken(null);
+        })
+        
         this.router.navigate(['/']);
 
+    }
+
+    /**
+     * Удаление выход пользователя на сервере
+     */
+    userExit(){
+        return this.http.delete(this.baseUrl + 'UserController.php?Key=user-exit&Id='+this.user.UserId);
     }
 
     /**
@@ -90,7 +105,7 @@ export class UserService{
             if(user){
                 this.ls.showLoad=false;
                 this.user = user[0];
-                this.token = user[1];
+                this.setToken(user[1]);
                 this.gs.book.User = {Name:this.user.Name, Email:this.user.Email, Phone:this.user.Phone};
                 localStorage.setItem('user',JSON.stringify(this.user));
                 return true;

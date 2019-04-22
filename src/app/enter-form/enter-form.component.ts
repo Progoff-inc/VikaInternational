@@ -48,6 +48,7 @@ export class EnterFormComponent implements OnInit {
         }
           this.us.user = user[0];
           this.us.setToken(user[1]);
+          console.log(user[1]);
           this.gs.book.User = {Name:user[0].Name, Email:user[0].Email, Phone:user[0].Phone};
           this.ls.showLoad=false;
           this.ms.close();

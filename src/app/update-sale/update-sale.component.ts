@@ -56,35 +56,42 @@ export class UpdateSaleComponent implements OnInit {
     
     
     this.gs.updateSale(s).subscribe((d)=>{
-      if(this.goodsFiles[i]){
-        this.ls.load = 0;
-        var formData = new FormData();
-        formData.append('Data', this.goodsFiles[i]);
-        this.gs.UploadFile(s.SaleId, UploadTypes.Sale, formData).subscribe(event=>{
-          if(event.type == HttpEventType.UploadProgress){
-            this.ls.load = Math.round(event.loaded/event.total * 100);
+      if(d){
+        if(this.goodsFiles[i]){
+          this.ls.load = 0;
+          var formData = new FormData();
+          formData.append('Data', this.goodsFiles[i]);
+          this.gs.UploadFile(s.SaleId, UploadTypes.Sale, formData).subscribe(event=>{
+            if(event.type == HttpEventType.UploadProgress){
+              this.ls.load = Math.round(event.loaded/event.total * 100);
+              
+            }
+            else if(event.type == HttpEventType.Response){
+              s.Image=event.body[0];
+              this.goodsFiles[i] = null;
+              let s1 = this.salesCopy.find(se => se.SaleId==s.SaleId);
+              Object.keys(s).forEach(k => {
+                s1[k]=s[k]
+              })
+              console.log(event);
+              this.ls.load = -1;
+              this.ls.showLoad=false;
+            }
             
-          }
-          else if(event.type == HttpEventType.Response){
-            s.Image=event.body[0];
-            this.goodsFiles[i] = null;
-            let s1 = this.salesCopy.find(se => se.SaleId==s.SaleId);
-            Object.keys(s).forEach(k => {
-              s1[k]=s[k]
-            })
-            console.log(event);
-            this.ls.load = -1;
-            this.ls.showLoad=false;
-          }
-          
-        })
+          })
+        }else{
+          let s1 = this.salesCopy.find(se => se.SaleId==s.SaleId);
+          Object.keys(s).forEach(k => {
+            s1[k]=s[k]
+          })
+          this.ls.showLoad=false;
+        }
       }else{
-        let s1 = this.salesCopy.find(se => se.SaleId==s.SaleId);
-        Object.keys(s).forEach(k => {
-          s1[k]=s[k]
-        })
         this.ls.showLoad=false;
+        throw new Error("Отказано в доступе");
+        
       }
+      
       
       
       
@@ -138,10 +145,15 @@ export class UpdateSaleComponent implements OnInit {
   }
   remove(id, i){
     this.gs.removeSale(id).subscribe(d => {
-      this.sales.splice(i,1);
-      this.salesCopy.splice(i,1);
-      this.goodsImageInvalids.splice(i,1);
-      this.goodsFiles.splice(i,1);
+      if(d){
+        this.sales.splice(i,1);
+        this.salesCopy.splice(i,1);
+        this.goodsImageInvalids.splice(i,1);
+        this.goodsFiles.splice(i,1);
+      }else{
+        throw new Error("Отказано в доступе");
+      }
+      
     })
   }
 
