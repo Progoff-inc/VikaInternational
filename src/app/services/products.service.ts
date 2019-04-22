@@ -1,6 +1,7 @@
 import { Good, Section, Book, NewSection, NewGood, Sale, NewSale, NewDeal, NewCartItem, GoodTypes, UploadTypes} from './models';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { UserService } from './user.service';
 
 
 @Injectable()
@@ -9,7 +10,7 @@ export class GoodsService{
     book:Book = new Book();
     baseUrl:string='http://client.nomokoiw.beget.tech/vi/';
 
-    constructor(private http: HttpClient ){
+    constructor(private http: HttpClient, private us:UserService ){
       if(sessionStorage.getItem('Cart')){
         this.book.Cart = JSON.parse(sessionStorage.getItem('Cart'));
       }
@@ -67,7 +68,7 @@ export class GoodsService{
      * @param section Секция (Name, Image)
      */
     addSection(section:NewSection){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-section',section);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-section&Token='+this.us.getToken(),section);
     }
     
     /**
@@ -75,7 +76,7 @@ export class GoodsService{
      * @param section Измененный раздел
      */
     updateSection(section:NewSection, id){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-section&Id='+id,section);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-section&Id='+id+'&Token='+this.us.getToken(),section);
     }
 
     /**
@@ -83,7 +84,7 @@ export class GoodsService{
      * @param section Измененный раздел
      */
     updateSectionGoods(goods:Good[]){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-goods', goods);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-goods&Token='+this.us.getToken(), goods);
     }
 
     /**
@@ -91,7 +92,7 @@ export class GoodsService{
      * @param goods Список новых товаров раздела
      */
     addGoods(goods:NewGood[]){
-      return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-section-goods', goods);
+      return this.http.post<Good[]>(this.baseUrl + 'DealsController.php?Key=add-section-goods&Token='+this.us.getToken(), goods);
     }
 
     /**
@@ -106,11 +107,11 @@ export class GoodsService{
      * @param sale Акция без SaleId
      */
     addSale(sale:NewSale){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-sale',sale);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=add-sale&Token='+this.us.getToken(),sale);
     }
 
     updateSale(sale:Sale){
-      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-sale',sale);
+      return this.http.post<number>(this.baseUrl + 'DealsController.php?Key=update-sale&Token='+this.us.getToken(),sale);
     }
 
     /**
@@ -163,7 +164,7 @@ export class GoodsService{
      * @param data изображение (FormData)
      */
     UploadFile(id, type:UploadTypes, data) {
-      return this.http.post(this.baseUrl + 'DealsController.php?Key=upload-file&Id='+id+'&Type='+type, data, {
+      return this.http.post(this.baseUrl + 'DealsController.php?Key=upload-file&Id='+id+'&Type='+type+'&Token='+this.us.getToken(), data, {
         reportProgress:true,
         observe:'events'
       });

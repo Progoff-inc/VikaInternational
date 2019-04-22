@@ -1,4 +1,4 @@
-import { Good, NewUser, User, UserInfo } from './models';
+import { Good, NewUser, User, UserInfo, UserToken } from './models';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CartItem } from './models';
@@ -11,10 +11,19 @@ import { GoodsService } from './products.service';
 @Injectable()
 export class UserService{
     public user:User;
+    private token:string;
     baseUrl:string='http://client.nomokoiw.beget.tech/vi/';
 
     constructor(private router:Router, private http: HttpClient, private gs:GoodsService){
         this.updateUser();
+    }
+
+    getToken(){
+        return this.token;
+    }
+
+    setToken(token:string){
+        this.token = token;
     }
 
     updateUser(){
@@ -28,6 +37,8 @@ export class UserService{
         }
     }
 
+
+
     /**
      * Вход пользователя по Email и паролю
      * Возвращает false если пользователь не найден
@@ -35,7 +46,7 @@ export class UserService{
      * @param password Пароль пользователя для входа
      */
     loginUser(email:string, password:string){
-        return this.http.get<User>(this.baseUrl + 'UserController.php?Key=get-user&Email='+email+'&Password='+password);
+        return this.http.get<UserToken>(this.baseUrl + 'UserController.php?Key=get-user&Email='+email+'&Password='+password);
     }
 
     /**
@@ -44,7 +55,7 @@ export class UserService{
      * @param user Объект типа NewUser
      */
     regUser(user:NewUser){
-        return this.http.post<User>(this.baseUrl + 'UserController.php?Key=add-user', user);
+        return this.http.post<UserToken>(this.baseUrl + 'UserController.php?Key=add-user', user);
     }
 
     /**
@@ -53,7 +64,7 @@ export class UserService{
      * @param userInfo Объект содержащий UserId, Email, Phone
      */
     updateUserInfo(userInfo:UserInfo){
-        return this.http.post(this.baseUrl + 'UserController.php?Key=update-user-info', userInfo);
+        return this.http.post(this.baseUrl + 'UserController.php?Key=update-user-info&Token='+this.token, userInfo);
     }
 
     logOut(){
@@ -64,6 +75,7 @@ export class UserService{
             sessionStorage.removeItem('user');
         }
         this.user = null;
+        this.token = null;
         this.router.navigate(['/']);
 
     }
@@ -73,12 +85,13 @@ export class UserService{
      * @param id идентификатор пользователя
      */
     getUserById(id){
-        this.http.get<User>(this.baseUrl + 'UserController.php?Key=get-user-by-id&Id='+id).subscribe(user => {
+        this.http.get<UserToken>(this.baseUrl + 'UserController.php?Key=get-user-by-id&Id='+id).subscribe(user => {
             if(user){
                 
-                this.user = user;
-                this.gs.book.User = {Name:user.Name, Email:user.Email, Phone:user.Phone};
-                localStorage.setItem('user',JSON.stringify(user));
+                this.user = user[0];
+                this.token = user[1];
+                this.gs.book.User = {Name:this.user.Name, Email:this.user.Email, Phone:this.user.Phone};
+                localStorage.setItem('user',JSON.stringify(this.user));
                 return true;
             }
             

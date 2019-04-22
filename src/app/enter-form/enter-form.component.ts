@@ -40,12 +40,13 @@ export class EnterFormComponent implements OnInit {
       
       if(user){
         if(this.save){
-          localStorage.setItem('user',JSON.stringify(user));
+          localStorage.setItem('user',JSON.stringify(user[0]));
         }else{
-          sessionStorage.setItem('user',JSON.stringify(user));
+          sessionStorage.setItem('user',JSON.stringify(user[0]));
         }
-          this.us.user = user;
-          this.gs.book.User = {Name:user.Name, Email:user.Email, Phone:user.Phone};
+          this.us.user = user[0];
+          this.us.setToken(user[1]);
+          this.gs.book.User = {Name:user[0].Name, Email:user[0].Email, Phone:user[0].Phone};
           this.ms.close();
       }
       else{

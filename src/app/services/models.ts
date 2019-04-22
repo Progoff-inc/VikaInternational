@@ -32,7 +32,12 @@ export interface Good{
     IsAdmin?:boolean;
 
     Deals:Deal[];
-}
+  }
+
+  export class UserToken{
+    User:User;
+    Token:string;
+  }
 
 export class Deal{
     DealId:number;
