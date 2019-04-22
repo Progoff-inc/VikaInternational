@@ -24,18 +24,18 @@ if(isset($_GET['Key']))
             break;
         case 'set-admin':
             $b = json_decode(file_get_contents('php://input'), true);
-            echo json_encode($ctxt->setAdmin($_GET['Id'], $_GET['IsAdmin']));
+            echo json_encode($ctxt->setAdmin($_GET['Token'], $_GET['Id'], $_GET['IsAdmin']));
             break;
         case 'get-email':
             echo json_encode($ctxt->getUserEmail($_GET['Id']));
             break;
         case 'update-user-info':
             $b = json_decode(file_get_contents('php://input'), true);
-            echo json_encode($ctxt->updateUserInfo($b['UserId'], $b['Phone'], $b['Email']));
+            echo json_encode($ctxt->updateUserInfo($_GET['Token'], $b['UserId'], $b['Phone'], $b['Email']));
             break;
         case 'update-password':
             $b = json_decode(file_get_contents('php://input'), true);
-            echo json_encode($ctxt->updatePassword($b['UserId'], $b['Password'], $b['NewPassword']));
+            echo json_encode($ctxt->updatePassword($_GET['Token'], $b['UserId'], $b['Password'], $b['NewPassword']));
             break;
         case 'remember-password':
             $b = json_decode(file_get_contents('php://input'), true);
@@ -43,6 +43,9 @@ if(isset($_GET['Key']))
             break;
         case 'check-email':
             echo json_encode($ctxt->checkUser($_GET['Email']));
+            break;
+        case 'user-exit':
+            echo json_encode($ctxt->userExit($_GET['Id']));
             break;
         default:
             echo "Введенный ключ несуществует";

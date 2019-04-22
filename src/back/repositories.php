@@ -117,6 +117,21 @@ class DataBase {
         return $s->fetch();
     }
     
+    public function getDeal($id) {
+        $s = $this->db->prepare("SELECT * FROM deals WHERE DealId=?");
+        $s->execute(array($id));
+        $s->setFetchMode(PDO::FETCH_CLASS, 'Deal');
+        
+        return $s->fetch();
+    }
+    public function getSale($id) {
+        $s = $this->db->prepare("SELECT * FROM sales WHERE SaleId=?");
+        $s->execute(array($id));
+        $s->setFetchMode(PDO::FETCH_CLASS, 'Sale');
+        
+        return $s->fetch();
+    }
+    
 
     
     public function addDeal($deal){
@@ -126,18 +141,34 @@ class DataBase {
             $s->execute($res[1]);
         }
         $id = $this->db->lastInsertId();
-        mail($this->getUserEmail($deal['UserId']), "Привет!", "Тестируем письмо! \n Номер заказа: $id"); 
+        
+        
         return $id;
     }
     
     public function addDealGoods($dealsgoods){
+        $cart="";
+         $str = file_get_contents("NotifyMail.html");
+         $did = "";
+         $sum = 0;
         for ($i = 0; $i < count($dealsgoods); $i++) {
+            $did = $dealsgoods[$i]['DealId'];
+            $g = $this->getGood($dealsgoods[$i]['GoodId']);
+            $cart.="<tr><td style='padding:5px 10px'><img src='".$g->Image."' style='width:100%'></td><td style='padding:5px 10px'>".$g->Name."</td><td style='padding:5px 10px'>".$g->Color."</td><td style='padding:5px 10px'>".$dealsgoods[$i]['Count']."</td><td style='padding:5px 10px'>".$g->Price."</td></tr>";
             $res = $this->genInsertQuery($dealsgoods[$i],"dealsgoods");
+            $sum+=$dealsgoods[$i]['Count']*$g->Price;
             $s = $this->db->prepare($res[0]);
             if($res[1][0]!=null){
                 $s->execute($res[1]);
             }
         }
+        $str = str_replace ( '#dealId#' , $did, $str);
+        $str = str_replace ( '#sum#' , $sum, $str);
+        $str = str_replace ( '#cart#' , $cart, $str);
+        $subject = "Оформление заказа";
+        $headers  = "Content-type: text/html; charset=utf-8 \r\n";
+        $did = $this->getDeal($did);
+        mail($this->getUserEmail($did->UserId), $subject, $str, $headers); 
         return true;
     }
     
@@ -166,11 +197,14 @@ class DataBase {
         $s->execute(array($e, md5(md5($p))));
         $s->setFetchMode(PDO::FETCH_CLASS, 'User');
         $u=$s->fetch();
+        $token = null;
         if($u){
+            $token = md5($u->Password.rand(1000,9999));
+            $this->setToken($u->UserId, $token);
             $u->Password = null;
             $u->Deals = $this->getUserDeals($u->UserId);
         }
-        return $u;
+        return array($u, $token);
     } 
     public function getUserDeals($id) {
         $s = $this->db->prepare("SELECT * FROM deals WHERE UserId=?");
@@ -190,8 +224,8 @@ class DataBase {
         return array($isa, $id);
     }
 
-    public function updateUserInfo($id, $phone, $email){
-        if($this->checkUser($email)){
+    public function updateUserInfo($token, $id, $phone, $email){
+        if($this->checkToken($token, $id) && $this->checkUser($email)){
             $s = $this->db->prepare("UPDATE users SET Phone=?, Email=? WHERE UserId=?");
             $s->execute(array($phone, $email, $id));
             return true;
@@ -201,8 +235,8 @@ class DataBase {
         }
     }
     
-    public function updatePassword($id, $p, $np){
-        if($this->getUserPassword($id)==md5(md5($p))){
+    public function updatePassword($token, $id, $p, $np){
+        if($this->checkToken($token, $id) && $this->getUserPassword($id)==md5(md5($p))){
             $s = $this->db->prepare("UPDATE users SET Password=? WHERE UserId=?");
             $s->execute(array(md5(md5($np)), $id));
             return true;
@@ -231,7 +265,7 @@ class DataBase {
             return false;
         }
     }
-    public function getUserPassword($id){
+    private function getUserPassword($id){
         $s = $this->db->prepare("SELECT Password FROM users WHERE UserId=?");
         $s->execute(array($id));
         return $s->fetch()['Password'];
@@ -241,9 +275,26 @@ class DataBase {
         $s->execute(array($id));
         $s->setFetchMode(PDO::FETCH_CLASS, 'User');
         $u=$s->fetch();
+        $token = md5($u->Password.rand(1000,9999));
+        $this->setToken($u->UserId, $token);
         $u->Password = null;
         $u->Deals = $this->getUserDeals($u->UserId);
+        
+        return array($u,$token);
+    }
+    
+    public function getUserByToken($token){
+        $s = $this->db->prepare("SELECT * FROM users WHERE Token=?");
+        $s->execute(array($token));
+        $s->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $u=$s->fetch();
+        
         return $u;
+    }
+    
+    private function setToken($uid, $token){
+        $s = $this->db->prepare('UPDATE users SET Token=? WHERE UserId=?');
+        $s->execute(array($token, $uid));
     }
     
     public function addUser($u){
@@ -270,13 +321,17 @@ class DataBase {
             //$headers .= "From: От кого письмо <from@example.com>\r\n"; 
             //$headers .= "Reply-To: reply-to@example.com\r\n"; 
             
-            mail($em, $subject, $message, $headers); 
+            mail($em, $subject, $str, $headers); 
             return $this->getUserById($this->db->lastInsertId());
         }
         else{
             return false;
         }
         
+    }
+    
+    public function userExit($uid){
+        $this->setToken($uid, null);
     }
 
     public function checkUser($e){
@@ -285,150 +340,207 @@ class DataBase {
         return count($s->fetchAll())==0;
     }
     
+    private function checkToken($token, $uid=0, $admin=false){
+        $u = $this->getUserByToken($token);
+        if($uid>0 && $uid != $u->UserId){
+            return false;
+        }
+        if($u->IsAdmin){
+            return true;
+        }
+        if($admin){
+            return false;
+        }
+        return true;
+    }
+    
     
     
     //####################User Controller###########################
     
     //####################Admin Controller##########################
 
-    public function addSection($section){
-        $res = $this->genInsertQuery($section,"sections");
-        $s = $this->db->prepare($res[0]);
-        if($res[1][0]!=null){
-            $s->execute($res[1]);
-        }
-        
-        
-        return $this->db->lastInsertId();
-    }
-    public function addSectionGoods($goods){
-        $result = [];
-        
-        for ($i = 0; $i < count($goods); $i++) {
-            $res = $this->genInsertQuery($goods[$i],"goods");
+    public function addSection($token, $section){
+        if($this->checkToken($token, 0, true)){
+            $res = $this->genInsertQuery($section,"sections");
             $s = $this->db->prepare($res[0]);
             if($res[1][0]!=null){
                 $s->execute($res[1]);
             }
             
-            $goods[$i]['GoodId']=$this->db->lastInsertId();
             
-            $result[]=$goods[$i];
-        }
-        return $result;
-    }
-    
-    public function uploadFile($pid, $files, $t){
-        $img=$this->getImage($pid, $t);
-        if($img){
-            $this->removeFile($img);
-        }
-        $url = "http://client.nomokoiw.beget.tech/vi/";
-        $n = basename($t."_".$pid."_".$files['Data']['name']);
-        $tid=ucfirst($t)."Id";
-        $t .="s";
-        $d = "Files/$n";
-        if(file_exists("Files")){
-            
-            if(move_uploaded_file($files['Data']['tmp_name'], $d)){
-                $s = $this->db->prepare("UPDATE $t SET Image=? WHERE $tid=?");
-                $s->execute(array($url.$d, $pid));
-                return($url.$d);
-            }else{
-                return($_FILES['Data']['tmp_name']);
-            }
+            return $this->db->lastInsertId();
         }else{
-            mkdir("Files");
-            if(move_uploaded_file($files['Data']['tmp_name'], $d)){
-                $s = $this->db->prepare("UPDATE $t SET Image=? WHERE $tid=?");
-                $s->execute(array($url.$d, $pid));
-                return($url.$d);
-            }else{
-                return($_FILES['Data']['tmp_name']);
-            }
+            return false;
         }
         
-        return false;
+    }
+    public function addSectionGoods($token, $goods){
+        if($this->checkToken($token, 0, true)){
+            $result = [];
+        
+            for ($i = 0; $i < count($goods); $i++) {
+                $res = $this->genInsertQuery($goods[$i],"goods");
+                $s = $this->db->prepare($res[0]);
+                if($res[1][0]!=null){
+                    $s->execute($res[1]);
+                }
+                
+                $goods[$i]['GoodId']=$this->db->lastInsertId();
+                
+                $result[]=$goods[$i];
+            }
+            return $result;
+        }else{
+            return false;
+        }
+        
     }
     
-    public function addSale($sale){
-        $res = $this->genInsertQuery($sale,"sales");
-        $s = $this->db->prepare($res[0]);
-        if($res[1][0]!=null){
-            $s->execute($res[1]);
-        }
-        
-        
-        return $this->db->lastInsertId();
-    }
-    public function removeSale($id){
-        $img=$this->getImage($id, 'sale');
-        if($img){
-            $this->removeFile($img);
-        }
-        $s = $this->db->prepare("DELETE FROM sales WHERE SaleId=?");
-        $s->execute(array($id));
-        
-        
-        return true;
-    }
-    public function removeSection($id){
-        $img=$this->getImage($id, 'section');
-        if($img){
-            $this->removeFile($img);
-        }
-        $s = $this->db->prepare("SELECT * FROM goods WHERE SectionId=?");
-        $s->execute(array($id));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Good');
-        while($c = $s->fetch()){
-            $img=$this->getImage($c->GoodId, 'goods');
+    public function uploadFile($token, $pid, $files, $t){
+        if($this->checkToken($token, 0, true)){
+            $img=$this->getImage($pid, $t);
             if($img){
                 $this->removeFile($img);
             }
+            $url = "http://client.nomokoiw.beget.tech/vi/";
+            $n = basename($t."_".$pid."_".$files['Data']['name']);
+            $tid=ucfirst($t)."Id";
+            $t .="s";
+            $d = "Files/$n";
+            if(file_exists("Files")){
+                
+                if(move_uploaded_file($files['Data']['tmp_name'], $d)){
+                    $s = $this->db->prepare("UPDATE $t SET Image=? WHERE $tid=?");
+                    $s->execute(array($url.$d, $pid));
+                    return($url.$d);
+                }else{
+                    return($_FILES['Data']['tmp_name']);
+                }
+            }else{
+                mkdir("Files");
+                if(move_uploaded_file($files['Data']['tmp_name'], $d)){
+                    $s = $this->db->prepare("UPDATE $t SET Image=? WHERE $tid=?");
+                    $s->execute(array($url.$d, $pid));
+                    return($url.$d);
+                }else{
+                    return($_FILES['Data']['tmp_name']);
+                }
+            }
+            
+            return false;
+        }else{
+            return false;
         }
-        $s = $this->db->prepare("DELETE FROM sections WHERE SectionId=?");
-        $s->execute(array($id));
         
-        
-        return true;
     }
-    public function removeGood($id){
-        $img=$this->getImage($id, 'good');
-        if($img){
-            $this->removeFile($img);
+    
+    public function addSale($token, $sale){
+        if($this->checkToken($token, 0, true)){
+            $res = $this->genInsertQuery($sale,"sales");
+            $s = $this->db->prepare($res[0]);
+            if($res[1][0]!=null){
+                $s->execute($res[1]);
+            }
+            
+            
+            return $this->db->lastInsertId();
+        }else{
+            return false;
         }
-        $s = $this->db->prepare("DELETE FROM goods WHERE GoodId=?");
-        $s->execute(array($id));
         
-        
-        return true;
     }
-    public function updateSale($sale){
-        $id=$sale['SaleId'];
-        unset($sale['SaleId']);
-        $a = $this->genUpdateQuery(array_keys($sale), array_values($sale), "sales", $id);
-        $s = $this->db->prepare($a[0]);
-        $s->execute($a[1]);
-        return $a;
+    public function removeSale($token, $id){
+        if($this->checkToken($token, 0, true)){
+            $img=$this->getImage($id, 'sale');
+            if($img){
+                $this->removeFile($img);
+            }
+            $s = $this->db->prepare("DELETE FROM sales WHERE SaleId=?");
+            $s->execute(array($id));
+            
+            
+            return true;
+        }else{
+            return false;
+        }
     }
-
-    public function updateSection($section, $id){
-        
-        $a = $this->genUpdateQuery(array_keys($section), array_values($section), "sections", $id);
-        $s = $this->db->prepare($a[0]);
-        $s->execute($a[1]);
-        return $a;
+    public function removeSection($token, $id){
+        if($this->checkToken($token, 0, true)){
+            $img=$this->getImage($id, 'section');
+            if($img){
+                $this->removeFile($img);
+            }
+            $s = $this->db->prepare("SELECT * FROM goods WHERE SectionId=?");
+            $s->execute(array($id));
+            $s->setFetchMode(PDO::FETCH_CLASS, 'Good');
+            while($c = $s->fetch()){
+                $img=$this->getImage($c->GoodId, 'good');
+                if($img){
+                    $this->removeFile($img);
+                }
+            }
+            $s = $this->db->prepare("DELETE FROM sections WHERE SectionId=?");
+            $s->execute(array($id));
+            
+            
+            return true;
+        }else{
+            return false;
+        }
     }
-    public function updateGoods($goods){
-        for ($i = 0; $i <= count($goods); $i++) {
-            $id=$goods[$i]['GoodId'];
-            unset($goods['GoodId']);
-            $a = $this->genUpdateQuery(array_keys($goods[$i]), array_values($goods[$i]), "goods", $id);
+    public function removeGood($token, $id){
+        if($this->checkToken($token, 0, true)){
+            $img=$this->getImage($id, 'good');
+            if($img){
+                $this->removeFile($img);
+            }
+            $s = $this->db->prepare("DELETE FROM goods WHERE GoodId=?");
+            $s->execute(array($id));
+            
+            
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function updateSale($token, $sale){
+        if($this->checkToken($token, 0, true)){
+            $id=$sale['SaleId'];
+            unset($sale['SaleId']);
+            $a = $this->genUpdateQuery(array_keys($sale), array_values($sale), "sales", $id);
             $s = $this->db->prepare($a[0]);
             $s->execute($a[1]);
+            return $a;
+        }else{
+            return false;
         }
-        
-        return $a;
+    }
+
+    public function updateSection($token, $section, $id){
+        if($this->checkToken($token, 0, true)){
+            $a = $this->genUpdateQuery(array_keys($section), array_values($section), "sections", $id);
+            $s = $this->db->prepare($a[0]);
+            $s->execute($a[1]);
+            return $a;
+        }else{
+            return false;
+        }
+    }
+    public function updateGoods($token, $goods){
+        if($this->checkToken($token, 0, true)){
+            for ($i = 0; $i <= count($goods); $i++) {
+                $id=$goods[$i]['GoodId'];
+                unset($goods['GoodId']);
+                $a = $this->genUpdateQuery(array_keys($goods[$i]), array_values($goods[$i]), "goods", $id);
+                $s = $this->db->prepare($a[0]);
+                $s->execute($a[1]);
+            }
+            
+            return $a;
+        }else{
+            return false;
+        }
     }
     
 
