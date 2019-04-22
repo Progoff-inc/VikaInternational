@@ -17,7 +17,12 @@
     <div class="goods">
       <h4>Товары раздела</h4>
       <div *ngFor="let g of goods; let i = index;">
+          <div class="d-flex justify-content-between">
+              <h5>{{g.Name}}</h5>
+              <button class="btn btn-link text-danger" *ngIf="i>0" (click)="removeNew(i)">Отменить добавление</button>
+          </div>
         <div class="new-good d-flex flex-wrap justify-content-between" >
+          
           <div class="form-group">
             <label  [ngClass]="{'text-danger':(submitted && g.Name=='')}">Название товара</label>
             <input [(ngModel)]="g.Name" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && g.Name=='')}" class="form-control"  placeholder="Название товара">
@@ -29,7 +34,7 @@
             <small  class="form-text text-danger" *ngIf="submitted && g.Color==''">Введите цвет товара</small>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted && !image)}">Изображение</label>
+            <label for="exampleInputEmail13" class="w-100" [ngClass]="{'text-danger':(submitted && !goodsFiles[i])}">Изображение</label>
             <p class="img-text" *ngIf="goodsFiles[i]"><span>{{goodsFiles[i].name}}</span> <i class="fa fa-times" aria-hidden="true" (click)="unload('good', i)"></i> </p>
             <input type="file" (change)="putFile($event, 'good', i)"  style="display:none" #gfileload>
             <button *ngIf="!goodsFiles[i]" class="btn btn-link border-primary" (click)="gfileload.click()">Загрузить картинку</button>
@@ -38,7 +43,7 @@
           </div>
           <div class="form-group">
             <label  [ngClass]="{'text-danger':(submitted && !g.Price)}">Цена товара</label>
-            <input [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && !g.Price)}" class="form-control"  placeholder="Цена товара">
+            <input type="number" [(ngModel)]="g.Price" [ngModelOptions]="{standalone: true}" [ngClass]="{'border-danger':(submitted && !g.Price)}" class="form-control"  placeholder="Цена товара">
             <small  class="form-text text-danger" *ngIf="submitted && !g.Price">Введите цену товара</small>
           </div>
           

@@ -1,3 +1,6 @@
+import { GoodsService } from './products.service';
+import { Injectable } from '@angular/core';
+
 export interface Good{
     GoodId:number;
     SectionId:number;
@@ -14,7 +17,7 @@ export interface Good{
     Count:number;
     Type:GoodTypes;
   
-    Good:Good;
+    Good:any;
   }
   export class NewCartItem{
     DealId:number;
@@ -81,6 +84,7 @@ export interface UserInfo{
 }
 
 export class Book{
+  
   constructor(){
     this.User=new BookingUser();
   }
@@ -100,9 +104,20 @@ export class Book{
   }
   minus(g){
     let i = this.Cart.find(x => x.Good.GoodId==g.Good.GoodId);
-    i.Count--;
+    if(i.Count>0){
+      i.Count--;
+    }
+    else{
+      this.removeCartItem(i);
+    }
+    
     sessionStorage.setItem('Cart',JSON.stringify(this.Cart));
     
+  }
+  removeCartItem(g){
+    let i = this.Cart.map(x => x.Good.GoodId?x.Good.GoodId:x.Good.SaleId+"-"+x.Type).indexOf(g.Good.GoodId?g.Good.GoodId:g.Good.SaleId+"-"+g.Type);
+    console.log(i);
+    this.Cart.splice(i,1);
   }
 }
 
@@ -140,6 +155,7 @@ export enum UploadTypes{
 
 export interface NewSection{
   Name:string;
+  Image?:string;
 }
 
 export interface NewGood{

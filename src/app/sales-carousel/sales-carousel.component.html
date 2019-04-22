@@ -6,9 +6,10 @@
   <div class="carousel-inner">
     <div class="carousel-item" [ngClass]="{'active':i==0}" *ngFor="let s of sales; let i = index;">
       <div class="d-flex flex-wrap align-items-stretch justify-content-center h-100">
-        <div class="d-flex flex-column justify-content-center" style="width:400px;">
+        <div class="d-flex flex-column justify-content-center align-items-start" style="width:400px;">
           <p class="sale-head">{{s.Name}}</p>
           <p class="sale-sm-head">{{s.Description}}</p>
+          <button class="btn btn-primary" (click)="addSale(s)">Добавить</button>
         </div>
         <div class="d-flex align-items-center" style="width:400px;">
           <img src="{{s.Image}}"  style="width: 100%;">
@@ -17,11 +18,19 @@
     </div>
   </div>
   <a *ngIf="sales.length>1" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-prev"></span>
+    <span class="carousel-prev">
+      <svg viewBox="0 0 20 100" width="20">
+        <polyline points="20,0 0,50 20,100" stroke="white" stroke-linejoin="round" stroke-width="2" fill="none"/>
+    </svg>
+    </span>
     <span class="sr-only">Previous</span>
   </a>
   <a *ngIf="sales && sales.length>1" class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-next"></span>
+    <span class="carousel-next">
+      <svg viewBox="0 0 20 100" width="20">
+        <polyline points="0,0 20,50 0,100" stroke="white" stroke-linejoin="round" stroke-width="2" fill="none"/>
+    </svg>
+    </span>
     <span class="sr-only">Next</span>
   </a>
 </div>

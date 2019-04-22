@@ -43,4 +43,11 @@ export class UserProfileComponent implements OnInit {
     this.ms.open("change", change);
   }
 
+  changePassword(){
+    let change = {
+      UserId:this.us.user.UserId
+    }
+    this.ms.open("change-password", change);
+  }
+
 }

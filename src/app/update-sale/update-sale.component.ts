@@ -10,7 +10,7 @@ import { LoadService } from '../services/load.service';
   styleUrls: ['./update-sale.component.less']
 })
 export class UpdateSaleComponent implements OnInit {
-  sales:Sale[];
+  sales:Sale[] = [];
   goods = [];
   salesCopy:Sale[];
   goodsImageInvalids:boolean[] = [];
@@ -18,13 +18,16 @@ export class UpdateSaleComponent implements OnInit {
   constructor(private gs:GoodsService, private ls:LoadService) { }
 
   ngOnInit() {
+    this.ls.showLoad=true;
     this.gs.getSales().subscribe(data => {
       data.forEach(s => {
         this.goodsFiles.push(null);
+        this.goodsImageInvalids.push(false);
       })
       console.log(this.goodsFiles);
       this.sales = data;
       this.salesCopy = JSON.parse(JSON.stringify(data));
+      this.ls.showLoad=false;
     })
   }
   checkChanges(s:Sale){
@@ -32,6 +35,11 @@ export class UpdateSaleComponent implements OnInit {
     return !this.deepEqual(s,s1);
   }
   saveChanges(s:Sale, i){
+    for(let i = 0; i< this.goodsImageInvalids.length; i++){
+      if(this.goodsImageInvalids[i]){
+        return
+      }
+    }
     for(let j = 0; j<Object.keys(s).length; j++){
       if(s[Object.keys(s)[j]]=='' || !s[Object.keys(s)[j]]){
         if(Object.keys(s)[j] == 'Image' && this.goodsFiles[i]){
@@ -127,6 +135,14 @@ export class UpdateSaleComponent implements OnInit {
   }
   unload(i){
     this.goodsFiles[i]=null;
+  }
+  remove(id, i){
+    this.gs.removeSale(id).subscribe(d => {
+      this.sales.splice(i,1);
+      this.salesCopy.splice(i,1);
+      this.goodsImageInvalids.splice(i,1);
+      this.goodsFiles.splice(i,1);
+    })
   }
 
 }

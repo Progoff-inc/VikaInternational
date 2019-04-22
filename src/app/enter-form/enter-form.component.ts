@@ -3,6 +3,7 @@ import { ModalService } from '../services/modal.service';
 import { FormBuilder, FormGroup, Validators, EmailValidator } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { GoodsService } from '../services/products.service';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'enter-form',
@@ -16,7 +17,7 @@ export class EnterFormComponent implements OnInit {
   save:boolean;
   submitted = false;
   showError = false;
-  constructor(public ms:ModalService, private fb: FormBuilder, private us:UserService,private gs:GoodsService) { }
+  constructor(public ms:ModalService, private fb: FormBuilder, private ls:LoadService, private us:UserService,private gs:GoodsService) { }
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -36,6 +37,7 @@ export class EnterFormComponent implements OnInit {
     if(this.userForm.invalid){
       return;
     }
+    this.ls.showLoad=true;
     this.us.loginUser(this.userForm.value.Email, this.userForm.value.Password).subscribe(user => {
       
       if(user){
@@ -47,13 +49,18 @@ export class EnterFormComponent implements OnInit {
           this.us.user = user[0];
           this.us.setToken(user[1]);
           this.gs.book.User = {Name:user[0].Name, Email:user[0].Email, Phone:user[0].Phone};
+          this.ls.showLoad=false;
           this.ms.close();
       }
       else{
+        this.ls.showLoad=false;
           this.showError = true;
       }
     });
     
+  }
+  remember(){
+    this.ms.type = 'remember-password';
   }
 
   get f() { return this.userForm.controls; }

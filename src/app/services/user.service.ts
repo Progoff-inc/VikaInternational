@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { error } from '@angular/compiler/src/util';
 import { ModalService } from './modal.service';
 import { GoodsService } from './products.service';
+import { LoadService } from './load.service';
 // import { OnInit } from '@angular/core';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class UserService{
     private token:string;
     baseUrl:string='http://client.nomokoiw.beget.tech/vi/';
 
-    constructor(private router:Router, private http: HttpClient, private gs:GoodsService){
+    constructor(private router:Router, private http: HttpClient, private gs:GoodsService, private ls:LoadService){
         this.updateUser();
     }
 
@@ -87,7 +88,7 @@ export class UserService{
     getUserById(id){
         this.http.get<UserToken>(this.baseUrl + 'UserController.php?Key=get-user-by-id&Id='+id).subscribe(user => {
             if(user){
-                
+                this.ls.showLoad=false;
                 this.user = user[0];
                 this.token = user[1];
                 this.gs.book.User = {Name:this.user.Name, Email:this.user.Email, Phone:this.user.Phone};
@@ -96,6 +97,7 @@ export class UserService{
             }
             
         }, error => {
+            this.ls.showLoad=false;
             return false;
         }) 
     }
@@ -106,6 +108,22 @@ export class UserService{
      */
     checkEmail(email){
         return this.http.get<boolean>(this.baseUrl + 'UserController.php?Key=check-email&Email='+email);
+    }
+
+    /**
+     * Изменение пароля пользователя
+     * @param password Объект с UserId, Password, NewPassword
+     */
+    updatePassword(password){
+        return this.http.post(this.baseUrl + 'UserController.php?Key=update-password', password);
+    }
+
+    /**
+     * Восстановление пароля
+     * @param email Почта пользователя
+     */
+    rememberPassword(email, password){
+        return this.http.get(this.baseUrl + 'UserController.php?Key=remember-password&Email='+ email+"&Password="+password);
     }
     /**
      * Генерация пароля

@@ -26,9 +26,20 @@ if(isset($_GET['Key']))
             $b = json_decode(file_get_contents('php://input'), true);
             echo json_encode($ctxt->setAdmin($_GET['Id'], $_GET['IsAdmin']));
             break;
+        case 'get-email':
+            echo json_encode($ctxt->getUserEmail($_GET['Id']));
+            break;
         case 'update-user-info':
             $b = json_decode(file_get_contents('php://input'), true);
             echo json_encode($ctxt->updateUserInfo($b['UserId'], $b['Phone'], $b['Email']));
+            break;
+        case 'update-password':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->updatePassword($b['UserId'], $b['Password'], $b['NewPassword']));
+            break;
+        case 'remember-password':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->rememberPassword($_GET['Email'], $_GET['Password']));
             break;
         case 'check-email':
             echo json_encode($ctxt->checkUser($_GET['Email']));

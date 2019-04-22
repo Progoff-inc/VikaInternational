@@ -7,7 +7,7 @@
         <img src="../../assets/images/logo.png" alt="">
       </div>
       <div class="col-md-4 d-inline-flex justify-content-center justify-content-md-end align-items-center search">
-          <i class="fas fa-user mx-2 text-light" (click)="Profile()" style="cursor:pointer"></i>
+          <span (click)="Profile()" style="color:white" class="user">{{us.user?us.user.Name:''}}<i class="fas fa-user mx-2 text-light"  style="cursor:pointer"></i></span>
           <span class="cart"><a (click)="goToCart()"><i class="fas fa-shopping-cart mx-2 text-light"></i></a>
             <span *ngIf="gs.book.Cart.length>0">{{gs.book.Cart.length>9?'9+':gs.book.Cart.length}}</span>
             <div *ngIf="gs.book.Cart.length>0" class="cart-items">
@@ -15,7 +15,7 @@
               <div class="cart-item" *ngFor="let g of gs.book.Cart">
                 <div>
                   <p>{{g.Good.Name}}</p>
-                  <p>{{g.Good.Color}}</p>
+                  <p>{{g.Good.Color?g.Good.Color:''}}</p>
                 </div>
                 <div style="text-align:right">
                   <span >{{g.Good.Price * g.Count}}₽</span>
@@ -29,14 +29,14 @@
               </div>
             </div>
           </span>
-          <form class="form-inline">
+          <!-- <form class="form-inline">
             
             <div class="form-group mx-sm-3 mb-2 d-flex">
               <input type="text" class="form-control" style="border-bottom-right-radius: 0; border-top-right-radius: 0;  " id="inputPassword2" placeholder="Найти">
               <i class="fas fa-search rounded"></i>
             </div>
             
-          </form>
+          </form> -->
         
       </div>
       <hr class="mt-0">

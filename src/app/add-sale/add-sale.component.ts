@@ -27,7 +27,7 @@ export class AddSaleComponent implements OnInit {
 
   addSale(){
     this.submitted = true;
-    if(!this.image){
+    if(!this.image || this.invalidImage){
       return;
     }
     if(this.saleForm.invalid){
@@ -38,8 +38,7 @@ export class AddSaleComponent implements OnInit {
     const formData = new FormData();
     formData.append('Data', this.image);
     this.gs.addSale(this.saleForm.value).subscribe(id => {
-      this.saleForm.reset();
-      this.submitted=false;
+      
       
       this.gs.UploadFile(id, UploadTypes.Sale, formData).subscribe(event=>{
         if(event.type == HttpEventType.UploadProgress){
@@ -47,8 +46,11 @@ export class AddSaleComponent implements OnInit {
           
         }
         else if(event.type == HttpEventType.Response){
+          this.image=null;
           this.ls.load = -1;
           this.ls.showLoad=false;
+          this.saleForm.reset();
+          this.submitted=false;
         }
         
       })
