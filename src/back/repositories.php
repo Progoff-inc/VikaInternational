@@ -46,7 +46,7 @@ class DataBase {
     }
     
     private function removeFile($filelink){
-        $path = explode('vi/',$filelink);
+        $path = explode('back/',$filelink);
         unlink($path[1]);
         
     }
