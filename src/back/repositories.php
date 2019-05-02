@@ -6,7 +6,7 @@ class DataBase {
     public function __construct()
     {
         //$this->db = new PDO('mysql:host=localhost;dbname=myblog;charset=UTF8','nlc','12345');
-        $this->db = new PDO('mysql:host=localhost;dbname=nomokoiw_vi;charset=UTF8','nomokoiw_vi','lCtw&9m8');
+        $this->db = new PDO('mysql:host=localhost;dbname=vikaoskina_vi;charset=UTF8','vikaoskina_vi','0nvNFp1e');
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
     private function genInsertQuery($ins, $t){
@@ -16,7 +16,6 @@ class DataBase {
             $res[0] = $res[0].array_keys($ins)[$i].',';
             $res[1][]=$ins[array_keys($ins)[$i]];
             $q=$q.'?,';
-            
         }
         $res[0]=rtrim($res[0],',');
         $res[0]=$res[0].') VALUES ('.rtrim($q,',').');';
