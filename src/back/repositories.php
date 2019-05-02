@@ -16,6 +16,7 @@ class DataBase {
             $res[0] = $res[0].array_keys($ins)[$i].',';
             $res[1][]=$ins[array_keys($ins)[$i]];
             $q=$q.'?,';
+            
         }
         $res[0]=rtrim($res[0],',');
         $res[0]=$res[0].') VALUES ('.rtrim($q,',').');';
@@ -402,7 +403,7 @@ class DataBase {
             if($img){
                 $this->removeFile($img);
             }
-            $url = "http://client.nomokoiw.beget.tech/vi/";
+            $url = "http://vikaoskina.beget.tech/back/";
             $n = basename($t."_".$pid."_".$files['Data']['name']);
             $tid=ucfirst($t)."Id";
             $t .="s";
