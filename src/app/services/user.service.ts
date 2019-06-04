@@ -13,7 +13,7 @@ import { LoadService } from './load.service';
 export class UserService{
     public user:User;
     
-    baseUrl:string='http://vikaoskina.beget.tech/back/';
+    baseUrl:string='http://vikainternational.ru/back/';
 
     constructor(private router:Router, private http: HttpClient, private gs:GoodsService, private ls:LoadService){
         this.updateUser();

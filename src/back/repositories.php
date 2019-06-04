@@ -403,7 +403,7 @@ class DataBase {
             if($img){
                 $this->removeFile($img);
             }
-            $url = "http://vikaoskina.beget.tech/back/";
+            $url = "http://vikainternational.ru/back/";
             $n = basename($t."_".$pid."_".$files['Data']['name']);
             $tid=ucfirst($t)."Id";
             $t .="s";
