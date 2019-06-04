@@ -4,9 +4,20 @@
     <input formControlName="DeliverTypes" class="form-check-input" type="radio" name="DeliverTypes" id="Pickup" value="pickup">
     <label class="form-check-label" for="Pickup">Самовывоз</label>
   </div>
+  <div *ngIf="f.DeliverTypes.value=='pickup'" class="pickinf">Самовывоз осуществляется по адресу:<br>
+    метро Авиамоторная, 5-ая Кабельная улица, д.2с1<br>
+    ТРК СпортEX, магазин&nbsp;Rama Sports
+  </div>
   <div class="form-check mb-2">
     <input formControlName="DeliverTypes" class="form-check-input" type="radio" name="DeliverTypes" id="Delivering" value="delivery">
     <label class="form-check-label" for="Delivering">Доставка</label>
+  </div>
+  <div *ngIf="f.DeliverTypes.value=='delivery'" class="pickinf">
+    Доставка курьером в пределах МКАД
+    <ul>
+      <li>Стоимость доставки 150₽</li>
+      <li>Бесплатно, если сумма заказа выше 3000₽</li>
+    </ul>
   </div>
   <div *ngIf="f.DeliverTypes.value=='delivery'">
     <form [formGroup]="AddressForm">
@@ -38,10 +49,10 @@
     <input formControlName="PayTypes" class="form-check-input" type="radio" name="PayTypes" id="Cash" value="cash">
     <label class="form-check-label" for="Cash">Наличные</label>
   </div>
-  <div class="form-check mb-3">
+  <div class="form-check" *ngIf="f.DeliverTypes.value!='delivery'">
     <input formControlName="PayTypes" class="form-check-input" type="radio" name="PayTypes" id="Card" value="card">
     <label class="form-check-label" for="Card">Банковская карта</label>
   </div>
   <small class="form-text text-danger pb-3" *ngIf="submitted && f.PayTypes.errors && f.PayTypes.errors.required">Выберите способ оплаты</small>
-  <button type="submit" class="btn btn-primary" (click)="nextPage()">Далее</button>
+  <button type="submit" class="btn btn-primary mt-3" (click)="nextPage()">Далее</button>
 </form>
