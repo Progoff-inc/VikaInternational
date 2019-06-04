@@ -9,7 +9,7 @@ export class GoodsService{
     bookId:number=null;
     private token:string;
     book:Book = new Book();
-    baseUrl:string='http://vikaoskina.beget.tech/back/';
+    baseUrl:string='http://vikainternational.ru/back/';
 
     constructor(private http: HttpClient){
       if(sessionStorage.getItem('Cart')){

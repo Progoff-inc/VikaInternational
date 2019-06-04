@@ -32,12 +32,15 @@ export class ChangePasswordComponent implements OnInit {
       return
     }
     this.ls.showLoad=true;
+    
     this.us.updatePassword({UserId:this.change.UserId, Password:this.v.Password, NewPassword:this.v.NewPassword}).subscribe(res => {
+      console.log(res);
       if(res){
         this.ls.showLoad=false;
         this.ms.close();
       }
       else{
+        this.ls.showLoad=false;
         this.invalid=true;
       }
     })

@@ -130,7 +130,7 @@ export class UserService{
      * @param password Объект с UserId, Password, NewPassword
      */
     updatePassword(password){
-        return this.http.post(this.baseUrl + 'UserController.php?Key=update-password', password);
+        return this.http.post(this.baseUrl + 'UserController.php?Key=update-password&Token='+this.gs.getToken(), password);
     }
 
     /**
