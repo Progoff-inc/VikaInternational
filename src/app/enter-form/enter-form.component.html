@@ -16,7 +16,7 @@
     <label class="form-check-label" for="exampleCheck1">Запомнить меня</label>
   </div>
   <div class="alert alert-danger" *ngIf="showError" role="alert">
-    Пользователь не найден
+    Логин или пароль неверен
   </div>
   <button type="submit" class="btn btn-primary" (click)="Enter()">Войти</button>
   <button type="submit" class="btn btn-link" (click)="auth()">Регистрация</button>

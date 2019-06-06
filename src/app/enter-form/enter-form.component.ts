@@ -40,7 +40,7 @@ export class EnterFormComponent implements OnInit {
     this.ls.showLoad=true;
     this.us.loginUser(this.userForm.value.Email, this.userForm.value.Password).subscribe(user => {
       
-      if(user){
+      if(user[1]){
         if(this.save){
           localStorage.setItem('user',JSON.stringify(user[0]));
         }else{
@@ -48,7 +48,7 @@ export class EnterFormComponent implements OnInit {
         }
           this.us.user = user[0];
           this.us.setToken(user[1]);
-          console.log(user[1]);
+          console.log(user);
           this.gs.book.User = {Name:user[0].Name, Email:user[0].Email, Phone:user[0].Phone};
           this.ls.showLoad=false;
           this.ms.close();
