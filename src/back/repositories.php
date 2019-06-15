@@ -1,11 +1,9 @@
 <?php
 require 'models.php';
 class DataBase {
-    //$this->db = new PDO('mysql:host=localhost;dbname=nomokoiw_portal;charset=UTF8','nomokoiw_portal','KESRdV2f');
     public $db;
     public function __construct()
     {
-        //$this->db = new PDO('mysql:host=localhost;dbname=myblog;charset=UTF8','nlc','12345');
         $this->db = new PDO('mysql:host=localhost;dbname=vikaoskina_vi;charset=UTF8','vikaoskina_vi','0nvNFp1e');
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
